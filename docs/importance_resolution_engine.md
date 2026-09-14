@@ -192,6 +192,6 @@ when uncertainty is higher, monotonically.
 * 5-region controlled table saved to
   `results/importance_engine_synthetic_results.csv`; figures under
   `results/figures/`.
-* Run `pytest -q` (80 tests: normalization, weights, monotonicity,
+* Run `pytest -q` (88 tests: normalization, weights, monotonicity,
   boundaries, edge cases, integration). Notebook ends with an assertion-gated
   `[PASS]/[FAIL]` validation summary.
