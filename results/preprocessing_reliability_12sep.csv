@@ -1,0 +1,4 @@
+frame_id,sample_token,input_points,processed_points,region_count,map_cell_count,mean_importance,resolution_counts,pipeline_latency_ms,fps_equivalent,valid
+00889f8a9549450aa2f32cf310a3e305,00889f8a9549450aa2f32cf310a3e305,34658,34658,410,410,0.5765337976540518,"{0.05: np.int64(28), 0.1: np.int64(328), 0.2: np.int64(54)}",705.11,1.42,True
+0106a9b8e65f4ad1867b44591aeed8b0,0106a9b8e65f4ad1867b44591aeed8b0,34589,34589,1105,1105,0.5103954447608439,"{0.05: np.int64(10), 0.1: np.int64(654), 0.2: np.int64(441)}",951.5,1.05,True
+023c4df2d451409881d8e6ea82f14704,023c4df2d451409881d8e6ea82f14704,34653,34653,1060,1060,0.5139575848956126,"{0.05: np.int64(31), 0.1: np.int64(583), 0.2: np.int64(446)}",1118.18,0.89,True

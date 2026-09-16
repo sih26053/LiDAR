@@ -1,0 +1,2 @@
+sample_token,input_points,processed_points,regions,map_cells,mean_importance,pipeline_latency_ms,fps_equivalent
+00889f8a9549450aa2f32cf310a3e305,34658,34658,410,410,0.5765337976540518,962.3813999933191,1.0390890763339171
