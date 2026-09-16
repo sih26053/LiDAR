@@ -1,1 +1,53 @@
-
+{
+  "robustness": {
+    "seed": 42,
+    "dropout_rates": [
+      0.05,
+      0.1,
+      0.2,
+      0.3
+    ],
+    "sparsity_levels": [
+      1.0,
+      0.75,
+      0.5,
+      0.25
+    ],
+    "noise_levels": {
+      "low": 0.01,
+      "medium": 0.03,
+      "high": 0.05
+    },
+    "noise_parameters": {
+      "distribution": "gaussian_zero_mean",
+      "axes": "xyz_only",
+      "intensity_touched": false,
+      "labels_altered": false
+    },
+    "n_frames_target": 7,
+    "cell_size_integration_m": 2.0,
+    "importance_weight_candidates": [
+      "W_BASE",
+      "W_SEM",
+      "W_SAFE"
+    ],
+    "resolution_threshold_candidates": [
+      "THRESH_A",
+      "THRESH_B",
+      "THRESH_C"
+    ],
+    "output_paths": {
+      "root": "c:\\Users\\SARKAR\\Documents\\Default Project\\results\\robustness",
+      "figures": "c:\\Users\\SARKAR\\Documents\\Default Project\\results\\robustness\\figures"
+    }
+  },
+  "failsafe": {
+    "low_point_density_threshold": 200,
+    "min_regions_for_normal_operation": 3,
+    "high_uncertainty_threshold": 0.8,
+    "fallback_resolution": 0.2,
+    "fallback_semantic_label": "unknown",
+    "reject_invalid_frame": true,
+    "policy": "reliable perception -> normal adaptive | low-confidence -> safety-biased | invalid perception -> fallback geometric | invalid frame -> reject + log"
+  }
+}

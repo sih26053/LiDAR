@@ -1,0 +1,8 @@
+file,frame_id,scene_name,timestamp,scene_category,point_count_original,n_boxes,n_ped_boxes,n_veh_boxes,scene_description
+5991fad3280c4f84b331536c32001a04_LIDAR_TOP_xyzi.npy,5991fad3280c4f84b331536c32001a04,scene-0655,1535385092150099.0,sparse,34359,34,1,33,"Parking lot, parked cars, jaywalker, bendy bus, gardening vehicles"
+6d1d793b68b24165be5755a54054c82a_LIDAR_TOP_xyzi.npy,6d1d793b68b24165be5755a54054c82a,scene-1077,1542800377447456.0,dense,34778,19,0,18,"Night, big street, bus stop, high speed, construction vehicle"
+b26e791522294bec90f86fd72226e35c_LIDAR_TOP_xyzi.npy,b26e791522294bec90f86fd72226e35c,scene-0061,1532402937198682.0,many_vehicles,34625,156,43,21,"Parked truck, construction, intersection, turn left, following a van"
+dc4c80e8a1534ff8a3eb80307341161c_LIDAR_TOP_xyzi.npy,dc4c80e8a1534ff8a3eb80307341161c,scene-1100,1542800989447876.0,pedestrian_vru,34689,25,9,16,"Night, peds in sidewalk, peds cross crosswalk, scooter, PMD, difficult lighting"
+c844bf5a9f2243ff8f4bf2c85fe218ff_LIDAR_TOP_xyzi.npy,c844bf5a9f2243ff8f4bf2c85fe218ff,scene-0061,1532402937698000.0,complex_static,34619,154,43,21,"Parked truck, construction, intersection, turn left, following a van"
+5c85640c10d9485c86bf6eb44778c002_LIDAR_TOP_xyzi.npy,5c85640c10d9485c86bf6eb44778c002,scene-0655,1535385096399680.0,normal,34690,62,4,58,"Parking lot, parked cars, jaywalker, bendy bus, gardening vehicles"
+858a1ece22cf45d9bc71e42336604b78_LIDAR_TOP_xyzi.npy,858a1ece22cf45d9bc71e42336604b78,scene-0916,1538984238948012.0,difficult_geometry,34764,72,22,49,"Parking lot, bicycle rack, parked bicycles, bus, many peds, parked scooters, parked motorcycle"
