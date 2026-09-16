@@ -1,0 +1,7 @@
+class,frames_present,frames_missing
+vehicle,10,0
+pedestrian_vru,8,2
+static_manmade,2,8
+vegetation,0,10
+road_driveable,0,10
+unknown,10,0

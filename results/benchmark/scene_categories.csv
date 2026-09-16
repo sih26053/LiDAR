@@ -1,0 +1,11 @@
+file,scene,scene_description,n_annotations,n_points,scene_category
+00889f8a9549450aa2f32cf310a3e305_LIDAR_TOP_xyzi.npy,scene-0757,"Arrive at busy intersection, bus, wait at intersection, bicycle, peds",16,34658,urban/road
+0106a9b8e65f4ad1867b44591aeed8b0_LIDAR_TOP_xyzi.npy,scene-0796,"Scooter, peds on sidewalk, bus, cars, truck, fake construction worker, bicycle, cross intersection, car overtaking us",18,34589,urban/road
+023c4df2d451409881d8e6ea82f14704_LIDAR_TOP_xyzi.npy,scene-0061,"Parked truck, construction, intersection, turn left, following a van",127,34653,object-rich
+0307afa1ec7e48ce90295acabf8cb6dd_LIDAR_TOP_xyzi.npy,scene-0757,"Arrive at busy intersection, bus, wait at intersection, bicycle, peds",14,34697,urban/road
+0373e9d8886648779c8a73304919ab5f_LIDAR_TOP_xyzi.npy,scene-0757,"Arrive at busy intersection, bus, wait at intersection, bicycle, peds",18,34669,urban/road
+0402e40724984f3b833496067d46c771_LIDAR_TOP_xyzi.npy,scene-0655,"Parking lot, parked cars, jaywalker, bendy bus, gardening vehicles",66,34763,object-rich
+042f582eb2bb4231910918ba85f390d3_LIDAR_TOP_xyzi.npy,scene-1094,"Night, after rain, many peds, PMD, ped with bag, jaywalker, truck, scooter",16,34639,mixed
+048a45dd2cf54aa5808d8ccc85731d44_LIDAR_TOP_xyzi.npy,scene-0916,"Parking lot, bicycle rack, parked bicycles, bus, many peds, parked scooters, parked motorcycle",71,34731,object-rich
+050b2d9c4bb647b7ab4ee94bdb538e1d_LIDAR_TOP_xyzi.npy,scene-1100,"Night, peds in sidewalk, peds cross crosswalk, scooter, PMD, difficult lighting",25,34688,urban/road
+056becbc0d5a46da8d59eebddedb47bb_LIDAR_TOP_xyzi.npy,scene-1094,"Night, after rain, many peds, PMD, ped with bag, jaywalker, truck, scooter",62,34729,object-rich

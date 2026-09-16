@@ -1,1 +1,72 @@
-
+{
+  "task": "13 September 2026 initial benchmark subset (Paradox Protocol)",
+  "cell_size_integration_m": 2.0,
+  "roi": {
+    "x": [
+      -80.0,
+      80.0
+    ],
+    "y": [
+      -80.0,
+      80.0
+    ],
+    "z": [
+      -10.0,
+      15.0
+    ]
+  },
+  "importance_weights": {
+    "distance": 0.3,
+    "semantic": 0.3,
+    "terrain": 0.15,
+    "dynamic": 0.15,
+    "uncertainty": 0.1
+  },
+  "max_distance_m": 100.0,
+  "uncertainty_lambda": 0.15,
+  "proposed_resolution_levels": [
+    [
+      0.75,
+      0.05
+    ],
+    [
+      0.5,
+      0.1
+    ],
+    [
+      0.25,
+      0.2
+    ],
+    [
+      0.0,
+      0.5
+    ]
+  ],
+  "uniform_resolution_m": 0.05,
+  "distance_thresholds": [
+    [
+      10.0,
+      0.05
+    ],
+    [
+      30.0,
+      0.1
+    ],
+    [
+      60.0,
+      0.2
+    ],
+    [
+      Infinity,
+      0.5
+    ]
+  ],
+  "semantic_class_mapping": "src.semantic_mapping.map_nuscenes_label_to_project",
+  "uncertainty_behavior": "documented fallback 0.5 for non-model regions",
+  "software": {
+    "python": "3.14.4",
+    "numpy": "2.4.4",
+    "pandas": "3.0.2",
+    "matplotlib": "3.11.1"
+  }
+}

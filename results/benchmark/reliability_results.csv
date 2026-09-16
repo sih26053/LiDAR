@@ -1,0 +1,11 @@
+file,status,frame_id,input_points,processed_points,retention_ratio,region_count,semantic_source,error
+00889f8a9549450aa2f32cf310a3e305_LIDAR_TOP_xyzi.npy,pass,00889f8a9549450aa2f32cf310a3e305,34658,34658,1.0,410,annotation+fallback,
+0106a9b8e65f4ad1867b44591aeed8b0_LIDAR_TOP_xyzi.npy,pass,0106a9b8e65f4ad1867b44591aeed8b0,34589,34589,1.0,1105,annotation+fallback,
+023c4df2d451409881d8e6ea82f14704_LIDAR_TOP_xyzi.npy,pass,023c4df2d451409881d8e6ea82f14704,34653,34653,1.0,1060,annotation+fallback,
+0307afa1ec7e48ce90295acabf8cb6dd_LIDAR_TOP_xyzi.npy,pass,0307afa1ec7e48ce90295acabf8cb6dd,34697,34697,1.0,470,annotation+fallback,
+0373e9d8886648779c8a73304919ab5f_LIDAR_TOP_xyzi.npy,pass,0373e9d8886648779c8a73304919ab5f,34669,34669,1.0,441,annotation+fallback,
+0402e40724984f3b833496067d46c771_LIDAR_TOP_xyzi.npy,pass,0402e40724984f3b833496067d46c771,34763,34763,1.0,723,annotation+fallback,
+042f582eb2bb4231910918ba85f390d3_LIDAR_TOP_xyzi.npy,pass,042f582eb2bb4231910918ba85f390d3,34639,34639,1.0,1172,annotation+fallback,
+048a45dd2cf54aa5808d8ccc85731d44_LIDAR_TOP_xyzi.npy,pass,048a45dd2cf54aa5808d8ccc85731d44,34731,34731,1.0,1064,annotation+fallback,
+050b2d9c4bb647b7ab4ee94bdb538e1d_LIDAR_TOP_xyzi.npy,pass,050b2d9c4bb647b7ab4ee94bdb538e1d,34688,34688,1.0,1298,annotation+fallback,
+056becbc0d5a46da8d59eebddedb47bb_LIDAR_TOP_xyzi.npy,pass,056becbc0d5a46da8d59eebddedb47bb,34729,34729,1.0,996,annotation+fallback,
