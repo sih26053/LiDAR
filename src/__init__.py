@@ -34,6 +34,23 @@ from .semantic_adapter import (
 )
 from .lidar_loader import load_lidar_bin, load_sample_lidar
 from .preprocessing import preprocess_points, save_processed_frame
+from .mapper_2_5d import (
+    AdaptiveMapCell,
+    PROTOTYPE_OCCUPANCY,
+    REQUIRED_MAP_FIELDS,
+    VALID_RESOLUTIONS,
+    build_adaptive_map,
+    map_statistics,
+    validate_adaptive_map_df,
+)
+from .visualization import (
+    plot_combined_demo,
+    plot_elevation_map,
+    plot_importance_map,
+    plot_lidar_xy,
+    plot_resolution_map,
+    plot_semantic_regions,
+)
 
 __all__ = [
     "LiDARFrame", "PerceptionResult", "RegionFeatures",
@@ -54,4 +71,9 @@ __all__ = [
     "build_perception_from_semantics", "compute_point_geometry",
     "points_in_box", "load_lidar_bin", "load_sample_lidar",
     "preprocess_points", "save_processed_frame",
+    "AdaptiveMapCell", "PROTOTYPE_OCCUPANCY", "REQUIRED_MAP_FIELDS",
+    "VALID_RESOLUTIONS", "build_adaptive_map", "map_statistics",
+    "validate_adaptive_map_df", "plot_combined_demo", "plot_elevation_map",
+    "plot_importance_map", "plot_lidar_xy", "plot_resolution_map",
+    "plot_semantic_regions",
 ]
