@@ -90,6 +90,10 @@ class ImportanceEngine:
         d_m = getattr(r, "distance_m", getattr(r, "distance", None))
         terr = getattr(r, "terrain_complexity", getattr(r, "roughness", None))
         sem_c = getattr(r, "semantic_class", getattr(r, "semantic_label", "unknown"))
+        if d_m is None:
+            raise ValueError("region distance is required")
+        if terr is None:
+            raise ValueError("region terrain complexity is required")
         d = self.distance_score(float(d_m))
         s = self._clip01(float(r.semantic_importance))
         t = self._clip01(float(terr))

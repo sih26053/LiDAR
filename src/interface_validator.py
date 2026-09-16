@@ -74,12 +74,18 @@ def validate_perception_result(pr: PerceptionResult) -> bool:
             raise _fail(
                 f"len({name}) must equal N={n}. Received: {arr.shape[0]}"
             )
-    if not np.all(np.isfinite(pr.confidence.astype(float))):
-        raise _fail("confidence must be all finite.")
+    # 11-September backward-compatible extension: NaN confidence entries are
+    # accepted as the documented "not applicable" representation for non-ML
+    # semantic sources (lidarseg / annotation / fallback). Finite entries must
+    # still lie within [0,1]; inf is always rejected. All previously valid
+    # (all-finite [0,1]) arrays still pass unchanged.
     for i, v in enumerate(np.asarray(pr.confidence, dtype=float)):
-        if not (0.0 <= v <= 1.0):
+        if np.isnan(v):
+            continue  # documented N/A for non-ML sources (never ML confidence)
+        if not np.isfinite(v) or not (0.0 <= v <= 1.0):
             raise _fail(
-                f"confidence must be within [0,1]. Received: {v!r} at index {i}"
+                f"confidence must be within [0,1] or NaN (not applicable for "
+                f"non-ML sources). Received: {v!r} at index {i}"
             )
     for i, v in enumerate(np.asarray(pr.roughness, dtype=float)):
         if not np.isfinite(v) or not (0.0 <= v <= 1.0):

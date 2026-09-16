@@ -110,7 +110,9 @@ class PerceptionResult:
     frame_id: str
     points: np.ndarray            # (N, 4)
     semantic_labels: np.ndarray   # (N,) str
-    confidence: np.ndarray        # (N,) [0,1]
+    confidence: np.ndarray        # (N,) [0,1]; NaN = not applicable (non-ML
+                                  # source: lidarseg/annotation/fallback, see
+                                  # docs/semantic_perception_integration.md)
     distance: np.ndarray          # (N,) metres, >= 0
     elevation: np.ndarray         # (N,) metres (= z)
     roughness: np.ndarray         # (N,) [0,1] normalized terrain variation

@@ -15,6 +15,25 @@ from .importance_engine import (
 )
 from .resolution_engine import ResolutionEngine as ResolutionEngineV1
 from .resolution_engine import ResolutionResult, assign_resolution, validate_importance
+from .semantic_mapping import (
+    PROJECT_CLASSES,
+    PROJECT_CLASS_NAMES,
+    PROJECT_DYNAMIC_PRIOR,
+    PROJECT_SEMANTIC_IMPORTANCE,
+    VALID_SEMANTIC_SOURCES,
+    map_lidarseg_id_to_project,
+    map_nuscenes_label_to_project,
+)
+from .semantic_adapter import (
+    aggregate_to_regions,
+    annotations_to_sensor_frame,
+    assign_annotation_semantics,
+    build_perception_from_semantics,
+    compute_point_geometry,
+    points_in_box,
+)
+from .lidar_loader import load_lidar_bin, load_sample_lidar
+from .preprocessing import preprocess_points, save_processed_frame
 
 __all__ = [
     "LiDARFrame", "PerceptionResult", "RegionFeatures",
@@ -27,4 +46,12 @@ __all__ = [
     "clip01", "normalize_distance", "validate_inputs",
     "validate_importance", "calculate_base_importance",
     "apply_uncertainty_modifier", "extract_features",
+    "PROJECT_CLASSES", "PROJECT_CLASS_NAMES", "PROJECT_DYNAMIC_PRIOR",
+    "PROJECT_SEMANTIC_IMPORTANCE", "VALID_SEMANTIC_SOURCES",
+    "map_lidarseg_id_to_project", "map_nuscenes_label_to_project",
+    "aggregate_to_regions", "annotations_to_sensor_frame",
+    "assign_annotation_semantics",
+    "build_perception_from_semantics", "compute_point_geometry",
+    "points_in_box", "load_lidar_bin", "load_sample_lidar",
+    "preprocess_points", "save_processed_frame",
 ]
