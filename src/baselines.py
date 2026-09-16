@@ -234,20 +234,21 @@ def build_uniform_map(
         gx, gy = np.meshgrid(xs.astype(np.float32), ys.astype(np.float32))
         grid_x, grid_y = gx, gy
         if region_features is not None:
-            from scipy.spatial import cKDTree
+            from scipy.spatial import KDTree
 
             regions = list(region_features)
             centroids = np.array(
                 [[float(x) for x in (_.x, _.y)] for _ in regions],
                 dtype=np.float64,
             )
-            tree = cKDTree(centroids)
+            tree = KDTree(centroids)
             query = np.column_stack(
                 [gx.ravel().astype(np.float64), gy.ravel().astype(np.float64)]
             )
             _, nearest = tree.query(query, k=1)
+            nearest = np.asarray(nearest, dtype=np.intp).reshape(-1)
             elev = np.array(
-                [float(regions[i].elevation) for i in nearest],
+                [float(regions[int(i)].elevation) for i in nearest],
                 dtype=np.float32,
             ).reshape(gx.shape)
             codes, _ = _semantic_codes(
