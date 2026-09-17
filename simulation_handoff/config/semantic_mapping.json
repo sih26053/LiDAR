@@ -1,0 +1,36 @@
+{
+  "project_classes": {
+    "vehicle": 0,
+    "pedestrian_vru": 1,
+    "static_manmade": 2,
+    "vegetation": 3,
+    "road_driveable": 4,
+    "unknown": 5
+  },
+  "semantic_importance": {
+    "vehicle": 1.0,
+    "pedestrian_vru": 1.0,
+    "static_manmade": 0.7,
+    "vegetation": 0.3,
+    "road_driveable": 0.1,
+    "unknown": 0.5
+  },
+  "dynamic_prior": {
+    "vehicle": 0.8,
+    "pedestrian_vru": 0.95,
+    "static_manmade": 0.05,
+    "vegetation": 0.05,
+    "road_driveable": 0.0,
+    "unknown": 0.2
+  },
+  "dynamic_note": "heuristic prior, NOT measured velocity",
+  "uncertainty_fallback": 0.5,
+  "uncertainty_note": "documented proxy, NOT calibrated uncertainty",
+  "confidence_note": "NaN at point level for non-model sources; 0.0 interface placeholder at region level",
+  "valid_sources": [
+    "lidarseg",
+    "annotation",
+    "model",
+    "fallback"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "weights": {
+    "distance": 0.3,
+    "semantic": 0.3,
+    "terrain": 0.15,
+    "dynamic": 0.15,
+    "uncertainty": 0.1
+  },
+  "max_distance_m": 100.0,
+  "uncertainty_lambda": 0.15,
+  "formula": "I_base = wd*D + ws*S + wt*T + wm*M + wu*U; I_final = min(1, I_base + lambda*U)"
+}
