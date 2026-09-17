@@ -1,0 +1,30 @@
+{
+  "synthetic_bands_covered": [
+    0.05,
+    0.1,
+    0.2,
+    0.5
+  ],
+  "n_cells": 4,
+  "fields": [
+    "x",
+    "y",
+    "elevation",
+    "occupancy",
+    "semantic_class",
+    "confidence",
+    "importance",
+    "resolution",
+    "point_count",
+    "region_id",
+    "semantic_source"
+  ],
+  "nan_inf_check": "PASS (no NaN/Inf in x,y,elevation,importance)",
+  "resolution_validity": "PASS (all in {0.05,0.10,0.20,0.50})",
+  "semantic_preserved": [
+    "road",
+    "unknown",
+    "vegetation",
+    "vehicle"
+  ]
+}

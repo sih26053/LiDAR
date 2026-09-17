@@ -1,1 +1,28 @@
-
+test,final_importance,base_importance,pass,error
+low_importance,0.15499999999999997,0.07999999999999999,True,
+medium_importance,0.575,0.5,True,
+high_importance,0.9199999999999999,0.845,True,
+sweep_semantic_importance_0.00,0.455,0.38,True,
+sweep_semantic_importance_0.25,0.53,0.455,True,
+sweep_semantic_importance_0.50,0.605,0.53,True,
+sweep_semantic_importance_0.75,0.6799999999999999,0.605,True,
+sweep_semantic_importance_1.00,0.7549999999999999,0.6799999999999999,True,
+sweep_roughness_0.00,0.5299999999999999,0.45499999999999996,True,
+sweep_roughness_0.25,0.5674999999999999,0.49249999999999994,True,
+sweep_roughness_0.50,0.605,0.53,True,
+sweep_roughness_0.75,0.6425,0.5675,True,
+sweep_roughness_1.00,0.6799999999999999,0.605,True,
+sweep_dynamic_relevance_0.00,0.5299999999999999,0.45499999999999996,True,
+sweep_dynamic_relevance_0.25,0.5674999999999999,0.49249999999999994,True,
+sweep_dynamic_relevance_0.50,0.605,0.53,True,
+sweep_dynamic_relevance_0.75,0.6425,0.5675,True,
+sweep_dynamic_relevance_1.00,0.6799999999999999,0.605,True,
+sweep_uncertainty_0.00,0.48,0.48,True,
+sweep_uncertainty_0.25,0.5425,0.505,True,
+sweep_uncertainty_0.50,0.605,0.53,True,
+sweep_uncertainty_0.75,0.6675,0.5549999999999999,True,
+sweep_uncertainty_1.00,0.73,0.58,True,
+malformed_negative_distance,,,True,raised as required
+malformed_semantic_above_1,,,True,raised as required
+malformed_uncertainty_nan,,,True,raised as required
+malformed_confidence_inf,,,True,raised as required
