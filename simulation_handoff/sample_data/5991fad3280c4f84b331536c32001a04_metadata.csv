@@ -1,0 +1,2 @@
+frame_id,sample_token,lidar_token,timestamp,source_file,n_raw,n_nonfinite_removed,n_zero_range_removed,n_outside_roi_removed,n_processed
+5991fad3280c4f84b331536c32001a04,5991fad3280c4f84b331536c32001a04,603a96c23db34acf8b5953d958df293d,1535385092150099.0,samples/LIDAR_TOP/n008-2018-08-27-11-48-51-0400__LIDAR_TOP__1535385092150099.pcd.bin,34368,0,0,9,34359
