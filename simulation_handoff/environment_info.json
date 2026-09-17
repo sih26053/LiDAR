@@ -1,0 +1,18 @@
+{
+  "python_version": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "packages": {
+    "numpy": "2.4.4",
+    "pandas": "3.0.2",
+    "matplotlib": "3.11.1",
+    "scipy": "1.17.1",
+    "nuscenes-devkit": "1.2.0",
+    "pyquaternion": "0.9.9",
+    "torch": null,
+    "open3d": null
+  },
+  "torch_note": "torch is NOT installed; the frozen pipeline uses only numpy/pandas and does not require torch.",
+  "open3d_note": "open3d is NOT installed; the frozen pipeline does not require open3d.",
+  "cuda_gpu": "not queried (torch not installed); pipeline is CPU-only numpy/pandas code, no GPU kernels used",
+  "validation_datetime_utc": "2026-09-17T07:42:48.854231+00:00"
+}

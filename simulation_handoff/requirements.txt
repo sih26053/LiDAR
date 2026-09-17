@@ -1,0 +1,7 @@
+numpy==2.4.4
+pandas==3.0.2
+nuscenes-devkit==1.2.0
+pyquaternion==0.9.9
+matplotlib==3.11.1
+scipy==1.17.1
+

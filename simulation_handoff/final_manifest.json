@@ -1,0 +1,55 @@
+{
+  "project_name": "Adaptive Variable-Resolution 2.5D LiDAR Mapping",
+  "final_version": "prototype-final-v1",
+  "final_selection": "W_BASE+THRESH_C",
+  "dataset": "nuScenes Mini (v1.0-mini)",
+  "dataset_subset": "7-frame final evaluation set (results/final/final_test_manifest.csv)",
+  "tested_frames": [
+    "5991fad3280c4f84b331536c32001a04",
+    "6d1d793b68b24165be5755a54054c82a",
+    "b26e791522294bec90f86fd72226e35c",
+    "dc4c80e8a1534ff8a3eb80307341161c",
+    "c844bf5a9f2243ff8f4bf2c85fe218ff",
+    "5c85640c10d9485c86bf6eb44778c002",
+    "858a1ece22cf45d9bc71e42336604b78"
+  ],
+  "n_frames": 7,
+  "semantic_source": "annotation+fallback (no trained perception model)",
+  "model_artifact": "No separately trained weights (CASE B: deterministic/annotation-driven prototype)",
+  "configuration_files": [
+    "results/final/config/final_config.json",
+    "results/final/config/importance_config.json",
+    "results/final/config/resolution_config.json",
+    "results/final/config/failsafe_config.json",
+    "results/final/config/semantic_mapping.json"
+  ],
+  "random_seed": 42,
+  "python_version": "3.14.4",
+  "package_versions": {
+    "numpy": "2.4.4",
+    "pandas": "3.0.2",
+    "matplotlib": "3.11.1",
+    "scipy": "1.17.1",
+    "nuscenes-devkit": "1.2.0",
+    "pyquaternion": "0.9.9",
+    "torch": null,
+    "open3d": null
+  },
+  "validation_date": "2026-09-17T07:42:48.854231+00:00",
+  "measured_summary": {
+    "mean_latency_ms": 1152.54,
+    "mean_fps": 0.881,
+    "mean_map_cells": 900.6,
+    "successful_runs": 7,
+    "failed_runs": 0
+  },
+  "known_limitations": [
+    "Annotation-derived labels are evaluation references, never model predictions.",
+    "No trained perception model; point/region confidence unavailable (NaN / 0.0 placeholder).",
+    "Dynamic relevance is a heuristic prior, not measured velocity.",
+    "Uncertainty 0.5 fallback is a documented proxy, not calibrated uncertainty.",
+    "7-frame v1.0-mini subset; degradations are controlled test conditions (seed 42).",
+    "FPS is measured CPU throughput, not a real-time claim.",
+    "torch/open3d not installed and not required by the frozen pipeline."
+  ]
+}
