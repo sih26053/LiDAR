@@ -1,1 +1,27 @@
-
+env: {
+ "numpy": "2.4.4",
+ "pandas": "3.0.2",
+ "matplotlib": "3.11.1",
+ "scipy": "1.17.1",
+ "nuscenes-devkit": "1.2.0",
+ "pyquaternion": "0.9.9",
+ "torch": null,
+ "open3d": null
+}
+code_state: 15/15 source files present
+configs frozen: W_BASE+THRESH_C validated by shipped validators
+IMPORT CHECK: PASS
+importance validation: 27/27 PASS
+resolution validation (THRESH_C): 14/14 PASS
+mapper validation: PASS (4/4 bands, no NaN/Inf)
+E2E 5991fad3             sparse: cells=533 lat=1287.8ms fps=0.777
+E2E 6d1d793b              dense: cells=759 lat=942.2ms fps=1.061
+E2E b26e7915      many_vehicles: cells=1132 lat=1315.0ms fps=0.760
+E2E dc4c80e8     pedestrian_vru: cells=1257 lat=1155.4ms fps=0.866
+E2E c844bf5a     complex_static: cells=1059 lat=1258.1ms fps=0.795
+E2E 5c85640c             normal: cells=509 lat=971.2ms fps=1.030
+E2E 858a1ece difficult_geometry: cells=1055 lat=1138.0ms fps=0.879
+reproducibility: PASS (10/10)
+14sep-vs-15sep cell equality: PASS
+robustness regression: 28/28 PASS
+critical-object representation: 496/496 preserved (representation in map, NOT detection accuracy)
