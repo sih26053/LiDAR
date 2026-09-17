@@ -1,0 +1,11 @@
+{
+  "weights": {
+    "distance": 0.3,
+    "semantic": 0.3,
+    "terrain": 0.15,
+    "dynamic": 0.15,
+    "uncertainty": 0.1
+  },
+  "max_distance_m": 100.0,
+  "uncertainty_lambda": 0.15
+}

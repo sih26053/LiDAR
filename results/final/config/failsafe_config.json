@@ -1,0 +1,9 @@
+{
+  "low_point_density_threshold": 200,
+  "min_regions_for_normal_operation": 3,
+  "high_uncertainty_threshold": 0.8,
+  "fallback_resolution": 0.2,
+  "fallback_semantic_label": "unknown",
+  "reject_invalid_frame": true,
+  "policy": "reliable perception -> normal adaptive | low-confidence -> safety-biased | invalid perception -> fallback geometric | invalid frame -> reject + log"
+}
