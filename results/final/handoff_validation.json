@@ -1,0 +1,12 @@
+{
+  "handoff_import": "PASS (clean subprocess, PYTHONPATH cleared, exit 0)",
+  "config_load": "PASS (config/final_config.json; engine defaults asserted equal)",
+  "artifact_load": "PASS (CASE B: no weight files; NO_TRAINED_WEIGHTS.txt present)",
+  "sample_load": "PASS (bundled sample_data npy+metadata, n=34359)",
+  "pipeline_execution": "PASS (cells=533, identical to frozen E2E run)",
+  "output_generation": "PASS (adaptive_map_5991fad3280c4f84b331536c32001a04.csv, rows=533, cols=['x', 'y', 'elevation', 'occupancy']...)",
+  "handoff_src_identical_to_repo": true,
+  "demo_vs_frozen_e2e_cells_match": true,
+  "validation_method": "independent: fresh interpreter, cwd=simulation_handoff, default args",
+  "overall_status": "PASS"
+}

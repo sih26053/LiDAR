@@ -1,0 +1,37 @@
+{
+  "source_files_in_final_implementation": [
+    "src/data_types.py",
+    "src/lidar_loader.py",
+    "src/preprocessing.py",
+    "src/semantic_mapping.py",
+    "src/semantic_adapter.py",
+    "src/feature_adapter.py",
+    "src/importance_engine.py",
+    "src/resolution_engine.py",
+    "src/mapper_2_5d.py",
+    "src/interface_validator.py",
+    "src/visualization.py",
+    "src/robustness.py",
+    "src/baselines.py",
+    "config/importance_config.py",
+    "config/resolution_config.py"
+  ],
+  "files_in_final_pipeline_path": [
+    "src/preprocessing.py",
+    "src/semantic_adapter.py",
+    "src/semantic_mapping.py",
+    "src/data_types.py",
+    "src/interface_validator.py",
+    "src/importance_engine.py",
+    "src/resolution_engine.py",
+    "src/mapper_2_5d.py",
+    "src/robustness.py"
+  ],
+  "notebook_references": [
+    "notebooks/04_End_to_End_Prototype.ipynb",
+    "notebooks/05_Benchmark_Comparison.ipynb",
+    "notebooks/06_Robustness_Tuning_Validation.ipynb"
+  ],
+  "model_artifact_references": [],
+  "model_artifact_note": "CASE B: no separately trained ML model exists."
+}

@@ -1,0 +1,11 @@
+test_name,frame_id,field,match,tolerance,difference
+repeat_same_frame_seed42,5991fad3280c4f84b331536c32001a04,map_cell_count,True,exact,0.0
+repeat_same_frame_seed42,5991fad3280c4f84b331536c32001a04,canonical_csv_sha256,True,exact,0.0
+repeat_same_frame_seed42,5991fad3280c4f84b331536c32001a04,numeric_x,True,1e-9,0.0
+repeat_same_frame_seed42,5991fad3280c4f84b331536c32001a04,numeric_y,True,1e-9,0.0
+repeat_same_frame_seed42,5991fad3280c4f84b331536c32001a04,numeric_elevation,True,1e-9,0.0
+repeat_same_frame_seed42,5991fad3280c4f84b331536c32001a04,numeric_importance,True,1e-9,0.0
+repeat_same_frame_seed42,5991fad3280c4f84b331536c32001a04,numeric_resolution,True,1e-9,0.0
+repeat_same_frame_seed42,5991fad3280c4f84b331536c32001a04,exact_semantic_class,True,exact,0.0
+repeat_same_frame_seed42,5991fad3280c4f84b331536c32001a04,exact_semantic_source,True,exact,0.0
+repeat_same_frame_seed42,5991fad3280c4f84b331536c32001a04,exact_region_id,True,exact,0.0

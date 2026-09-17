@@ -1,0 +1,20 @@
+{
+  "project_name": "Adaptive Variable-Resolution 2.5D LiDAR Mapping",
+  "final_version": "prototype-final-v1",
+  "final_selection": "W_BASE+THRESH_C",
+  "dataset": "nuScenes Mini (v1.0-mini)",
+  "random_seed": 42,
+  "tested_frames": [
+    "5991fad3280c4f84b331536c32001a04",
+    "6d1d793b68b24165be5755a54054c82a",
+    "b26e791522294bec90f86fd72226e35c",
+    "dc4c80e8a1534ff8a3eb80307341161c",
+    "c844bf5a9f2243ff8f4bf2c85fe218ff",
+    "5c85640c10d9485c86bf6eb44778c002",
+    "858a1ece22cf45d9bc71e42336604b78"
+  ],
+  "semantic_source": "annotation+fallback (no trained model)",
+  "model_artifact": "No separately trained weights (CASE B)",
+  "validation_date": "2026-09-17T08:01:14.054779+00:00",
+  "known_limitations": "see results/final/reports/limitations.md"
+}
