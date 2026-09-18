@@ -1,0 +1,14 @@
+{
+  "demo_frame": "5991fad3280c4f84b331536c32001a04",
+  "frames": [
+    "5991fad3280c4f84b331536c32001a04",
+    "6d1d793b68b24165be5755a54054c82a",
+    "b26e791522294bec90f86fd72226e35c",
+    "dc4c80e8a1534ff8a3eb80307341161c",
+    "c844bf5a9f2243ff8f4bf2c85fe218ff",
+    "5c85640c10d9485c86bf6eb44778c002",
+    "858a1ece22cf45d9bc71e42336604b78"
+  ],
+  "frozen_config": "results/final/config/final_config.json",
+  "note": "References frozen W_BASE+THRESH_C; no separate weights/thresholds."
+}
