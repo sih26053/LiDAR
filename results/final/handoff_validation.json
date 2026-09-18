@@ -1,12 +1,12 @@
-{
-  "handoff_import": "PASS (clean subprocess, PYTHONPATH cleared, exit 0)",
-  "config_load": "PASS (config/final_config.json; engine defaults asserted equal)",
-  "artifact_load": "PASS (CASE B: no weight files; NO_TRAINED_WEIGHTS.txt present)",
-  "sample_load": "PASS (bundled sample_data npy+metadata, n=34359)",
-  "pipeline_execution": "PASS (cells=533, identical to frozen E2E run)",
-  "output_generation": "PASS (adaptive_map_5991fad3280c4f84b331536c32001a04.csv, rows=533, cols=['x', 'y', 'elevation', 'occupancy']...)",
-  "handoff_src_identical_to_repo": true,
-  "demo_vs_frozen_e2e_cells_match": true,
-  "validation_method": "independent: fresh interpreter, cwd=simulation_handoff, default args",
-  "overall_status": "PASS"
-}
+{"artifact_load": "PASS (CASE B: no weight files; NO_TRAINED_WEIGHTS.txt present)",
+ "config_load": "PASS (config/final_config.json; engine defaults asserted equal)",
+ "demo_vs_frozen_e2e_cells_match": true,
+ "handoff_import": "PASS (clean process, PYTHONPATH cleared, cwd=simulation_handoff, exit 0)",
+ "handoff_src_identical_to_repo": true,
+ "notebooks": "notebooks/08_Simulation_Integration_and_Demo.ipynb + .executed.ipynb (top-to-bottom, 0 errors) copied into handoff",
+ "output_generation": "PASS (adaptive_map_5991fad3280c4f84b331536c32001a04.csv, rows=533, sha256-identical to simulation replay map)",
+ "overall_status": "PASS",
+ "pipeline_execution": "PASS (cells=533, mean_importance=0.565344, res 52/429/52/0, latency_ms=1059.065, fps=0.9442 - all match frozen/sim)",
+ "sample_load": "PASS (bundled sample_data npy+metadata, n=34359)",
+ "sample_outputs": "adaptive_map CSV (byte-identical to sim replay) + representative_demo PNG (measured stats)",
+ "validation_method": "independent: fresh interpreter, PYTHONPATH cleared, cwd=simulation_handoff, absolute --nusc-root; rerun 2026-09-17 after 16-Sep integration update"}

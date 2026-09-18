@@ -14,5 +14,5 @@
   "torch_note": "torch NOT installed; pipeline uses only numpy/pandas.",
   "open3d_note": "open3d NOT installed; not required by the pipeline.",
   "cuda_gpu": "not queried (torch absent); CPU-only numpy/pandas code",
-  "validation_datetime_utc": "2026-09-17T08:01:14.054779+00:00"
+  "validation_datetime_utc": "2026-09-18T07:22:40.988073+00:00"
 }

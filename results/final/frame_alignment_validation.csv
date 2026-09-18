@@ -1,0 +1,8 @@
+frame_id,scene_id,timestamp,sample_token,lidar_sample_data_token,semantic_source,lidar_loaded,semantic_loaded,annotation_loaded,aligned,error
+5991fad3280c4f84b331536c32001a04,scene-0655,1535385092150099.0,5991fad3280c4f84b331536c32001a04,603a96c23db34acf8b5953d958df293d,annotation+fallback (no model),True,True,True,True,
+6d1d793b68b24165be5755a54054c82a,scene-1077,1542800377447456.0,6d1d793b68b24165be5755a54054c82a,ba504fabcb6d4eaa9cf4b33a49f99f9f,annotation+fallback (no model),True,True,True,True,
+b26e791522294bec90f86fd72226e35c,scene-0061,1532402937198682.0,b26e791522294bec90f86fd72226e35c,cb6676be21f34ad39eb93ecbd40aa846,annotation+fallback (no model),True,True,True,True,
+dc4c80e8a1534ff8a3eb80307341161c,scene-1100,1542800989447876.0,dc4c80e8a1534ff8a3eb80307341161c,4dc98064647f400bb2e797f95e4500cb,annotation+fallback (no model),True,True,True,True,
+c844bf5a9f2243ff8f4bf2c85fe218ff,scene-0061,1532402937698000.0,c844bf5a9f2243ff8f4bf2c85fe218ff,e28319b88b634a2d9eff6fdfa7db5500,annotation+fallback (no model),True,True,True,True,
+5c85640c10d9485c86bf6eb44778c002,scene-0655,1535385096399680.0,5c85640c10d9485c86bf6eb44778c002,5f468f66edb141fcaaad2f61b5800e84,annotation+fallback (no model),True,True,True,True,
+858a1ece22cf45d9bc71e42336604b78,scene-0916,1538984238948012.0,858a1ece22cf45d9bc71e42336604b78,2b77a910c5e749f9a620d893361c1976,annotation+fallback (no model),True,True,True,True,

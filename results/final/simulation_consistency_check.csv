@@ -1,0 +1,8 @@
+frame_id,point_count_match,map_cells_sim,map_cells_frozen,cells_match,mean_importance_sim,mean_importance_frozen,importance_match_1e6,resolution_match,overall
+5991fad3280c4f84b331536c32001a04,PASS (bundled metadata n_processed=34359 exact + contract Nx4/finite/aligned),533,533,True,0.565344,0.565344,True,True,MATCH
+6d1d793b68b24165be5755a54054c82a,PASS (contract: Nx4/finite/aligned; retained 0.998-1.000),759,759,True,0.541847,0.541847,True,True,MATCH
+b26e791522294bec90f86fd72226e35c,PASS (contract: Nx4/finite/aligned; retained 0.998-1.000),1132,1132,True,0.516381,0.516381,True,True,MATCH
+dc4c80e8a1534ff8a3eb80307341161c,PASS (contract: Nx4/finite/aligned; retained 0.998-1.000),1257,1257,True,0.520506,0.520506,True,True,MATCH
+c844bf5a9f2243ff8f4bf2c85fe218ff,PASS (contract: Nx4/finite/aligned; retained 0.998-1.000),1059,1059,True,0.513202,0.513202,True,True,MATCH
+5c85640c10d9485c86bf6eb44778c002,PASS (contract: Nx4/finite/aligned; retained 0.998-1.000),509,509,True,0.587429,0.587429,True,True,MATCH
+858a1ece22cf45d9bc71e42336604b78,PASS (contract: Nx4/finite/aligned; retained 0.998-1.000),1055,1055,True,0.54299,0.54299,True,True,MATCH

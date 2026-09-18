@@ -15,6 +15,6 @@
   ],
   "semantic_source": "annotation+fallback (no trained model)",
   "model_artifact": "No separately trained weights (CASE B)",
-  "validation_date": "2026-09-17T08:01:14.054779+00:00",
+  "validation_date": "2026-09-18T07:22:40.988073+00:00",
   "known_limitations": "see results/final/reports/limitations.md"
 }

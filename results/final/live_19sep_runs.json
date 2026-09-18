@@ -1,0 +1,142 @@
+[
+  {
+    "frame_id": "5991fad3280c4f84b331536c32001a04",
+    "success": true,
+    "scene_id": "scene-0655",
+    "timestamp": 1535385092150099.0,
+    "input": 34359,
+    "processed": 34359,
+    "cells": 533,
+    "fine": 52,
+    "medium": 429,
+    "coarse": 52,
+    "total_ms": 3846.1,
+    "map_ms": 232.1,
+    "fps": 0.26,
+    "imp_mean": 0.565344,
+    "sem": {
+      "fallback": 474,
+      "annotation": 59
+    }
+  },
+  {
+    "frame_id": "6d1d793b68b24165be5755a54054c82a",
+    "success": true,
+    "scene_id": "scene-1077",
+    "timestamp": 1542800377447456.0,
+    "input": 34778,
+    "processed": 34778,
+    "cells": 759,
+    "fine": 20,
+    "medium": 684,
+    "coarse": 55,
+    "total_ms": 3985.2,
+    "map_ms": 397.4,
+    "fps": 0.2509,
+    "imp_mean": 0.541847,
+    "sem": {
+      "fallback": 736,
+      "annotation": 23
+    }
+  },
+  {
+    "frame_id": "b26e791522294bec90f86fd72226e35c",
+    "success": true,
+    "scene_id": "scene-0061",
+    "timestamp": 1532402937198682.0,
+    "input": 34625,
+    "processed": 34625,
+    "cells": 1132,
+    "fine": 59,
+    "medium": 791,
+    "coarse": 282,
+    "total_ms": 5082.5,
+    "map_ms": 547.9,
+    "fps": 0.1968,
+    "imp_mean": 0.516381,
+    "sem": {
+      "fallback": 1014,
+      "annotation": 118
+    }
+  },
+  {
+    "frame_id": "dc4c80e8a1534ff8a3eb80307341161c",
+    "success": true,
+    "scene_id": "scene-1100",
+    "timestamp": 1542800989447876.0,
+    "input": 34689,
+    "processed": 34689,
+    "cells": 1257,
+    "fine": 30,
+    "medium": 1050,
+    "coarse": 177,
+    "total_ms": 3453.5,
+    "map_ms": 248.6,
+    "fps": 0.2896,
+    "imp_mean": 0.520506,
+    "sem": {
+      "fallback": 1225,
+      "annotation": 32
+    }
+  },
+  {
+    "frame_id": "c844bf5a9f2243ff8f4bf2c85fe218ff",
+    "success": true,
+    "scene_id": "scene-0061",
+    "timestamp": 1532402937698000.0,
+    "input": 34619,
+    "processed": 34619,
+    "cells": 1059,
+    "fine": 49,
+    "medium": 730,
+    "coarse": 280,
+    "total_ms": 2589.3,
+    "map_ms": 199.7,
+    "fps": 0.3862,
+    "imp_mean": 0.513202,
+    "sem": {
+      "fallback": 953,
+      "annotation": 106
+    }
+  },
+  {
+    "frame_id": "5c85640c10d9485c86bf6eb44778c002",
+    "success": true,
+    "scene_id": "scene-0655",
+    "timestamp": 1535385096399680.0,
+    "input": 34690,
+    "processed": 34690,
+    "cells": 509,
+    "fine": 80,
+    "medium": 403,
+    "coarse": 26,
+    "total_ms": 1788.7,
+    "map_ms": 85.1,
+    "fps": 0.5591,
+    "imp_mean": 0.587429,
+    "sem": {
+      "fallback": 429,
+      "annotation": 80
+    }
+  },
+  {
+    "frame_id": "858a1ece22cf45d9bc71e42336604b78",
+    "success": true,
+    "scene_id": "scene-0916",
+    "timestamp": 1538984238948012.0,
+    "input": 34764,
+    "processed": 34764,
+    "cells": 1055,
+    "fine": 73,
+    "medium": 841,
+    "coarse": 141,
+    "total_ms": 2447.1,
+    "map_ms": 214.0,
+    "fps": 0.4086,
+    "imp_mean": 0.54299,
+    "sem": {
+      "fallback": 977,
+      "annotation": 78
+    }
+  }
+]

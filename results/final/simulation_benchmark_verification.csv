@@ -1,0 +1,8 @@
+frame_id,latency_sim_ms,latency_frozen_ms,fps_sim,fps_frozen,map_cells_sim,map_cells_frozen,cells_match,note
+5991fad3280c4f84b331536c32001a04,1398.539,1883.9082,0.715,0.530811,533,533,True,"same 7 frames/config/preprocessing/defs; latency is machine-measured, not copied"
+6d1d793b68b24165be5755a54054c82a,1391.578,1424.5112,0.7186,0.701995,759,759,True,"same 7 frames/config/preprocessing/defs; latency is machine-measured, not copied"
+b26e791522294bec90f86fd72226e35c,1762.344,2012.0472,0.5674,0.497006,1132,1132,True,"same 7 frames/config/preprocessing/defs; latency is machine-measured, not copied"
+dc4c80e8a1534ff8a3eb80307341161c,1720.737,1901.0119,0.5811,0.526036,1257,1257,True,"same 7 frames/config/preprocessing/defs; latency is machine-measured, not copied"
+c844bf5a9f2243ff8f4bf2c85fe218ff,1832.776,2180.5779,0.5456,0.458594,1059,1059,True,"same 7 frames/config/preprocessing/defs; latency is machine-measured, not copied"
+5c85640c10d9485c86bf6eb44778c002,1292.785,1791.3899,0.7735,0.558226,509,509,True,"same 7 frames/config/preprocessing/defs; latency is machine-measured, not copied"
+858a1ece22cf45d9bc71e42336604b78,1527.11,2577.1764,0.6548,0.388022,1055,1055,True,"same 7 frames/config/preprocessing/defs; latency is machine-measured, not copied"

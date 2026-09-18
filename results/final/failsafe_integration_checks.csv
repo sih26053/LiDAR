@@ -1,0 +1,8 @@
+check,actual_behavior
+missing frame,"raises KeyError - rejected, no map"
+empty cloud health,"ok=False reject=True reasons=['empty frame (0 points)', 'very low point density (n=0)']"
+empty preprocess,raises ValueError: Raw points are empty.
+NaN cloud health,"ok=False reject=True reasons=['1 non-finite rows', 'very low point density (n=100)']"
+NaN preprocess,drops non-finite rows: 99 of 100 kept
+unknown class,"point-level label passes through (conf NaN); aggregate_to_regions maps unseen labels to region label 'unknown' with confidence 0.0, uncertainty 0.5 documented proxy, dynamic prior 0.2 - verified live"
+annotation confidence,"point-level conf NaN (not applicable, non-ML source); region/map confidence 0.0 placeholder - never ML confidence - verified live"
