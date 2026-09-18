@@ -1,8 +1,13 @@
 # Simulation Handoff — Adaptive Variable-Resolution 2.5D LiDAR Mapping
 
-Frozen prototype handoff (`prototype-final-v1`, 15 September 2026).
+Frozen prototype handoff (`prototype-final-v1`, 15 September 2026) +
+16 September simulation integration (7-frame replay validated, all MATCH frozen).
 Independently executable: `python run_demo.py` needs only this folder,
 its `requirements.txt`, the nuScenes Mini dataset, and one bundled sample.
+Full integration record: `notebooks/08_Simulation_Integration_and_Demo.ipynb`
+(clean + `.executed.` top-to-bottom run); demo frame list:
+`config/demo_config.json` (references frozen `config/final_config.json`,
+no separate weights/thresholds).
 
 ## 1. Project purpose
 
@@ -124,6 +129,16 @@ python run_demo.py
 # output_generation: OK (adaptive_map_....csv, cells=533)
 # {"status": "PASS", ...}
 ```
+
+16-Sep replay evidence (measured, same frozen pipeline): 7/7 frames PASS,
+cells 533/759/1132/1257/1059/509/1055 — identical to the frozen benchmark;
+handoff `sample_outputs/adaptive_map_....csv` is byte-identical (sha256)
+to the simulation replay map for the demo frame. Representative 4-view figure:
+`sample_outputs/representative_demo_5991fad3280c4f84b331536c32001a04.png`
+(input LiDAR + adaptive 2.5D map + resolution view + measured statistics).
+Sim wall-clock latencies are recorded separately and differ honestly from the
+frozen compute-only timings (timing-scope difference, documented in the dev
+repo issue log SIM-001); frozen results were not overwritten.
 
 Pipeline recap:
 
