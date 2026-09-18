@@ -1,1 +1,395 @@
-
+{
+  "provenance": {
+    "source": "results/benchmark/ (stored validated results, NOT recalculated)",
+    "files": [
+      "results/benchmark/benchmark_summary.csv",
+      "results/benchmark/benchmark_results.csv",
+      "results/benchmark/resolution_distribution.csv",
+      "results/benchmark/benchmark_config.json"
+    ],
+    "note": "Benchmark values shown here are loaded from the validated benchmark results and are not recalculated by the frontend."
+  },
+  "task": "13 September 2026 initial benchmark subset (Paradox Protocol)",
+  "methods": [
+    {
+      "method": "distance_adaptive",
+      "label": "Distance-based Adaptive",
+      "frames": 10,
+      "successful": 10,
+      "mean_mapping_latency_ms": 14.99273999943398,
+      "median_mapping_latency_ms": 12.973249977221712,
+      "mean_end_to_end_latency_ms": 1094.3874399992637,
+      "mean_cells": 873.9,
+      "median_cells": 1028.0,
+      "mean_resolution_m": 0.1771422984923616,
+      "mean_coverage": 18620.892663883387,
+      "failure_rate": 0.0,
+      "resolution_totals": {
+        "res_5cm": 759,
+        "res_10cm": 3394,
+        "res_20cm": 3460,
+        "res_50cm": 1126
+      },
+      "resolution_share": {
+        "res_5cm": 0.08685204256779952,
+        "res_10cm": 0.3883739558301865,
+        "res_20cm": 0.39592630735782125,
+        "res_50cm": 0.1288476942441927
+      }
+    },
+    {
+      "method": "proposed",
+      "label": "Proposed Adaptive",
+      "frames": 10,
+      "successful": 10,
+      "mean_mapping_latency_ms": 104.84821999561973,
+      "median_mapping_latency_ms": 112.56869995850138,
+      "mean_end_to_end_latency_ms": 1184.2429199954495,
+      "mean_cells": 873.9,
+      "median_cells": 1028.0,
+      "mean_resolution_m": 0.12499264034991724,
+      "mean_coverage": 18620.892663883387,
+      "failure_rate": 0.0,
+      "resolution_totals": {
+        "res_5cm": 340,
+        "res_10cm": 5718,
+        "res_20cm": 2681,
+        "res_50cm": 0
+      },
+      "resolution_share": {
+        "res_5cm": 0.038906053324178964,
+        "res_10cm": 0.6543082732578098,
+        "res_20cm": 0.3067856734180112,
+        "res_50cm": 0.0
+      }
+    },
+    {
+      "method": "uniform_5cm",
+      "label": "Uniform 5 cm",
+      "frames": 10,
+      "successful": 10,
+      "mean_mapping_latency_ms": 0.19783000461757183,
+      "median_mapping_latency_ms": 0.03825000021606684,
+      "mean_end_to_end_latency_ms": 1079.5925300044473,
+      "mean_cells": 7453396.6,
+      "median_cells": 7492925.5,
+      "mean_resolution_m": 0.05,
+      "mean_coverage": 18620.892663883387,
+      "failure_rate": 0.0,
+      "resolution_totals": {
+        "res_5cm": 74533966,
+        "res_10cm": 0,
+        "res_20cm": 0,
+        "res_50cm": 0
+      },
+      "resolution_share": {
+        "res_5cm": 1.0,
+        "res_10cm": 0.0,
+        "res_20cm": 0.0,
+        "res_50cm": 0.0
+      }
+    }
+  ],
+  "per_frame": [
+    {
+      "frame_id": "00889f8a9549450aa2f32cf310a3e305",
+      "method": "proposed",
+      "map_cells": 410,
+      "mapping_latency_ms": 112.53599997144192,
+      "end_to_end_latency_ms": 1175.0069999834523,
+      "mean_resolution_m": 0.10975609756097561,
+      "mean_importance": 0.5765337976540518,
+      "status": "pass"
+    },
+    {
+      "frame_id": "00889f8a9549450aa2f32cf310a3e305",
+      "method": "uniform_5cm",
+      "map_cells": 5228904,
+      "mapping_latency_ms": 1.560300006531179,
+      "end_to_end_latency_ms": 1064.0313000185415,
+      "mean_resolution_m": 0.05,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "00889f8a9549450aa2f32cf310a3e305",
+      "method": "distance_adaptive",
+      "map_cells": 410,
+      "mapping_latency_ms": 12.559800001326948,
+      "end_to_end_latency_ms": 1075.0308000133373,
+      "mean_resolution_m": 0.1326829268292683,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0106a9b8e65f4ad1867b44591aeed8b0",
+      "method": "proposed",
+      "map_cells": 1105,
+      "mapping_latency_ms": 177.58560000220314,
+      "end_to_end_latency_ms": 1151.183400012087,
+      "mean_resolution_m": 0.13945701357466062,
+      "mean_importance": 0.5103954447608439,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0106a9b8e65f4ad1867b44591aeed8b0",
+      "method": "uniform_5cm",
+      "map_cells": 9042214,
+      "mapping_latency_ms": 0.037999998312443495,
+      "end_to_end_latency_ms": 973.6358000081964,
+      "mean_resolution_m": 0.05,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0106a9b8e65f4ad1867b44591aeed8b0",
+      "method": "distance_adaptive",
+      "map_cells": 1105,
+      "mapping_latency_ms": 16.16450003348291,
+      "end_to_end_latency_ms": 989.7623000433668,
+      "mean_resolution_m": 0.21846153846153846,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "023c4df2d451409881d8e6ea82f14704",
+      "method": "proposed",
+      "map_cells": 1060,
+      "mapping_latency_ms": 129.9769000033848,
+      "end_to_end_latency_ms": 1186.924599984195,
+      "mean_resolution_m": 0.14061320754716983,
+      "mean_importance": 0.5139575848956126,
+      "status": "pass"
+    },
+    {
+      "frame_id": "023c4df2d451409881d8e6ea82f14704",
+      "method": "uniform_5cm",
+      "map_cells": 8957616,
+      "mapping_latency_ms": 0.03850000211969018,
+      "end_to_end_latency_ms": 1056.98619998293,
+      "mean_resolution_m": 0.05,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "023c4df2d451409881d8e6ea82f14704",
+      "method": "distance_adaptive",
+      "map_cells": 1060,
+      "mapping_latency_ms": 20.23249998455867,
+      "end_to_end_latency_ms": 1077.180199965369,
+      "mean_resolution_m": 0.2262735849056604,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0307afa1ec7e48ce90295acabf8cb6dd",
+      "method": "proposed",
+      "map_cells": 470,
+      "mapping_latency_ms": 43.58340002363548,
+      "end_to_end_latency_ms": 807.3778999969363,
+      "mean_resolution_m": 0.10893617021276598,
+      "mean_importance": 0.5727356114733025,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0307afa1ec7e48ce90295acabf8cb6dd",
+      "method": "uniform_5cm",
+      "map_cells": 4563354,
+      "mapping_latency_ms": 0.0350000336766243,
+      "end_to_end_latency_ms": 763.8295000069775,
+      "mean_resolution_m": 0.05,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0307afa1ec7e48ce90295acabf8cb6dd",
+      "method": "distance_adaptive",
+      "map_cells": 470,
+      "mapping_latency_ms": 6.669500027783215,
+      "end_to_end_latency_ms": 770.4640000010841,
+      "mean_resolution_m": 0.13893617021276594,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0373e9d8886648779c8a73304919ab5f",
+      "method": "proposed",
+      "map_cells": 441,
+      "mapping_latency_ms": 34.760800015646964,
+      "end_to_end_latency_ms": 1135.819300019648,
+      "mean_resolution_m": 0.11462585034013607,
+      "mean_importance": 0.5638303719490543,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0373e9d8886648779c8a73304919ab5f",
+      "method": "uniform_5cm",
+      "map_cells": 5150925,
+      "mapping_latency_ms": 0.03619998460635543,
+      "end_to_end_latency_ms": 1101.0946999886073,
+      "mean_resolution_m": 0.05,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0373e9d8886648779c8a73304919ab5f",
+      "method": "distance_adaptive",
+      "map_cells": 441,
+      "mapping_latency_ms": 4.761699994560331,
+      "end_to_end_latency_ms": 1105.8201999985613,
+      "mean_resolution_m": 0.14319727891156464,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0402e40724984f3b833496067d46c771",
+      "method": "proposed",
+      "map_cells": 723,
+      "mapping_latency_ms": 58.63609997322783,
+      "end_to_end_latency_ms": 1016.2106999778189,
+      "mean_resolution_m": 0.11542185338865837,
+      "mean_importance": 0.565103541602326,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0402e40724984f3b833496067d46c771",
+      "method": "uniform_5cm",
+      "map_cells": 6732431,
+      "mapping_latency_ms": 0.03490003291517496,
+      "end_to_end_latency_ms": 957.6095000375062,
+      "mean_resolution_m": 0.05,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "0402e40724984f3b833496067d46c771",
+      "method": "distance_adaptive",
+      "map_cells": 723,
+      "mapping_latency_ms": 6.91459997324273,
+      "end_to_end_latency_ms": 964.4891999778338,
+      "mean_resolution_m": 0.16376210235131397,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "042f582eb2bb4231910918ba85f390d3",
+      "method": "proposed",
+      "map_cells": 1172,
+      "mapping_latency_ms": 108.34920004708692,
+      "end_to_end_latency_ms": 1025.638900056947,
+      "mean_resolution_m": 0.1386518771331058,
+      "mean_importance": 0.5151664090868268,
+      "status": "pass"
+    },
+    {
+      "frame_id": "042f582eb2bb4231910918ba85f390d3",
+      "method": "uniform_5cm",
+      "map_cells": 10051258,
+      "mapping_latency_ms": 0.09490002412348986,
+      "end_to_end_latency_ms": 917.3846000339836,
+      "mean_resolution_m": 0.05,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "042f582eb2bb4231910918ba85f390d3",
+      "method": "distance_adaptive",
+      "map_cells": 1172,
+      "mapping_latency_ms": 32.06830000272021,
+      "end_to_end_latency_ms": 949.3580000125803,
+      "mean_resolution_m": 0.19739761092150174,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "048a45dd2cf54aa5808d8ccc85731d44",
+      "method": "proposed",
+      "map_cells": 1064,
+      "mapping_latency_ms": 155.31689999625087,
+      "end_to_end_latency_ms": 1798.522100027185,
+      "mean_resolution_m": 0.12396616541353384,
+      "mean_importance": 0.5435914998265406,
+      "status": "pass"
+    },
+    {
+      "frame_id": "048a45dd2cf54aa5808d8ccc85731d44",
+      "method": "uniform_5cm",
+      "map_cells": 6568293,
+      "mapping_latency_ms": 0.03459997242316604,
+      "end_to_end_latency_ms": 1643.2398000033572,
+      "mean_resolution_m": 0.05,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "048a45dd2cf54aa5808d8ccc85731d44",
+      "method": "distance_adaptive",
+      "map_cells": 1064,
+      "mapping_latency_ms": 12.939499982167035,
+      "end_to_end_latency_ms": 1656.144700013101,
+      "mean_resolution_m": 0.17885338345864663,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "050b2d9c4bb647b7ab4ee94bdb538e1d",
+      "method": "proposed",
+      "map_cells": 1298,
+      "mapping_latency_ms": 115.13589997775853,
+      "end_to_end_latency_ms": 1435.4828999494202,
+      "mean_resolution_m": 0.13174114021571648,
+      "mean_importance": 0.5214864378719694,
+      "status": "pass"
+    },
+    {
+      "frame_id": "050b2d9c4bb647b7ab4ee94bdb538e1d",
+      "method": "uniform_5cm",
+      "map_cells": 9985551,
+      "mapping_latency_ms": 0.04160002572461963,
+      "end_to_end_latency_ms": 1320.3885999973863,
+      "mean_resolution_m": 0.05,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "050b2d9c4bb647b7ab4ee94bdb538e1d",
+      "method": "distance_adaptive",
+      "map_cells": 1298,
+      "mapping_latency_ms": 13.00699997227639,
+      "end_to_end_latency_ms": 1333.353999943938,
+      "mean_resolution_m": 0.19148690292758092,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "056becbc0d5a46da8d59eebddedb47bb",
+      "method": "proposed",
+      "map_cells": 996,
+      "mapping_latency_ms": 112.60139994556084,
+      "end_to_end_latency_ms": 1110.262399946805,
+      "mean_resolution_m": 0.12675702811244982,
+      "mean_importance": 0.5366534233831631,
+      "status": "pass"
+    },
+    {
+      "frame_id": "056becbc0d5a46da8d59eebddedb47bb",
+      "method": "uniform_5cm",
+      "map_cells": 8253420,
+      "mapping_latency_ms": 0.06429996574297547,
+      "end_to_end_latency_ms": 997.7252999669872,
+      "mean_resolution_m": 0.05,
+      "mean_importance": null,
+      "status": "pass"
+    },
+    {
+      "frame_id": "056becbc0d5a46da8d59eebddedb47bb",
+      "method": "distance_adaptive",
+      "map_cells": 996,
+      "mapping_latency_ms": 24.610000022221357,
+      "end_to_end_latency_ms": 1022.2710000234656,
+      "mean_resolution_m": 0.18037148594377514,
+      "mean_importance": null,
+      "status": "pass"
+    }
+  ]
+}
