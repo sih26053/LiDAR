@@ -16,9 +16,16 @@ from backend.routes import config as config_routes
 from backend.routes import demo as demo_routes
 from backend.routes import frames as frames_routes
 from backend.routes import health as health_routes
+from backend.routes import flow as flow_routes
+from backend.routes import live as live_routes
+from backend.routes import simulation as simulation_routes
 from backend.routes import metrics as metrics_routes
+from backend.routes import model as model_routes
+from backend.routes import model as model_routes
 from backend.routes import replay as replay_routes
 from backend.routes import results as results_routes
+from backend.routes import stream as stream_routes
+from backend.routes import tracking as tracking_routes
 
 logging.basicConfig(
     level=logging.INFO,
@@ -35,7 +42,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Paradox Protocol Backend",
-    description="Local-only SIH prototype backend: replay -> frozen ML pipeline -> structured results.",
+    description="Local-only SIH prototype backend: replay -> frozen deterministic pipeline (trained point classifier + tracker on board) -> structured results.",
     version="0.1.0",
     lifespan=lifespan,
 )
@@ -56,9 +63,16 @@ app.add_middleware(
 )
 
 app.include_router(health_routes.router, tags=["health"])
+app.include_router(flow_routes.router, tags=["flow"])
+app.include_router(live_routes.router, tags=["live"])
+app.include_router(simulation_routes.router, tags=["simulation"])
 app.include_router(config_routes.router, tags=["config"])
+app.include_router(model_routes.router, tags=["model"])
 app.include_router(frames_routes.router, tags=["frames"])
 app.include_router(replay_routes.router, tags=["replay"])
+app.include_router(stream_routes.router, tags=["stream"])
+app.include_router(tracking_routes.router, tags=["tracking"])
 app.include_router(results_routes.router, tags=["results"])
 app.include_router(metrics_routes.router, tags=["metrics"])
+app.include_router(model_routes.router, tags=["model"])
 app.include_router(demo_routes.router, tags=["demo"])
