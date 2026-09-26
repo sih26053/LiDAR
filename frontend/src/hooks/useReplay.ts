@@ -14,6 +14,16 @@ export type ReplayPhase = 'idle' | 'loading' | 'processing' | 'ready' | 'error';
 
 export interface SessionEvent { time: string; kind: 'info' | 'success' | 'error'; text: string; }
 
+export interface RunHistoryEntry {
+  frame_id: string;
+  timestamp: number | null;
+  total_latency_ms: number | null;
+  mapping_latency_ms: number | null;
+  cells: number;
+  avg_resolution: number | null;
+  semantic_mode: string;
+}
+
 function stamp(): string {
   const d = new Date();
   const p = (n: number) => String(n).padStart(2, '0');
@@ -28,6 +38,12 @@ export function useReplay() {
   const [error, setError] = useState<string | null>(null);
   const [events, setEvents] = useState<SessionEvent[]>([]);
   const [maxCells, setMaxCells] = useState(2000);
+  // Semantic channel: 'annotation' (box reference + heuristic fallback) or
+  // 'model' (trained point classifier with measured confidence).
+  const [semanticMode, setSemanticMode] = useState<'annotation' | 'model'>('annotation');
+  // Chronological record of successfully processed frames in this session.
+  // Powers the temporal-replay statistics (frame-to-frame adaptive mapping).
+  const [history, setHistory] = useState<RunHistoryEntry[]>([]);
 
   const push = useCallback((kind: SessionEvent['kind'], text: string) => {
     setEvents((prev) => [...prev.slice(-49), { time: stamp(), kind, text }]);
@@ -44,23 +60,33 @@ export function useReplay() {
   }, [push]);
 
   const run = useCallback(
-    async (frame: FrameInfo | null, cellsOverride?: number) => {
+    async (frame: FrameInfo | null, cellsOverride?: number, modeOverride?: 'annotation' | 'model') => {
       if (!frame) {
         setError('No frame selected.');
         return;
       }
       const limit = cellsOverride ?? maxCells;
+      const mode = modeOverride ?? semanticMode;
       setPhase('loading');
       setError(null);
       push('info', `Loading frame ${frame.frame_id.slice(0, 8)}…`);
       try {
         const loaded = await api.loadFrame(frame.frame_id);
         setCurrentFrame({ ...frame, point_count: loaded.point_count ?? frame.point_count });
-        push('info', `LiDAR frame loaded: ${(loaded.point_count ?? 0).toLocaleString()} points`);
+        push('info', `LiDAR frame loaded: ${(loaded.point_count ?? 0).toLocaleString()} points${loaded.load_latency_ms != null ? ` in ${loaded.load_latency_ms.toFixed(1)} ms file I/O` : ''}`);
         setPhase('processing');
-        const { result } = await api.runFrame(frame.frame_id, limit);
+        const { result } = await api.runFrame(frame.frame_id, limit, mode);
         if (!isValidResult(result)) throw new Error('Invalid response: pipeline result failed validation.');
         setCurrentResult(result);
+        setHistory((prev) => [...prev.slice(-99), {
+          frame_id: result.frame_id,
+          timestamp: result.timestamp,
+          total_latency_ms: result.timing.total_latency_ms,
+          mapping_latency_ms: result.timing.mapping_latency_ms,
+          cells: result.map_cell_count,
+          avg_resolution: result.resolution.average_resolution,
+          semantic_mode: result.semantic.mode,
+        }]);
         push('success', `Map generated: ${result.map_cell_count.toLocaleString()} cells in ${result.timing.total_latency_ms != null ? result.timing.total_latency_ms.toFixed(0) : 'unavailable'} ms (backend-measured)`);
         try {
           setCurrentMetrics(await api.getMetrics(frame.frame_id));
@@ -75,7 +101,7 @@ export function useReplay() {
         push('error', `Pipeline failure on ${frame.frame_id.slice(0, 8)}…: ${msg}`);
       }
     },
-    [push, maxCells],
+    [push, maxCells, semanticMode],
   );
 
   const reset = useCallback(() => {
@@ -83,6 +109,7 @@ export function useReplay() {
     setCurrentMetrics(null);
     setError(null);
     setPhase('idle');
+    setHistory([]);
     setEvents([{ time: stamp(), kind: 'info', text: 'Session reset: result, metrics, visualizations and events cleared.' }]);
   }, []);
 
@@ -90,7 +117,7 @@ export function useReplay() {
     ? dominantSource(currentResult.semantic.source_counts)
     : null;
 
-  return { currentFrame, currentResult, currentMetrics, phase, error, semanticSource, events, maxCells, setMaxCells, selectFrame, run, reset };
+  return { currentFrame, currentResult, currentMetrics, phase, error, semanticSource, events, history, maxCells, setMaxCells, semanticMode, setSemanticMode, selectFrame, run, reset };
 }
 
 function dominantSource(counts: Record<string, number> | undefined): string {
