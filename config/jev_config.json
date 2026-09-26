@@ -1,0 +1,21 @@
+{
+  "comment": "Jev decision backend (Phases 10-13). No secrets here: the API key comes ONLY from config/local_secrets.py (server-side, git-ignored) or the OPENROUTER_API_KEY/TYPESAFE_API_KEY environment variables, and is never committed. Thresholds are starting values, NOT claimed optima.",
+  "decision_model": "jev",
+  "model": "typesafe/jev-1.13",
+  "question": {
+    "instructions": "Which vehicle action should be selected based only on the supplied structured state? First determine whether every useful direction lacks safe clearance or an emergency flag is set. If so, stop. Otherwise select the direction with the largest safe clearance that is useful for travel, using forward_clearance_m, left_clearance_m and right_clearance_m. obstacle_density reports LiDAR-coverage evidence presence (1.0 is normal full-scan coverage), NOT a blockage fraction; judge blockage from the directional clearances and nearest_obstacle_m.",
+    "criteria": {
+      "forward": "The forward clearance is a safe clearance, is the largest useful clearance, and forward motion is useful.",
+      "left": "The left clearance is a safe clearance, is the largest useful clearance, and turning left is useful.",
+      "right": "The right clearance is a safe clearance, is the largest useful clearance, and turning right is useful.",
+      "stop": "No direction offers safe clearance for useful movement, or an emergency/stop condition is present (emergency_flag is true, or all clearances are below safe maneuvering needs)."
+    }
+  },
+  "actions": ["forward", "turn_left", "turn_right", "stop"],
+  "instructions": "Select exactly one of forward/turn_left/turn_right/stop from the structured enriched state. First check whether every useful direction lacks safe clearance or emergency_flag is set: then stop. Otherwise select the direction with the largest safe clearance (forward_clearance_m, left_clearance_m, right_clearance_m) that is useful for travel. obstacle_density is evidence presence, not blockage; judge blockage from clearances and nearest_obstacle_m. Never explain; output JSON only.",
+  "confidence_policy": {"min_confidence": 0.6, "fallback_action": "stop", "note": "starting value, not optimal; below-threshold or invalid confidence uses the safe fallback through the safety layer"},
+  "timeout_s": 8.0,
+  "max_retries": 1,
+  "decision_frequency_hz": 2,
+  "logging": {"log_state": true, "log_response": true, "log_dir": "results/decisions"}
+}

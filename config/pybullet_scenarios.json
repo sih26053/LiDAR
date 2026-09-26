@@ -1,0 +1,135 @@
+{
+  "comment": "Phase 21 closed-loop scenarios. Geometry note: the vehicle starts at x=-50 (config/simulation_config.json); obstacle xyz are WORLD coordinates. Corridor: 120 m x 12 m road, boundary walls with inner faces at y=+/-6.25 m (real lateral constraints, detected by LiDAR at ~7.8 m). Side-blocking obstacles sit ~4.5 m ahead so they read INSIDE the wall floor (a 10 m side obstacle is occluded by nearer wall returns and cannot test side discrimination). Forward path is open road; the 0-degree LiDAR ring flies over the 1 m walls and detects in-lane obstacles at true range; the -6-degree ring paints walls (~8 m) and ground (~17 m). Pedestrian scenarios are NOT listed (no pedestrian actors).",
+  "vehicle_start": {
+    "x": -50.0,
+    "y": 0.0
+  },
+  "walls_inner_face_y_m": 6.25,
+  "scenarios": [
+    {
+      "id": "straight_road",
+      "obstacles": [],
+      "goal": "drive 60 m straight",
+      "status": "executed"
+    },
+    {
+      "id": "obstacle_ahead",
+      "obstacles": [
+        {
+          "xyz": [
+            -40.0,
+            0.0,
+            1.0
+          ],
+          "half": [
+            1.5,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "goal": "stop before obstacle",
+      "status": "executed"
+    },
+    {
+      "id": "left_blocked",
+      "obstacles": [
+        {
+          "xyz": [
+            -45.5,
+            4.0,
+            1.0
+          ],
+          "half": [
+            1.5,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "goal": "keep right, continue",
+      "status": "executed"
+    },
+    {
+      "id": "right_blocked",
+      "obstacles": [
+        {
+          "xyz": [
+            -45.5,
+            -4.0,
+            1.0
+          ],
+          "half": [
+            1.5,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "goal": "keep left, continue",
+      "status": "executed"
+    },
+    {
+      "id": "both_blocked",
+      "obstacles": [
+        {
+          "xyz": [
+            -45.5,
+            4.0,
+            1.0
+          ],
+          "half": [
+            1.5,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "xyz": [
+            -45.5,
+            -4.0,
+            1.0
+          ],
+          "half": [
+            1.5,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "goal": "stop, do not force gap",
+      "status": "executed"
+    },
+    {
+      "id": "emergency_close",
+      "obstacles": [
+        {
+          "xyz": [
+            -46.5,
+            0.0,
+            1.0
+          ],
+          "half": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "goal": "immediate safety STOP",
+      "status": "executed"
+    }
+  ],
+  "record_per_scenario": [
+    "scenario_id",
+    "actions_proposed",
+    "actions_executed",
+    "confidence",
+    "safety_overrides",
+    "collision",
+    "distance_m",
+    "completion",
+    "loop_latency_ms",
+    "jev_latency_ms"
+  ]
+}

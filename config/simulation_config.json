@@ -1,0 +1,13 @@
+{
+  "comment": "PyBullet closed-loop configuration (Phases 4/15/17). All values documented starting points, not tuned optima. Live execution uses .venv-pb (Python 3.11, pybullet 3.2.6 source-built, 2026-09-25).",
+  "mode": "DIRECT",
+  "timestep_s": 0.0166667,
+  "gravity": [0, 0, -9.81],
+  "road": {"length_m": 120.0, "width_m": 12.0, "thickness_m": 0.1},
+  "boundaries": {"height_m": 1.0, "thickness_m": 0.5},
+  "vehicle": {"start_xy": [-50.0, 0.0], "start_yaw_deg": 0.0, "half_extents_m": [2.2, 1.0, 0.7]},
+  "lidar": {"n_rays": 180, "fov_deg": 360.0, "rings_deg": [-6.0, 0.0, 6.0], "max_range_m": 50.0, "height_m": 1.8, "neutral_intensity": 0.5, "intensity_source": "sim-default (raycast has no intensity; documented neutral, NOT a measurement)"},
+  "control": {"forward_speed_ms": 2.0, "turn_speed_ms": 1.0, "turn_yaw_deg_s": 25.0},
+  "frequencies_hz": {"physics": 60, "safety": 60, "lidar_perception": 10, "jev_decision": 2},
+  "determinism": {"fixed_timestep": true, "obstacle_seed": 42, "note": "explicit stepSimulation only; no real-time sleep in DIRECT mode"}
+}
