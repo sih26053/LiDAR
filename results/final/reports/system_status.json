@@ -1,0 +1,63 @@
+{
+  "generated_utc": "2026-09-25T11:34:33Z",
+  "stages": {
+    "1": [
+      "PASS",
+      "replay loader + preprocessing green (216 passed 2026-09-25, .venv-pb)",
+      "python -m pytest tests/ backend/tests/ -q",
+      "results/final/"
+    ],
+    "2": [
+      "PASS",
+      "trained MLP live inference measured per frame (216 passed 2026-09-25)",
+      "python -m pytest tests/ backend/tests/ -q",
+      "results/segmentation/metrics.json"
+    ],
+    "3": [
+      "PASS",
+      "six factors with provenance; unit-tested (216 passed 2026-09-25)",
+      "python -m pytest backend/tests/test_flow.py -q",
+      "src/scene_analysis.py"
+    ],
+    "4": [
+      "PASS",
+      "frozen tiers + live quadtree stats (216 passed 2026-09-25)",
+      "python -m pytest tests/ backend/tests/ -q",
+      "src/quadtree.py"
+    ],
+    "5": [
+      "PASS",
+      "diagram fields test-verified; map_validator gate live (216 passed 2026-09-25)",
+      "python -m pytest tests/ backend/tests/ -q",
+      "src/map_validator.py"
+    ],
+    "6": [
+      "PASS",
+      "13-dim vector verified at runtime incl. live frames (216 passed 2026-09-25)",
+      "python -m pytest tests/test_pybullet_jev_live.py -q",
+      "config/rl_state_config.json"
+    ],
+    "7": [
+      "JEV DECISION VERIFIED",
+      "live Jev decisions succeeding (choice+confidence)",
+      "python scripts/check_jev.py",
+      "results/decisions/jev_requests.jsonl"
+    ],
+    "8": [
+      "PYBULLET AUTONOMOUS ACTION EXECUTION VERIFIED",
+      "Jev actions via safety move vehicle",
+      "python scripts/run_pybullet_jev.py --steps 200",
+      "results/pybullet/"
+    ],
+    "9": [
+      "PYBULLET CLOSED-LOOP SIMULATION VERIFIED",
+      "full intelligent loop with scenario evidence",
+      "python scripts/run_pybullet_jev.py --steps 200",
+      "results/metrics/pybullet_jev_metrics.json"
+    ]
+  },
+  "physical_testing": "NOT EXECUTED",
+  "pybullet_importable": true,
+  "jev_available": true,
+  "jev_reason": ""
+}
