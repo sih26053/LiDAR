@@ -15,6 +15,17 @@ import { ResolutionDistancePanel } from './components/ResolutionDistancePanel';
 import { ResolutionView } from './components/ResolutionView';
 import { SettingsPanel } from './components/SettingsPanel';
 import { StatusPanel } from './components/StatusPanel';
+import { ModelPanel } from './components/ModelPanel';
+import { AccuracyPanel } from './components/AccuracyPanel';
+import { DecisionPanel } from './components/DecisionPanel';
+import { FlowPanel } from './components/FlowPanel';
+import { LiveControlPanel } from './components/LiveControlPanel';
+import { ResourcePanel } from './components/ResourcePanel';
+import { RLPanel } from './components/RLPanel';
+import { SimulationPanel } from './components/SimulationPanel';
+import { StreamPanel } from './components/StreamPanel';
+import { TracksPanel } from './components/TracksPanel';
+import { TransparencyPanel } from './components/TransparencyPanel';
 import { useBackendStatus } from './hooks/useBackendStatus';
 import { useFrames } from './hooks/useFrames';
 import { useReplay } from './hooks/useReplay';
@@ -112,6 +123,7 @@ export default function App() {
             actionError={replay.error}
             playing={playing}
             speed={speed}
+            semanticMode={replay.semanticMode}
             onSelect={(f) => (f ? selectAndPrime(f.frame_id) : replay.selectFrame(null))}
             onRun={() => void replay.run(replay.currentFrame)}
             onReset={stopAndReset}
@@ -119,9 +131,10 @@ export default function App() {
             onNext={() => step(1)}
             onPlayPause={() => setPlaying((p) => !p)}
             onSpeed={setSpeed}
+            onSemanticMode={(m) => { replay.selectFrame(replay.currentFrame); replay.setSemanticMode(m); }}
           />
           <LidarView result={replay.currentResult} mode={encoding} onMode={setEncoding} title="1. Raw LiDAR Point Cloud" />
-          <LidarView result={replay.currentResult} mode="semantic" onMode={() => undefined} title="2. Semantic Perception" hideModeSwitch />
+          <LidarView result={replay.currentResult} mode="semantic" onMode={() => undefined} title="2. Deep-Learning Semantic Perception (model / annotation channel)" hideModeSwitch />
           <ImportanceView result={replay.currentResult} />
           <div id="panel-map" className="ops-anchor" />
           <AdaptiveMapView result={replay.currentResult} />
@@ -136,12 +149,23 @@ export default function App() {
           <SettingsPanel speed={speed} onSpeed={setSpeed} maxCells={replay.maxCells} onMaxCells={replay.setMaxCells} />
           <Legend />
           <BenchmarkPanel current={replay.currentResult} />
+          <ModelPanel />
+          <AccuracyPanel />
+          <ResourcePanel />
+          <FlowPanel />
+          <DecisionPanel />
+          <LiveControlPanel />
+          <RLPanel result={replay.currentResult} />
+          <SimulationPanel />
+          <TracksPanel />
+          <StreamPanel frames={frames.frames} />
+          <TransparencyPanel result={replay.currentResult} history={replay.history} />
           <ExplanationPanel result={replay.currentResult} />
         </main>
       </div>
       <footer className="footer">
         Paradox Protocol · LOCAL DEMO · PUBLIC DATASET · NUScenes MINI · OFFLINE/LOCAL ·
-        semantic annotations are evaluation references, never model predictions
+        annotation labels are evaluation references; model outputs are labelled by source
       </footer>
     </div>
   );
