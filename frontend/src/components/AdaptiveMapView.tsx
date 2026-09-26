@@ -17,12 +17,15 @@ function extentLabel(result: PipelineResult): string {
 export function AdaptiveMapView({ result }: { result: PipelineResult | null }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const [showSemantic, setShowSemantic] = useState(true);
+  // Client-side canvas draw time (performance.now, this browser only).
+  const [renderMs, setRenderMs] = useState<number | null>(null);
   const cells = result?.map_cells ?? [];
   const limited = cells.length > 4000 ? cells.slice(0, 4000) : cells;
   const cam = useCanvasView(result ? result.frame_id : null);
   const view = cam.view;
 
   useEffect(() => {
+    const t0 = performance.now();
     const canvas = ref.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -57,6 +60,7 @@ export function AdaptiveMapView({ result }: { result: PipelineResult | null }) {
         ctx.strokeRect(cx - s / 2 - 1, cy - s / 2 - 1, s + 2, s + 2);
       }
     }
+    setRenderMs(performance.now() - t0);
   }, [limited, showSemantic, view]);
 
   const semanticCells = result ? result.map_cells.filter((c) => c.semantic_source !== 'fallback' && c.semantic_source !== 'unknown').length : 0;
@@ -81,7 +85,7 @@ export function AdaptiveMapView({ result }: { result: PipelineResult | null }) {
             <li><span>Elevation (height)</span><b>per-cell, m</b></li>
             <li><span>Occupancy</span><b>per-cell</b></li>
             <li><span>Semantic class</span><b>{[...new Set(result.map_cells.map((c) => c.semantic_class))].slice(0, 6).join(', ') || 'none'}</b></li>
-            <li><span>Confidence</span><b>n/a — annotation reference, no model</b></li>
+            <li><span>Confidence</span><b>{result.map_cells.some((c) => c.semantic_source === 'model' && c.confidence !== null) ? 'measured model confidence (this run)' : 'n/a — annotation reference, no model in this run'}</b></li>
             <li><span>Importance</span><b>mean {result.importance.mean?.toFixed(3) ?? 'unavailable'}</b></li>
             <li><span>Resolution</span><b>4 tiers (0.05–0.50 m)</b></li>
           </ul>
@@ -89,6 +93,7 @@ export function AdaptiveMapView({ result }: { result: PipelineResult | null }) {
             X/Y position · marker size = backend <code>resolution</code> · brightness = elevation ·{' '}
             {semanticCells.toLocaleString()} of {result.map_cell_count.toLocaleString()} cells carry valid semantic source
             {' · '}scroll = zoom · drag = pan · <button className="link" onClick={cam.reset}>reset view</button>
+            {' · '}canvas render {renderMs !== null ? `${renderMs.toFixed(1)} ms (this browser, excluded from pipeline latency)` : '—'}
           </p>
         </>
       ) : (

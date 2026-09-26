@@ -29,7 +29,7 @@ export function Header({ backend, demo, frame, playing }: { backend: BackendStat
     </div>
       <div className="ops-title">
         <h1>Adaptive LiDAR Perception &amp; Mapping System</h1>
-        <p className="subtitle">AI-Driven 2.5D Environment Understanding for Dynamic Environment Perception</p>
+        <p className="subtitle">Importance-Driven 2.5D LiDAR Mapping for Dynamic Environment Replay (trained point classifier + tracker on board)</p>
       </div>
       <div className="sys-state" role="status" aria-label="system state">
         <span className={`pill ${operational ? 'ok' : backend === 'checking' ? 'wait' : 'bad'}`}>

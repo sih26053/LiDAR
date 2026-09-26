@@ -11,6 +11,7 @@ interface Props {
   actionError: string | null;
   playing: boolean;
   speed: number;
+  semanticMode: 'annotation' | 'model';
   onSelect: (f: FrameInfo | null) => void;
   onRun: () => void;
   onReset: () => void;
@@ -18,6 +19,7 @@ interface Props {
   onNext: () => void;
   onPlayPause: () => void;
   onSpeed: (s: number) => void;
+  onSemanticMode: (m: 'annotation' | 'model') => void;
 }
 
 const PHASE_LABEL: Record<ReplayPhase, string> = {
@@ -71,6 +73,13 @@ export function ReplayControls(p: Props) {
             {[0.25, 0.5, 1, 2].map((s) => (
               <option key={s} value={s}>{s}x</option>
             ))}
+          </select>
+        </label>
+        <label className="field inline">
+          Semantics
+          <select value={p.semanticMode} onChange={(e) => p.onSemanticMode(e.target.value as 'annotation' | 'model')} aria-label="semantic channel">
+            <option value="annotation">annotation+fallback</option>
+            <option value="model">trained model</option>
           </select>
         </label>
       </div>

@@ -2,17 +2,17 @@ import { KIND_LABEL, groupObjects, terrainSplit } from '../utils/terrain';
 import type { PipelineResult } from '../types/api';
 
 /**
- * Panel 5 — Detected Objects & Terrain. Rows are annotation-sourced cell
+ * Panel 5 — Objects & Terrain (annotation or model channel). Rows are cell
  * groups from the backend result (centroid location, distance, cell count,
- * source). There is NO confidence column: the pipeline has no trained model,
- * so per-class ML confidence does not exist and is never shown.
+ * source). In the model channel, cells additionally carry measured softmax
+ * confidence, summarized below; annotation cells never fabricate confidence.
  */
 export function ObjectsTerrainPanel({ result }: { result: PipelineResult | null }) {
   const groups = result ? groupObjects(result.map_cells) : [];
   const split = result ? terrainSplit(result.map_cells) : null;
   return (
-    <section className="panel" id="panel-objects" aria-label="Detected objects and terrain">
-      <h2>5. Detected Objects &amp; Terrain</h2>
+    <section className="panel" id="panel-objects" aria-label="Objects and terrain">
+      <h2>5. Objects &amp; Terrain (model / annotation channel)</h2>
       {result && split ? (
         <>
           <table className="bench objs">
@@ -42,8 +42,12 @@ export function ObjectsTerrainPanel({ result }: { result: PipelineResult | null 
           </ul>
           <p className="caption">
             Locations/distances are geometry from backend cell positions. Classes are
-            annotation references ({result.semantic.mode}), never model predictions;
-            confidence is not applicable without a trained model.
+            {result.semantic.mode.startsWith('model')
+              ? ' trained-classifier predictions with measured confidence (see Model panel).'
+              : ` annotation references (${result.semantic.mode}), never model predictions;`}
+            {result.model_eval?.available
+              ? ` Model-vs-annotation agreement on box interiors this frame: ${result.model_eval.accuracy_vs_annotation_reference !== null ? `${(result.model_eval.accuracy_vs_annotation_reference * 100).toFixed(1)}%` : 'n/a'} (${result.model_eval.n_reference_points?.toLocaleString()} ref pts, eval-only).`
+              : ''}
           </p>
         </>
       ) : (

@@ -24,15 +24,28 @@ export function Legend() {
           </ul>
         </div>
         <div>
-          <b>Semantic</b>
+          <b>Semantic class</b>
           <ul>
             {[['vehicle', 'vehicle'], ['pedestrian_vru', 'pedestrian / VRU'], ['static_manmade', 'static man-made'], ['unknown', 'unknown / fallback']].map(([k, label]) => (
               <li key={k}><i style={{ background: semanticColor(k) }} /> {label}</li>
             ))}
+          </ul>
+        </div>
+        <div>
+          <b>Semantic source</b>
+          <ul>
             <li><i className="ring" /> white ring = valid (non-fallback) source</li>
+            <li>annotation = nuScenes ground-truth/reference annotation</li>
+            <li>fallback = heuristic rule where no annotation applied</li>
+            <li>unknown = no semantic information</li>
+            <li>model = trained point-classifier prediction (select “trained model” channel)</li>
           </ul>
         </div>
       </div>
+      <p className="caption">
+        Importance bands follow the frozen runtime thresholds (I ≥ 0.70 → 0.05 m;
+        I ≥ 0.45 → 0.10 m; I ≥ 0.20 → 0.20 m; else 0.50 m — results/final/config/final_config.json).
+      </p>
     </section>
   );
 }

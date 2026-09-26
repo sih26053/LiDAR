@@ -16,7 +16,7 @@ export function MetricsPanel({ result, metrics }: { result: PipelineResult | nul
         { label: 'Medium cells', value: fmtInt(result.resolution.medium_cells), hint: 'cells' },
         { label: 'Coarse cells', value: fmtInt(result.resolution.coarse_cells), hint: 'cells' },
         { label: 'Avg resolution', value: fmtMeters(result.resolution.average_resolution), hint: 'm' },
-        { label: 'Mapping latency', value: fmtMs(t?.mapping_latency_ms), hint: 'core ML time' },
+        { label: 'Mapping latency', value: fmtMs(t?.mapping_latency_ms), hint: 'mapping stage only' },
         { label: 'Total latency', value: fmtMs(t?.total_latency_ms), hint: 'compute only' },
         { label: 'API wall clock', value: fmtMs(t?.wall_clock_ms), hint: 'incl. overhead' },
         { label: 'Throughput', value: fmtFps(t?.fps), hint: '1000/total ms' },
@@ -38,8 +38,10 @@ export function MetricsPanel({ result, metrics }: { result: PipelineResult | nul
             ))}
           </div>
           <p className="caption">
-            Mapping latency = core ML time (preprocessing + perception + feature + mapping). API wall clock
-            includes network/serialization overhead and is shown separately.
+            Mapping latency = adaptive-map build stage only (time.perf_counter). Total latency =
+            preprocessing + perception + feature extraction + mapping compute. API wall clock
+            additionally includes serialization/network overhead and is shown separately.
+            Rendering and file I/O are excluded from all latency figures.
             {metrics && metrics.latency_ms !== t?.total_latency_ms ? ' Metrics endpoint confirms stored result.' : ''}
           </p>
         </>

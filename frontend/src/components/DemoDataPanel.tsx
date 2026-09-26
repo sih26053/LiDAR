@@ -14,9 +14,9 @@ export function DemoDataPanel({ backend, demo, config }: {
     ['Dataset', 'nuScenes Mini (public dataset, local files)'],
     ['Mode', 'Local replay — no live sensor'],
     ['Backend', backend === 'connected' ? `Local (${API_BASE_URL})` : backend === 'checking' ? 'Checking…' : 'Disconnected'],
-    ['Model', config ? `Frozen configuration (${config.selection})` : demo?.configuration_loaded ? 'Frozen configuration (loaded)' : 'Unavailable'],
-    ['Semantic mode', config?.semantic_source_mode ?? 'annotation+fallback (no trained model)'],
-    ['Replay frames', demo ? `${demo.available_frames} validated frames` : 'Unavailable'],
+    ['Model', config ? `Frozen configuration (${config.selection}); trained point-classifier ${config.trained_model_available ? 'available' : 'unavailable'}` : demo?.configuration_loaded ? 'Frozen configuration (loaded)' : 'Unavailable'],
+    ['Semantic mode', config?.semantic_source_mode ?? 'annotation+fallback'],
+    ['Replay frames', demo ? `${demo.available_frames} replay frames (stored manifest)` : 'Unavailable'],
     ['Data classification', 'Public demonstration data'],
     ['Network', 'Offline / local loopback only'],
   ];

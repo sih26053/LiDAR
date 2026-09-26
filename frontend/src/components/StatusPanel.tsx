@@ -3,14 +3,14 @@ import type { BackendState } from '../hooks/useBackendStatus';
 import type { DemoStatusInfo, FrameInfo, PipelineResult } from '../types/api';
 
 const SOURCE_BLURB: Record<string, string> = {
-  model_prediction: 'Model prediction — network output.',
+  model_prediction: 'Model prediction — trained point-classifier output with measured confidence.',
   lidarseg_annotation: 'LiDARSeg annotation — evaluation reference, never a model prediction.',
   lidarseg: 'LiDARSeg annotation — evaluation reference, never a model prediction.',
   annotation: 'Annotation — evaluation reference, never a model prediction.',
   object_annotation: 'Object annotation — evaluation reference, never a model prediction.',
   fallback: 'Fallback — heuristic label where no annotation applied.',
   unknown: 'Unknown — no semantic information for this frame/source.',
-  model: 'Model output.',
+  model: 'Model output — trained point-classifier prediction (see Model panel for held-out metrics).',
 };
 
 /** Panel F — Frame / semantic source / status. */

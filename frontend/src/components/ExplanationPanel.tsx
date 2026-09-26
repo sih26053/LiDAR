@@ -18,7 +18,7 @@ export function ExplanationPanel({ result }: { result: PipelineResult | null }) 
       <p>
         Regions that are more important, dynamic, uncertain, or geometrically complex can receive finer
         spatial resolution, while lower-priority regions remain coarser. Importance shown here is the
-        backend/model output — the frontend only visualizes it.
+        backend-computed output — the frontend only visualizes it.
       </p>
       {result ? (
         <ul className="kv">
@@ -43,9 +43,11 @@ export function ExplanationPanel({ result }: { result: PipelineResult | null }) 
             <li><span>Measured performance</span><b>{result.timing.total_latency_ms != null ? `${result.timing.total_latency_ms.toFixed(1)} ms` : 'unavailable'} · {result.timing.fps != null ? `${result.timing.fps.toFixed(2)} FPS` : 'unavailable'} (backend-measured)</b></li>
           </ul>
           <p className="caption">
-            Detail where needed, coarser elsewhere. Semantic labels are annotation references
-            ({result.semantic.mode}), never model predictions. Benchmark comparison is shown separately
-            from stored results.
+            Detail where needed, coarser elsewhere. Semantic channel: {result.semantic.mode}
+            {result.semantic.mode.startsWith('model')
+              ? ' — trained classifier predictions with measured confidence (see Model panel).'
+              : ' — annotation references, never model predictions.'}{' '}
+            Benchmark comparison is shown separately from stored results.
           </p>
         </div>
       )}
