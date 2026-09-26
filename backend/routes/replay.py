@@ -31,6 +31,7 @@ class RunRequest(BaseModel):
     save_output: bool = False
     include_visualization: bool = False
     max_map_cells: int | None = Field(default=None, ge=1, le=5000)
+    semantic_mode: str = Field(default="annotation", pattern="^(annotation|model)$")
 
 
 class SequenceRequest(BaseModel):
@@ -39,6 +40,7 @@ class SequenceRequest(BaseModel):
     end_frame: str | None = None
     scene_id: str | None = None
     max_map_cells: int | None = Field(default=None, ge=1, le=5000)
+    semantic_mode: str = Field(default="annotation", pattern="^(annotation|model)$")
 
 
 def _err(status: int, stage: str, code: str, message: str, frame_id=None):
@@ -52,21 +54,24 @@ def _err(status: int, stage: str, code: str, message: str, frame_id=None):
 def replay_load(req: LoadRequest):
     try:
         entry = replay_service.get_frame_entry(req.frame_id)
+        t0 = time.perf_counter()
         points, _ = replay_service.load_frame_points(req.frame_id)
+        load_ms = (time.perf_counter() - t0) * 1000.0
     except FrameNotFoundError as exc:
         return _err(404, "input", "FRAME_NOT_FOUND", str(exc), req.frame_id)
     except DataLoadError as exc:
         return _err(500, "loading", "DATA_LOAD_FAILED", str(exc), req.frame_id)
     return {"frame_id": entry["frame_id"], "scene_id": entry.get("scene_id"),
             "timestamp": entry.get("timestamp"), "point_count": int(len(points)),
-            "load_status": "loaded"}
+            "load_status": "loaded", "load_latency_ms": round(load_ms, 1)}
 
 
 @router.post("/replay/run")
 def replay_run(req: RunRequest):
     t0 = time.perf_counter()
     try:
-        result = pipeline_service.run_frame(req.frame_id, max_map_cells=req.max_map_cells)
+        result = pipeline_service.run_frame(req.frame_id, max_map_cells=req.max_map_cells,
+                                            semantic_mode=req.semantic_mode)
     except PipelineStageError as exc:
         status = 404 if exc.code == "FRAME_NOT_FOUND" else 500
         result_service.store_result(req.frame_id, {}, status="failed")
@@ -105,7 +110,8 @@ def replay_run_sequence(req: SequenceRequest):
     outputs, errors = [], []
     for fid in ids:
         try:
-            res = pipeline_service.run_frame(fid, max_map_cells=req.max_map_cells)
+            res = pipeline_service.run_frame(fid, max_map_cells=req.max_map_cells,
+                                             semantic_mode=req.semantic_mode)
             result_service.store_result(fid, res, status="success")
             outputs.append(res)
         except PipelineStageError as exc:
