@@ -1,0 +1,37 @@
+# Paradox Protocol — optional container supervision for the Laya service.
+#
+# The project does NOT depend on Docker: native startup works via
+#   .venv-pb python scripts/provision_laya.py   (once)
+#   .venv-pb python scripts/run_laya_server.py --offline
+# This file is a production convenience: `docker compose up laya`
+# runs the SAME standalone entry with restart supervision.
+#
+# GPU note: CPU image below is the tested path (this machine is CPU-only).
+# For CUDA hosts, use a torch-CUDA base image and set LAYA_DEVICE=cuda.
+
+services:
+  laya:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+      - laya-checkpoint:/app/models/laya/checkpoint
+    command: >
+      bash -c "pip install 'laya[serve]' &&
+               python scripts/run_laya_server.py --host 127.0.0.1 --port 18001 --offline"
+    environment:
+      LAYA_PORT: "18001"
+      HF_HUB_OFFLINE: "1"
+    expose:
+      - "18001"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18001/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 180s
+
+volumes:
+  laya-checkpoint:
