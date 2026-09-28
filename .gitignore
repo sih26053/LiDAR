@@ -22,3 +22,9 @@ frontend/dist/
 
 # Notebooks checkpoints
 .ipynb_checkpoints/
+data/
+models/laya/checkpoint/
+*.safetensors
+*.zip
+.vscode/
+.venv312/
