@@ -111,6 +111,9 @@ export interface FrameInfo {
   timestamp: number | null;
   source: string | null;
   point_count: number | null;
+  origin?: string | null;
+  run_id?: string | null;
+  scenario?: string | null;
 }
 
 export interface FrameList {
@@ -325,7 +328,7 @@ export interface SimStep {
   done?: boolean;
 }
 
-/** Live PyBullet+Jev snapshot from GET /simulation/state or /ws/live. */
+/** Live PyBullet+Laya snapshot from GET /simulation/state or /ws/live. */
 export interface LiveSnapshot {
   frame_id: string | null;
   timestamp: number | null;
@@ -352,16 +355,16 @@ export interface LiveSnapshot {
   pipeline?: Record<string, { state: string; verified: boolean }>;
   lidar?: { point_count: number | null; frame_count: number | null; fps: number | null; status: string };
   map?: { cell_count: number | null; importance: ImportanceSummary; semantic_classes: string[]; status: string };
-  decision?: { model: string; action: string | null; confidence: number | null; probabilities: Record<string, number> | null; latency_ms: number | null; status: string };
+  decision?: { model: string; backend?: string; endpoint?: string; device?: string; action: string | null; confidence: number | null; answer_confidence?: number | null; probabilities: Record<string, number> | null; latency_ms: number | null; status: string; mode?: string | null; gate_metric?: string | null; gate_threshold?: number | null; gate?: string | null; eligible_actions?: string[] | null; category?: string | null; raw_action?: string | null; raw_confidence?: number | null; constrained_action?: string | null; laya_skipped?: boolean | null; checkpoint_revision?: string | null; calibration_version?: string | null };
   safety?: { status: string | null; override: boolean; reason: string | null };
   vehicle?: { x: number | null; y: number | null; z: number | null; yaw_deg: number | null; speed_mps: number | null; yaw_rate: number | null };
   execution?: { proposed_action: string | null; executed_action: string | null; source: string | null };
   metrics?: {
-    jev_latency_ms: number | null; perception_latency_ms: number | null;
+    laya_latency_ms: number | null; perception_latency_ms: number | null;
     safety_latency_ms: number | null; action_execution_latency_ms: number | null;
     loop_latency_ms: number | null; vehicle_speed_mps: number | null;
     distance_m: number | null; collision: boolean | null; collisions_total: number;
-    jev_calls: number; jev_successful: number; jev_failed: number;
+    laya_calls: number; laya_successful: number; laya_failed: number;
     manual_calls: number; directional_actions: number; stop_actions: number;
     safety_overrides: number;
   };
@@ -374,13 +377,48 @@ export interface LiveStatus {
   run_id: string | null;
   steps: number;
   simulator: string;
-  jev_calls: number;
-  jev_successful: number;
-  jev_failed: number;
+  decision_engine?: string;
+  laya_calls: number;
+  laya_successful: number;
+  laya_failed: number;
   manual_calls: number;
   safety_overrides: number;
   collisions: number;
   error: string | null;
+  recorder_writes?: number | null;
+  recorder_error?: string | null;
+}
+
+/** Local Laya server state (GET /laya/status). */
+export interface LayaServerStatus {
+  state: string;
+  healthy: boolean;
+  managed_process: boolean;
+  independent?: boolean | null;
+  pid?: number | null;
+  uptime_s?: number | null;
+  restart_count?: number | null;
+  model: string;
+  checkpoint?: string | null;
+  checkpoint_revision?: string | null;
+  offline?: string | null;
+  device: string;
+  calibration?: { gate: { loaded: boolean; threshold?: number | null; metric?: string | null; dataset?: string | null; state: string }; temperature: { loaded: boolean; value?: number | null; state: string } };
+  last_error: string | null;
+}
+
+/** Measured navigation diagnostics (GET /laya/diagnostics). */
+export interface LayaDiagnostics {
+  navigation: Record<string, unknown> | null;
+  ab_comparison: Record<string, unknown> | null;
+}
+
+/** Gate + temperature calibration (GET /laya/calibration). */
+export interface LayaCalibration {
+  gate_config: { enabled: boolean; metric: string; threshold: number; fallback_action: string; source: string };
+  runtime: { gate: { loaded: boolean; threshold?: number | null; metric?: string | null; dataset?: string | null; state: string }; temperature: { loaded: boolean; value?: number | null; state: string } };
+  gate_selection: Record<string, unknown> | null;
+  temperature: Record<string, unknown> | null;
 }
 
 export interface ResourceMetrics {
