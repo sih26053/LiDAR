@@ -114,8 +114,17 @@ def run_frame(frame_id: str, max_map_cells: int | None = None,
     t_wall0 = time.perf_counter()
     try:
         raw_points, meta = replay_service.load_frame_points(fid)
-    except FrameNotFoundError as exc:
-        raise PipelineStageError("input", "FRAME_NOT_FOUND", str(exc)) from exc
+    except FrameNotFoundError:
+        # Recorded live frame (SQLite): same live path as the simulator
+        # loop (no nuScenes sample/annotations; model or fallback channel).
+        from backend.services import replay_jev as _rj
+
+        try:
+            raw_points, meta = _rj.load_recorded_points(fid)
+        except (FrameNotFoundError, DataLoadError) as exc:
+            raise PipelineStageError("input", "FRAME_NOT_FOUND", str(exc)) from exc
+        return _execute(raw_points, None, meta, fid, mode, max_map_cells,
+                        t_wall0, live_input=True)
     except DataLoadError as exc:
         raise PipelineStageError("loading", "DATA_LOAD_FAILED", str(exc)) from exc
 
