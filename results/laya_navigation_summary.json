@@ -1,0 +1,164 @@
+{
+  "generated_utc": "2026-09-27T18:52:17Z",
+  "dataset": {
+    "runs": 94,
+    "frames": 48693,
+    "splits": {
+      "train": 1101,
+      "calibration": 196,
+      "validation": 146,
+      "test": 92,
+      "ood_test": 200
+    },
+    "split_hash": "1701ceef3230d910",
+    "coverage_gate": {
+      "A": "READY",
+      "B": "READY",
+      "C": "READY",
+      "D": "READY",
+      "E": "READY",
+      "F": "READY"
+    }
+  },
+  "baseline_test": {
+    "constrained_laya": {
+      "n": 92,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "macro_f1": 1.0,
+      "confusion_oracle_x_proposed": {
+        "forward": {
+          "forward": 52,
+          "left": 0,
+          "right": 0,
+          "stop": 0
+        },
+        "left": {
+          "forward": 0,
+          "left": 10,
+          "right": 0,
+          "stop": 0
+        },
+        "right": {
+          "forward": 0,
+          "left": 0,
+          "right": 10,
+          "stop": 0
+        },
+        "stop": {
+          "forward": 0,
+          "left": 0,
+          "right": 0,
+          "stop": 20
+        }
+      },
+      "action_distribution": {
+        "forward": 52,
+        "stop": 20,
+        "left": 10,
+        "right": 10
+      },
+      "forward_rate": 0.5652,
+      "unsafe_raw_action_rate": 0.0,
+      "emergency_n": 10,
+      "emergency_forward_proposal_rate": 0.0,
+      "answer_confidence_mean": 0.6464,
+      "ece": 0.3536,
+      "brier": 0.1809,
+      "latency_p50_ms": 9229.61,
+      "latency_p95_ms": 13532.707,
+      "emergency_executed_forward_estimate": 0,
+      "coverage_at_gate": 1.0,
+      "stop_rate": 0.2174
+    },
+    "unconstrained_laya": {
+      "n": 50,
+      "accuracy": 0.2,
+      "balanced_accuracy": 0.25,
+      "macro_f1": 0.0833,
+      "confusion_oracle_x_proposed": {
+        "forward": {
+          "forward": 10,
+          "left": 0,
+          "right": 0,
+          "stop": 0
+        },
+        "left": {
+          "forward": 10,
+          "left": 0,
+          "right": 0,
+          "stop": 0
+        },
+        "right": {
+          "forward": 10,
+          "left": 0,
+          "right": 0,
+          "stop": 0
+        },
+        "stop": {
+          "forward": 20,
+          "left": 0,
+          "right": 0,
+          "stop": 0
+        }
+      },
+      "action_distribution": {
+        "forward": 50
+      },
+      "forward_rate": 1.0,
+      "unsafe_raw_action_rate": 0.8,
+      "emergency_n": 10,
+      "emergency_forward_proposal_rate": 1.0,
+      "answer_confidence_mean": 0.3996,
+      "ece": 0.1996,
+      "brier": 0.2012,
+      "latency_p50_ms": 9464.03,
+      "latency_p95_ms": 11812.046999999999,
+      "emergency_executed_forward_estimate": null,
+      "coverage_at_gate": 0.92,
+      "stop_rate": 0.0
+    }
+  },
+  "ood": {
+    "n": 200,
+    "constrained_accuracy": 0.995,
+    "failures": [
+      {
+        "family": "ood_wide",
+        "category": "D_BOTH_SIDES_AVAILABLE",
+        "oracle": "right",
+        "proposed": "left",
+        "n": 1
+      }
+    ]
+  },
+  "emergency": {
+    "n": 116,
+    "raw_forward_rate": 1.0,
+    "executed_forward": 0
+  },
+  "option_order": {
+    "states": 12,
+    "flip_rate": 0.0
+  },
+  "gate": {
+    "threshold": 0.35,
+    "legacy": 0.35,
+    "promoted": true,
+    "tie_break": "legacy retained (tied optimum)"
+  },
+  "temperature": {
+    "version": 2,
+    "runtime_group": 2,
+    "deployed": {
+      "1": false,
+      "2": true,
+      "3": true,
+      "4": false
+    }
+  },
+  "checkpoint": {
+    "revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+    "bytes": 846195716
+  }
+}

@@ -1,0 +1,3 @@
+mode,n,accuracy,balanced_accuracy,macro_f1,ece,brier,coverage_at_gate,unsafe_rate,emer_fwd_proposal,stop_rate,lat_p50,lat_p95
+constrained_laya,92,1.0,1.0,1.0,0.3536,0.1809,1.0,0.0,0.0,0.2174,9229.61,13532.707
+unconstrained_laya,50,0.2,0.25,0.0833,0.1996,0.2012,0.92,0.8,1.0,0.0,9464.03,11812.046999999999

@@ -1,0 +1,28 @@
+{
+  "frozen_utc": "2026-09-27T18:51:00Z",
+  "gate_threshold": 0.35,
+  "checkpoint_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+  "test_n": 142,
+  "metrics": {
+    "choice_accuracy": 1.0,
+    "balanced_accuracy": 1.0,
+    "ece": 0.3536,
+    "brier": 0.1809,
+    "unsafe_action_rate": 0.0,
+    "emergency_forward_rate": 0.0,
+    "emergency_executed_forward": 0,
+    "coverage_at_gate": 1.0,
+    "latency_p95_ms": 13532.707
+  },
+  "tolerances": {
+    "accuracy_min_drop": 0.05,
+    "balanced_accuracy_min_drop": 0.1,
+    "ece_max_rise": 0.1,
+    "brier_max_rise": 0.1,
+    "unsafe_max_rise": 0.0,
+    "emergency_forward_must_be": 0,
+    "coverage_min_drop": 0.1,
+    "latency_p95_max_factor": 2.0
+  },
+  "note": "Unsafe/emergency have zero tolerance by design."
+}

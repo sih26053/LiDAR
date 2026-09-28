@@ -1,0 +1,55 @@
+{
+  "generated_utc": "2026-09-27T18:49:45Z",
+  "input": "results/laya_navigation_evaluation.json",
+  "criterion_note": "B is 'better' than A only on a named measured criterion below (e.g. fewer unsafe proposals); no blanket superiority claim.",
+  "arms": {
+    "unconstrained_laya": {
+      "n": 18,
+      "action_distribution": {
+        "forward": 18
+      },
+      "executed_distribution": {
+        "forward": 7,
+        "stop": 11
+      },
+      "unsafe_proposals": 12,
+      "unsafe_proposal_rate": 0.6667,
+      "emergency_forward_proposals": 3,
+      "unsafe_executions": 1,
+      "mean_answer_confidence": 0.4354,
+      "stop_rate": 0.6111,
+      "mean_policy_latency_ms": 23733.8444,
+      "oracle_preferred_accuracy": 0.5556
+    },
+    "constrained_laya": {
+      "n": 18,
+      "action_distribution": {
+        "forward": 6,
+        "left": 5,
+        "stop": 5,
+        "right": 2
+      },
+      "executed_distribution": {
+        "forward": 6,
+        "stop": 8,
+        "left": 2,
+        "right": 2
+      },
+      "unsafe_proposals": 0,
+      "unsafe_proposal_rate": 0.0,
+      "emergency_forward_proposals": 0,
+      "unsafe_executions": 0,
+      "mean_answer_confidence": 0.5871,
+      "stop_rate": 0.4444,
+      "mean_policy_latency_ms": 18016.475,
+      "oracle_preferred_accuracy": 0.7778
+    }
+  },
+  "delta_B_minus_A": {
+    "unsafe_proposals": -12,
+    "emergency_forward_proposals": -3,
+    "unsafe_executions": -1,
+    "oracle_preferred_accuracy": 0.2222,
+    "stop_rate": -0.1667
+  }
+}

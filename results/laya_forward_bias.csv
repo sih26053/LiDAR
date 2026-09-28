@@ -1,0 +1,7 @@
+category,n,raw_distribution
+A_OPEN_FORWARD,25,"{""forward"": 25}"
+B_FORWARD_BLOCKED_LEFT_OPEN,25,"{""forward"": 25}"
+C_FORWARD_BLOCKED_RIGHT_OPEN,25,"{""forward"": 25}"
+D_BOTH_SIDES_AVAILABLE,159,"{""forward"": 159}"
+E_NO_SAFE_DIRECTION,25,"{""forward"": 25}"
+F_EMERGENCY,66,"{""forward"": 66}"

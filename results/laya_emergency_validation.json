@@ -1,0 +1,12 @@
+{
+  "generated_utc": "2026-09-27T18:26:21Z",
+  "n_emergency": 116,
+  "raw_forward": 116,
+  "raw_forward_rate": 1.0,
+  "constrained_forward": 0,
+  "executed_forward": 0,
+  "skip_logic_verified_samples": 5,
+  "acceptance_executed_forward_zero": true,
+  "deploy": "PROCEED (criterion met)",
+  "note": "Raw model behavior recorded honestly; constrained path is deterministic STOP (no inference)."
+}

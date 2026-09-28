@@ -1,0 +1,460 @@
+{
+  "generated_utc": "2026-09-27T17:46:23Z",
+  "n_states": 12,
+  "n_flips": 0,
+  "flip_rate": 0.0,
+  "production_order": [
+    "forward",
+    "left",
+    "right",
+    "stop"
+  ],
+  "production_order_changed": false,
+  "note": "Diagnostic only; production option order unchanged.",
+  "results": [
+    {
+      "frame_id": "benchmark-ind_side_blocked-1790524567_f00000",
+      "category": "A_OPEN_FORWARD",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    },
+    {
+      "frame_id": "benchmark-ind_side_blocked-1790524567_f00001",
+      "category": "A_OPEN_FORWARD",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    },
+    {
+      "frame_id": "benchmark-ind_fwd_blocked-1790524567_f00001",
+      "category": "B_FORWARD_BLOCKED_LEFT_OPEN",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    },
+    {
+      "frame_id": "benchmark-ind_fwd_blocked-1790524567_f00009",
+      "category": "B_FORWARD_BLOCKED_LEFT_OPEN",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    },
+    {
+      "frame_id": "benchmark-ind_fwd_blocked-1790524567_f00008",
+      "category": "C_FORWARD_BLOCKED_RIGHT_OPEN",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    },
+    {
+      "frame_id": "benchmark-ind_fwd_blocked-1790524567_f00015",
+      "category": "C_FORWARD_BLOCKED_RIGHT_OPEN",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    },
+    {
+      "frame_id": "benchmark-ood_dense-1790524567_f00000",
+      "category": "D_BOTH_SIDES_AVAILABLE",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    },
+    {
+      "frame_id": "benchmark-ood_noisy-1790524567_f00000",
+      "category": "D_BOTH_SIDES_AVAILABLE",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    },
+    {
+      "frame_id": "benchmark-ind_trap-1790524567_f00020",
+      "category": "E_NO_SAFE_DIRECTION",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    },
+    {
+      "frame_id": "benchmark-ind_trap-1790524567_f00039",
+      "category": "E_NO_SAFE_DIRECTION",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    },
+    {
+      "frame_id": "benchmark-ind_fwd_blocked-1790524567_f00000",
+      "category": "F_EMERGENCY",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    },
+    {
+      "frame_id": "benchmark-ind_trap-1790524567_f00000",
+      "category": "F_EMERGENCY",
+      "orders": [
+        [
+          "forward",
+          "left",
+          "right",
+          "stop"
+        ],
+        [
+          "left",
+          "right",
+          "stop",
+          "forward"
+        ],
+        [
+          "right",
+          "stop",
+          "forward",
+          "left"
+        ],
+        [
+          "stop",
+          "forward",
+          "left",
+          "right"
+        ]
+      ],
+      "choices": [
+        "forward",
+        "forward",
+        "forward",
+        "forward"
+      ],
+      "flipped": false
+    }
+  ]
+}

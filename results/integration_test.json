@@ -1,0 +1,103 @@
+{
+  "steps": [
+    {
+      "step": "checkpoint-local",
+      "ok": true,
+      "detail": "rev=55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851 offline=AVAILABLE"
+    },
+    {
+      "step": "laya-ready",
+      "ok": true,
+      "detail": "reused=False cold_start_s=37.3"
+    },
+    {
+      "step": "backend-connect",
+      "ok": true,
+      "detail": "mode=idle"
+    },
+    {
+      "step": "pybullet-start",
+      "ok": true,
+      "detail": "live-1790533644"
+    },
+    {
+      "step": "autonomy-steps",
+      "ok": true,
+      "detail": "steps=9"
+    },
+    {
+      "step": "real-laya-decision",
+      "ok": true,
+      "detail": "action=forward conf=0.433"
+    },
+    {
+      "step": "eligibility-recorded",
+      "ok": true,
+      "detail": "eligible=['forward', 'left', 'right', 'stop'] mode=constrained_laya"
+    },
+    {
+      "step": "safety-bound",
+      "ok": true,
+      "detail": "safety=SAFE_TO_EXECUTE executed=forward"
+    },
+    {
+      "step": "recorded-frames",
+      "ok": true,
+      "detail": "frames=10"
+    },
+    {
+      "step": "sqlite-decision",
+      "ok": true,
+      "detail": "frame=live-1790533644_f00000"
+    },
+    {
+      "step": "laya-survives-backend-restart",
+      "ok": true,
+      "detail": "same_pid=True (independent lifetime)"
+    },
+    {
+      "step": "backend-reconnect",
+      "ok": true,
+      "detail": "reconnected"
+    },
+    {
+      "step": "dashboard-chain",
+      "ok": true,
+      "detail": "mode=constrained_laya eligible=['forward', 'left', 'right', 'stop']"
+    },
+    {
+      "step": "replay-constrained",
+      "ok": true,
+      "detail": "action=forward eligible=['forward', 'left', 'right', 'stop']"
+    },
+    {
+      "step": "replay-unconstrained",
+      "ok": true,
+      "detail": "action=forward eligible=['forward', 'left', 'right', 'stop']"
+    },
+    {
+      "step": "replay-no-live-command",
+      "ok": true,
+      "detail": "env untouched (None)"
+    },
+    {
+      "step": "ab-present",
+      "ok": true,
+      "detail": "results/laya_ab_comparison.json"
+    },
+    {
+      "step": "calibration-loaded",
+      "ok": true,
+      "detail": "gate=0.35"
+    }
+  ],
+  "started_utc": "2026-09-27T18:26:39Z",
+  "laya_cold_start_s": 37.3,
+  "warm_laya_latency_ms": 10793.76,
+  "loop_latency_ms": 10954.44,
+  "lidar_fps": 3.09,
+  "sample_frame": "live-1790533644_f00000",
+  "memory_backend_rss_mb": null,
+  "device": "CPU",
+  "finished_utc": "2026-09-27T18:32:14Z"
+}

@@ -1,0 +1,128 @@
+dimension,key,value
+run,live-1790533867,frames=12 scenario=None mode=autonomous
+run,live-1790533644,frames=42 scenario=straight_road mode=autonomous
+run,benchmark-ind_open-1790524567,frames=0 scenario=ind_open mode=benchmark
+run,benchmark-ind_fwd_blocked-1790524567,frames=230 scenario=ind_fwd_blocked mode=benchmark
+run,benchmark-ind_side_blocked-1790524567,frames=95 scenario=ind_side_blocked mode=benchmark
+run,benchmark-ind_trap-1790524567,frames=151 scenario=ind_trap mode=benchmark
+run,benchmark-ind_emergency-1790524567,frames=24 scenario=ind_emergency mode=benchmark
+run,benchmark-ood_narrow-1790524567,frames=27 scenario=ood_narrow mode=benchmark
+run,benchmark-ood_wide-1790524567,frames=19 scenario=ood_wide mode=benchmark
+run,benchmark-ood_big-1790524567,frames=18 scenario=ood_big mode=benchmark
+run,benchmark-ood_dense-1790524567,frames=29 scenario=ood_dense mode=benchmark
+run,benchmark-ood_pose-1790524567,frames=28 scenario=ood_pose mode=benchmark
+run,benchmark-ood_noisy-1790524567,frames=27 scenario=ood_noisy mode=benchmark
+run,benchmark-ood_dropout-1790524567,frames=23 scenario=ood_dropout mode=benchmark
+run,benchmark-ood_sparse-1790524567,frames=29 scenario=ood_sparse mode=benchmark
+run,benchmark-ind_open-1790524472,frames=0 scenario=ind_open mode=benchmark
+run,benchmark-ind_fwd_blocked-1790524472,frames=0 scenario=ind_fwd_blocked mode=benchmark
+run,benchmark-ind_side_blocked-1790524472,frames=0 scenario=ind_side_blocked mode=benchmark
+run,benchmark-ind_trap-1790524472,frames=0 scenario=ind_trap mode=benchmark
+run,benchmark-ind_emergency-1790524472,frames=0 scenario=ind_emergency mode=benchmark
+run,benchmark-ood_narrow-1790524472,frames=0 scenario=ood_narrow mode=benchmark
+run,benchmark-ood_wide-1790524472,frames=0 scenario=ood_wide mode=benchmark
+run,benchmark-ood_big-1790524472,frames=0 scenario=ood_big mode=benchmark
+run,benchmark-ood_dense-1790524472,frames=0 scenario=ood_dense mode=benchmark
+run,benchmark-ood_pose-1790524472,frames=0 scenario=ood_pose mode=benchmark
+run,benchmark-ood_noisy-1790524472,frames=0 scenario=ood_noisy mode=benchmark
+run,benchmark-ood_dropout-1790524472,frames=0 scenario=ood_dropout mode=benchmark
+run,benchmark-ood_sparse-1790524472,frames=0 scenario=ood_sparse mode=benchmark
+run,benchmark-ind_open-1790524036,frames=0 scenario=ind_open mode=benchmark
+run,benchmark-ind_fwd_blocked-1790524036,frames=0 scenario=ind_fwd_blocked mode=benchmark
+run,benchmark-ind_side_blocked-1790524036,frames=0 scenario=ind_side_blocked mode=benchmark
+run,benchmark-ind_trap-1790524036,frames=0 scenario=ind_trap mode=benchmark
+run,benchmark-ind_emergency-1790524036,frames=0 scenario=ind_emergency mode=benchmark
+run,benchmark-ood_narrow-1790524036,frames=0 scenario=ood_narrow mode=benchmark
+run,benchmark-ood_wide-1790524036,frames=0 scenario=ood_wide mode=benchmark
+run,benchmark-ood_big-1790524036,frames=0 scenario=ood_big mode=benchmark
+run,benchmark-ood_dense-1790524036,frames=0 scenario=ood_dense mode=benchmark
+run,benchmark-ood_pose-1790524036,frames=0 scenario=ood_pose mode=benchmark
+run,benchmark-ood_noisy-1790524036,frames=0 scenario=ood_noisy mode=benchmark
+run,benchmark-ood_dropout-1790524036,frames=0 scenario=ood_dropout mode=benchmark
+run,benchmark-ood_sparse-1790524036,frames=0 scenario=ood_sparse mode=benchmark
+run,benchmark-ind_trap-1790523598,frames=2 scenario=ind_trap mode=benchmark
+run,benchmark-ind_emergency-1790523598,frames=2 scenario=ind_emergency mode=benchmark
+run,benchmark-ood_narrow-1790523598,frames=1 scenario=ood_narrow mode=benchmark
+run,benchmark-ood_wide-1790523598,frames=1 scenario=ood_wide mode=benchmark
+run,benchmark-ood_big-1790523598,frames=1 scenario=ood_big mode=benchmark
+run,benchmark-ood_dense-1790523598,frames=1 scenario=ood_dense mode=benchmark
+run,benchmark-ood_pose-1790523598,frames=1 scenario=ood_pose mode=benchmark
+run,benchmark-ood_noisy-1790523598,frames=1 scenario=ood_noisy mode=benchmark
+run,live-1790521469,frames=750 scenario=None mode=autonomous
+run,live-1790520786,frames=71 scenario=straight_road mode=autonomous
+run,live-1790520361,frames=20 scenario=None mode=manual
+run,live-1790520062,frames=121 scenario=straight_road mode=autonomous
+run,live-1790519431,frames=36 scenario=None mode=autonomous
+run,live-1790519251,frames=33 scenario=straight_road mode=autonomous
+run,live-1790513214,frames=1735 scenario=None mode=autonomous
+run,live-1790511776,frames=39 scenario=None mode=manual
+run,live-1790511480,frames=133 scenario=straight_road mode=autonomous
+run,live-1790511039,frames=177 scenario=None mode=manual
+run,live-1790510839,frames=91 scenario=straight_road mode=autonomous
+run,live-1790510394,frames=48 scenario=None mode=manual
+run,live-1790510253,frames=68 scenario=straight_road mode=autonomous
+run,live-1790509835,frames=102 scenario=None mode=manual
+run,live-1790509092,frames=402 scenario=straight_road mode=autonomous
+run,live-1790508891,frames=37 scenario=straight_road mode=autonomous
+run,live-1790508707,frames=58 scenario=straight_road mode=autonomous
+run,live-1790508473,frames=83 scenario=straight_road mode=autonomous
+run,live-1790508274,frames=73 scenario=straight_road mode=autonomous
+run,live-1790507288,frames=65 scenario=straight_road mode=autonomous
+run,live-1790507123,frames=53 scenario=straight_road mode=autonomous
+run,live-1790506883,frames=35 scenario=None mode=autonomous
+run,live-1790506715,frames=12 scenario=None mode=autonomous
+run,live-1790506267,frames=128 scenario=straight_road mode=autonomous
+run,live-1790506055,frames=75 scenario=straight_road mode=autonomous
+run,live-1790505827,frames=90 scenario=straight_road mode=autonomous
+run,live-1790505595,frames=45 scenario=straight_road mode=autonomous
+run,live-1790505389,frames=77 scenario=straight_road mode=autonomous
+run,live-1790448558,frames=16177 scenario=None mode=autonomous
+run,live-1790448234,frames=2596 scenario=None mode=manual
+run,live-1790447199,frames=4263 scenario=None mode=autonomous
+run,live-1790447107,frames=426 scenario=None mode=autonomous
+run,live-1790447062,frames=196 scenario=None mode=autonomous
+run,live-1790446769,frames=250 scenario=None mode=autonomous
+run,live-1790446760,frames=29 scenario=None mode=autonomous
+run,live-1790445931,frames=3816 scenario=None mode=autonomous
+run,live-1790418812,frames=5800 scenario=None mode=autonomous
+run,live-1790418498,frames=361 scenario=None mode=autonomous
+run,live-1790417083,frames=4204 scenario=None mode=autonomous
+run,live-1790413824,frames=3421 scenario=None mode=autonomous
+run,live-1790413041,frames=622 scenario=None mode=manual
+run,live-1790412964,frames=261 scenario=None mode=manual
+run,live-1790412732,frames=216 scenario=straight_road mode=autonomous
+run,live-1790412700,frames=365 scenario=None mode=manual
+run,live-1790412579,frames=269 scenario=straight_road mode=autonomous
+scenario,,45753
+scenario,ind_emergency,26
+scenario,ind_fwd_blocked,230
+scenario,ind_side_blocked,95
+scenario,ind_trap,153
+scenario,ood_big,19
+scenario,ood_dense,30
+scenario,ood_dropout,23
+scenario,ood_narrow,28
+scenario,ood_noisy,28
+scenario,ood_pose,29
+scenario,ood_sparse,29
+scenario,ood_wide,20
+scenario,straight_road,2230
+decision,benchmark-laya:forward,646
+decision,benchmark-laya:stop,171
+decision,benchmark-laya:turn_left,41
+decision,benchmark-laya:turn_right,42
+decision,fallback:None,30506
+decision,fallback:forward,3044
+decision,fallback:turn_left,115
+decision,fallback:turn_right,5070
+decision,jev:forward,4116
+decision,jev:turn_left,1700
+decision,jev:turn_right,780
+decision,laya:forward,2634
+decision,manual:forward,3
+decision,manual:left,3
+decision,manual:right,3
+decision,manual:stop,7
+decision,replay-jev:None,386
+decision,replay-jev:forward,789
+decision,replay-laya:forward,13

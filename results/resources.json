@@ -1,0 +1,18 @@
+{
+  "detected_utc": "2026-09-27T18:49:13Z",
+  "os": "Windows-10-10.0.19045-SP0",
+  "python": "3.11.0",
+  "torch": "2.14.0+cpu",
+  "cuda_available": false,
+  "gpu_count": 0,
+  "cpu_count": 4,
+  "ram_gb": "Unavailable (psutil missing)",
+  "laya_version": "0.3.20",
+  "docker": false,
+  "systemd": false,
+  "paths": {
+    "finetune": "CPU-only: package only",
+    "docker": "prepare config, mark unvalidated",
+    "systemd": "ship unit, mark unvalidated"
+  }
+}
