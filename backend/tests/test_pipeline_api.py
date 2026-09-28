@@ -22,11 +22,14 @@ def _check_contract(result: dict):
         assert key in cell, f"cell missing {key}"
     assert cell["resolution"] in (0.05, 0.10, 0.20, 0.50)
     assert 0.0 <= cell["importance"] <= 1.0
-    # Semantic provenance must use the annotation vocabulary, never fake ML.
+    # Semantic provenance must use the known vocabulary, never fake ML.
+    # Default (annotation) mode carries no model claims; model mode must say
+    # "trained" (a real trained classifier now exists — see /model/info).
     assert cell["semantic_source"] in ("annotation", "fallback", "lidarseg",
                                        "lidarseg_annotation", "object_annotation",
                                        "unknown", "model")
-    assert "model" not in result["semantic"]["mode"].lower() or "no trained model" in result["semantic"]["mode"]
+    mode = str(result["semantic"]["mode"]).lower()
+    assert ("model" not in mode) or ("trained" in mode)
     assert result["timing"]["total_latency_ms"] is not None
     assert result["timing"]["total_latency_ms"] > 0
 

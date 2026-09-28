@@ -9,10 +9,6 @@ client = TestClient(app)
 
 
 def test_simulator_reports_live_truthfully(monkeypatch):
-    from src.decision import jev_client as C
-
-    # Hermetic regardless of any real key in config/local_secrets.py.
-    monkeypatch.setattr(C, "resolve_api_key", lambda: ("", ""))
     try:
         __import__("pybullet")
         live = True
@@ -26,7 +22,8 @@ def test_simulator_reports_live_truthfully(monkeypatch):
         assert "active" in body["simulator"]
     else:
         assert "BLOCKED" in body["simulator"]
-    assert body["jev"]["available"] is False  # no key in test env
+    assert body["decision_engine"] == "laya"
+    assert "laya" in body  # local engine block (availability varies)
 
 
 def test_simulation_run_live_or_blocked():

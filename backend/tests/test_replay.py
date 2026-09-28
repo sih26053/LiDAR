@@ -18,7 +18,12 @@ def test_frames_lists_real_manifest():
 def test_frames_endpoint():
     r = client.get("/frames")
     assert r.status_code == 200
-    assert r.json()["count"] == 7
+    assert r.json()["nuscenes"] == 7
+    body = r.json()
+    # Recorded live frames appended with origin; nuScenes intact, never mixed.
+    assert body["count"] == body["nuscenes"] + body["live_recorded"]
+    assert REAL_FRAME in {f["frame_id"] for f in body["frames"]
+                          if f["origin"] == "nuscenes"}
 
 
 def test_replay_load_real_frame():
