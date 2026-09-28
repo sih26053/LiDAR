@@ -1,0 +1,73 @@
+{
+  "current_known_good": {
+    "checkpoint_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+    "gate_threshold": 0.35,
+    "split_hash": "1701ceef3230d910",
+    "registered_utc": "2026-09-27T18:51:35Z",
+    "stage": "CURRENT_KNOWN_GOOD",
+    "previous": {
+      "checkpoint_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+      "gate_threshold": 0.35,
+      "split_hash": "9556324fa45dedb2",
+      "registered_utc": "2026-09-27T18:34:03Z",
+      "stage": "CURRENT_KNOWN_GOOD",
+      "previous": null
+    }
+  },
+  "candidates": [
+    {
+      "checkpoint_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+      "gate_threshold": 0.35,
+      "split_hash": "9556324fa45dedb2",
+      "registered_utc": "2026-09-27T18:34:03Z",
+      "stage": "EXPERIMENTAL"
+    },
+    {
+      "checkpoint_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+      "gate_threshold": 0.35,
+      "split_hash": "1701ceef3230d910",
+      "registered_utc": "2026-09-27T18:51:35Z",
+      "stage": "EXPERIMENTAL"
+    }
+  ],
+  "history": [
+    {
+      "candidate": {
+        "checkpoint_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+        "gate_threshold": 0.35,
+        "split_hash": "9556324fa45dedb2",
+        "registered_utc": "2026-09-27T18:34:03Z",
+        "stage": "EXPERIMENTAL"
+      },
+      "utc": "2026-09-27T18:34:17Z",
+      "result": "BLOCKED",
+      "reasons": [
+        "replay-pure: no executor in replay path"
+      ]
+    },
+    {
+      "candidate": {
+        "checkpoint_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+        "gate_threshold": 0.35,
+        "split_hash": "9556324fa45dedb2",
+        "registered_utc": "2026-09-27T18:34:03Z",
+        "stage": "EXPERIMENTAL"
+      },
+      "utc": "2026-09-27T18:37:33Z",
+      "result": "PROMOTED",
+      "reasons": []
+    },
+    {
+      "candidate": {
+        "checkpoint_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+        "gate_threshold": 0.35,
+        "split_hash": "1701ceef3230d910",
+        "registered_utc": "2026-09-27T18:51:35Z",
+        "stage": "EXPERIMENTAL"
+      },
+      "utc": "2026-09-27T18:51:48Z",
+      "result": "PROMOTED",
+      "reasons": []
+    }
+  ]
+}
