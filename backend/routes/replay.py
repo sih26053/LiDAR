@@ -57,13 +57,31 @@ def replay_load(req: LoadRequest):
         t0 = time.perf_counter()
         points, _ = replay_service.load_frame_points(req.frame_id)
         load_ms = (time.perf_counter() - t0) * 1000.0
+    except FrameNotFoundError:
+        # Recorded live frame (SQLite): same shape, explicit origin.
+        from backend.services import replay_jev as _rj
+
+        try:
+            t0 = time.perf_counter()
+            points, meta = _rj.load_recorded_points(req.frame_id)
+            load_ms = (time.perf_counter() - t0) * 1000.0
+        except FrameNotFoundError as exc:
+            return _err(404, "input", "FRAME_NOT_FOUND", str(exc), req.frame_id)
+        except DataLoadError as exc:
+            return _err(500, "loading", "DATA_LOAD_FAILED", str(exc), req.frame_id)
+        return {"frame_id": req.frame_id, "scene_id": meta.get("scene_id"),
+                "timestamp": meta.get("timestamp"), "point_count": int(len(points)),
+                "load_status": "loaded", "load_latency_ms": round(load_ms, 1),
+                "origin": "live-recorded", "run_id": meta.get("run_id"),
+                "scenario": meta.get("scenario")}
     except FrameNotFoundError as exc:
         return _err(404, "input", "FRAME_NOT_FOUND", str(exc), req.frame_id)
     except DataLoadError as exc:
         return _err(500, "loading", "DATA_LOAD_FAILED", str(exc), req.frame_id)
     return {"frame_id": entry["frame_id"], "scene_id": entry.get("scene_id"),
             "timestamp": entry.get("timestamp"), "point_count": int(len(points)),
-            "load_status": "loaded", "load_latency_ms": round(load_ms, 1)}
+            "load_status": "loaded", "load_latency_ms": round(load_ms, 1),
+            "origin": "nuscenes"}
 
 
 @router.post("/replay/run")

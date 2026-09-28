@@ -30,10 +30,12 @@ def system_status() -> Dict[str, Any]:
 
     sim = simulator.active_backend()
     try:
-        from src.decision.jev_decision import service_status as jev_status
-        jev = jev_status()
+        from src.decision.laya_client import resolve_model, service_status
+        laya = service_status()
+        laya_model = resolve_model()
     except Exception as exc:  # noqa: BLE001 - report
-        jev = {"available": False, "reason": f"status probe failed: {exc}"}
+        laya = {"available": False, "reason": f"status probe failed: {exc}"}
+        laya_model = "typed-decisions"
     try:
         from backend.services import pybullet_live
         live = pybullet_live.status()
@@ -43,9 +45,12 @@ def system_status() -> Dict[str, Any]:
         "backend": "ok",
         "simulator": "pybullet",
         "pybullet_importable": sim["pybullet_importable"],
-        "decision_model": "typesafe/jev-1.13",
-        "jev_available": bool(jev.get("available")),
-        "jev_reason": jev.get("reason"),
+        "decision_engine": "laya",
+        "decision_model": laya_model,
+        "decision_backend": "LOCAL",
+        "laya": laya,
+        "laya_available": bool(laya.get("available")),
+        "laya_reason": laya.get("reason"),
         "live": live,
         "physical_testing": "NOT EXECUTED",
     }

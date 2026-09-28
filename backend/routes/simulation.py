@@ -111,7 +111,7 @@ def simulation_step():
 
 class PyBulletRunBody(BaseModel):
     steps: int = Field(default=20, ge=1, le=500)
-    decision_mode: str = Field(default="jev", pattern="^(jev|dqn)$")
+    decision_mode: str = Field(default="laya", pattern="^(laya|jev|dqn)$")
 
 @router.post("/simulation/run")
 def simulation_run(body: PyBulletRunBody):
@@ -167,20 +167,22 @@ def simulation_pybullet():
 
     state = simulator.active_backend()
     try:
-        from src.decision.jev_decision import service_status as jev_status
-        jev = jev_status()
+        from src.decision.laya_client import service_status as laya_status
+        laya = laya_status()
     except Exception as exc:  # noqa: BLE001 - report
-        jev = {"available": False, "reason": f"status probe failed: {exc}"}
+        laya = {"available": False, "reason": f"status probe failed: {exc}"}
     return {"simulator": "pybullet (active)" if state["pybullet_importable"] else "pybullet (BLOCKED: not importable here)",
-            "decision_backend": "jev" if jev["available"] else "jev (BLOCKED) / dqn-untrained baseline",
+            "decision_backend": "laya (LOCAL)" if laya["available"] else "laya (STARTING/ERROR) / dqn-untrained baseline",
+            "decision_engine": "laya",
             "pybullet_importable": state["pybullet_importable"],
             "carla_importable": state["carla_importable"],
-            "jev": jev}
+            "laya": laya}
 
 
 class LiveStartBody(BaseModel):
     mode: str = Field(default="autonomous", pattern="^(autonomous|manual)$")
     decision_interval_steps: int = Field(default=5, ge=1, le=100)
+    scenario_id: str | None = Field(default=None, max_length=64)
 
 
 @router.post("/simulation/live/start")
@@ -188,8 +190,12 @@ def live_start(body: LiveStartBody):
     """Start the in-process PyBullet live loop (real env or honest BLOCKED)."""
     from backend.services import pybullet_live
 
-    return pybullet_live.start(mode=body.mode,
-                               decision_interval_steps=body.decision_interval_steps)
+    try:
+        return pybullet_live.start(mode=body.mode,
+                                   decision_interval_steps=body.decision_interval_steps,
+                                   scenario_id=body.scenario_id)
+    except ValueError as exc:
+        return JSONResponse(status_code=400, content={"message": str(exc)[:400]})
 
 
 @router.post("/simulation/live/stop")
@@ -220,7 +226,7 @@ def simulation_state():
 
 @router.post("/simulation/action/{action}")
 def manual_action(action: str):
-    """One safety-checked manual step; recorded with source=manual (never Jev)."""
+    """One safety-checked manual step; recorded with source=manual (never Laya)."""
     from backend.services import pybullet_live
 
     try:
