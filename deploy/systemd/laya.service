@@ -1,0 +1,22 @@
+[Unit]
+Description=Paradox Protocol Laya decision server (independent service)
+After=network.target
+
+[Service]
+Type=simple
+User=paradox
+WorkingDirectory=/opt/paradox-protocol
+Environment=LAYA_HOST=127.0.0.1
+Environment=LAYA_PORT=18001
+Environment=HF_HUB_OFFLINE=1
+ExecStart=/opt/paradox-protocol/.venv-pb/bin/python scripts/run_laya_server.py --offline
+Restart=on-failure
+RestartSec=5
+StartLimitBurst=5
+StartLimitIntervalSec=120
+TimeoutStartSec=600
+StandardOutput=append:/var/log/paradox/laya_server.log
+StandardError=append:/var/log/paradox/laya_server.log
+
+[Install]
+WantedBy=multi-user.target
