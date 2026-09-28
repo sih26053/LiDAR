@@ -1,1 +1,37 @@
-
+{
+  "artifact": "gate_selection",
+  "version": 2,
+  "date_utc": "2026-09-27T18:50:56Z",
+  "dataset_id": "laya-splits-v1",
+  "dataset_hash": "077adc992adae459",
+  "split_hash": "1701ceef3230d910",
+  "split": "validation",
+  "n_calibration": 196,
+  "n_validation": 146,
+  "confidence_metric": "answer_confidence",
+  "legacy_starting_threshold": 0.35,
+  "validated_candidate_threshold": 0.35,
+  "selected_threshold": 0.35,
+  "tie_break": "legacy retained (tied optimum)",
+  "plateau_note": "Thresholds <=0.40 are outcome-identical on validation (eligibility carries admissibility); optimality NOT claimed.",
+  "current_gate_threshold": 0.35,
+  "promoted": true,
+  "stop_reasons": [],
+  "selection_objective": "PRIMARY minimize unsafe accepted; SUBJECT TO coverage>=0.50; SECONDARY maximize correct accepted; TERTIARY minimize unnecessary STOP",
+  "validation_row": {
+    "threshold": 0.35,
+    "n_total": 146,
+    "accepted": 146,
+    "rejected": 0,
+    "coverage": 1.0,
+    "fallback_stop_rate": 0.0,
+    "correct_accepted": 146,
+    "unsafe_accepted": 0,
+    "unnecessary_rejections": 0,
+    "unnecessary_stop_rate": 0.0,
+    "balanced_accuracy": 0.5,
+    "brier_accepted": 0.1857
+  },
+  "checkpoint_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+  "note": "Promoted only under zero-unsafe validation; otherwise legacy 0.35 stays live with status NOT VALIDATED."
+}
