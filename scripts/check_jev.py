@@ -1,4 +1,8 @@
-"""Jev live gate probe (no key exposure, no fake decision).
+"""LEGACY cloud-Jev live gate probe (kept for historical records).
+
+The active backend uses local Laya (scripts/check_laya.py) and never
+calls OpenRouter. This script still works where a key is configured.
+"""
 
 Key source: config/local_secrets.py (OPENROUTER_API_KEY pasted by the
 user; server-side only) unless OPENROUTER_API_KEY / TYPESAFE_API_KEY is

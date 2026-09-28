@@ -62,9 +62,18 @@ def main(steps: int = 50, gui: bool = False,
     interval = int(decision_interval_steps) if decision_interval_steps else _default_interval_steps()
     interval = max(1, interval)
     run_id = run_id or f"run-{time.strftime('%Y%m%dT%H%M%S', time.gmtime())}"
+    try:
+        from backend.services import laya_manager
+
+        laya_boot = laya_manager.ensure_started(wait_s=180.0)
+        laya_state = "READY" if laya_boot["health"].get("healthy") else "ERROR"
+    except Exception as exc:  # noqa: BLE001 - degraded UNAVAILABLE path
+        laya_state = f"ERROR: {type(exc).__name__}: {str(exc)[:200]}"
     trace: dict = {"steps": [], "status": "STARTED", "run_id": run_id,
                    "decision_interval_steps": interval,
                    "scenario_id": scenario_id,
+                   "decision_engine": "laya",
+                   "laya_state": laya_state,
                    "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     try:
         scenario = _load_scenario(scenario_id)
@@ -75,7 +84,7 @@ def main(steps: int = 50, gui: bool = False,
         trace.update({"status": "BLOCKED", "reason": f"simulator: {exc}"})
         _save(trace)
         return trace
-    policy = get_policy("jev")
+    policy = get_policy()
     lidar = PyBulletLidar()
     executor = PyBulletActionExecutor(env)
     last_decision = None
@@ -197,10 +206,10 @@ def _metrics_summary(trace: dict) -> dict:
         "safety_latency_ms_mean": _mean([s.get("safety_latency_ms") for s in steps]),
         "action_execution_latency_ms_mean": _mean([s.get("exec_ms") for s in steps]),
         "loop_latency_ms_mean": _mean([s.get("loop_ms") for s in steps]),
-        "jev_calls": jev_calls,
-        "jev_successful": ok,
-        "jev_failed": failed,
-        "jev_unavailable": unavailable,
+        "laya_calls": jev_calls,
+        "laya_successful": ok,
+        "laya_failed": failed,
+        "laya_unavailable": unavailable,
         "actions_by_type": by_type,
         "safety_overrides": overrides,
         "vehicle_movement_m": movement if movement is not None else "NOT_AVAILABLE",
@@ -222,7 +231,7 @@ def _save(trace: dict) -> None:
         d = s.get("decision", {})
         rows.append({"step": s.get("step"), "run_id": s.get("run_id"),
                      "points": s.get("points"),
-                     "model": "jev", "source": d.get("source"),
+                     "model": "laya", "source": d.get("source"),
                      "proposed_action": d.get("proposed_action"),
                      "confidence": d.get("confidence"),
                      "safety_override": d.get("safety_override"),

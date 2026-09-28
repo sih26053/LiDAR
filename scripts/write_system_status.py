@@ -26,44 +26,44 @@ def probe() -> dict:
 
     sim = simulator.active_backend()
     try:
-        from src.decision.jev_decision import service_status as jev_status
-        jev = jev_status()
+        from src.decision.laya_client import service_status as laya_status
+        laya = laya_status()
     except Exception as exc:  # noqa: BLE001
-        jev = {"available": False, "reason": str(exc)[:200]}
+        laya = {"available": False, "reason": str(exc)[:200]}
     stages = {
-        "1": ("PASS", "replay loader + preprocessing green (216 passed 2026-09-25, .venv-pb)",
+        "1": ("PASS", "replay loader + preprocessing green (backend suite, .venv-pb)",
               "python -m pytest tests/ backend/tests/ -q", "results/final/"),
-        "2": ("PASS", "trained MLP live inference measured per frame (216 passed 2026-09-25)",
+        "2": ("PASS", "trained MLP live inference measured per frame",
               "python -m pytest tests/ backend/tests/ -q", "results/segmentation/metrics.json"),
-        "3": ("PASS", "six factors with provenance; unit-tested (216 passed 2026-09-25)",
+        "3": ("PASS", "six factors with provenance; unit-tested",
               "python -m pytest backend/tests/test_flow.py -q", "src/scene_analysis.py"),
-        "4": ("PASS", "frozen tiers + live quadtree stats (216 passed 2026-09-25)",
+        "4": ("PASS", "frozen tiers + live quadtree stats",
               "python -m pytest tests/ backend/tests/ -q", "src/quadtree.py"),
-        "5": ("PASS", "diagram fields test-verified; map_validator gate live (216 passed 2026-09-25)",
+        "5": ("PASS", "diagram fields test-verified; map_validator gate live",
               "python -m pytest tests/ backend/tests/ -q", "src/map_validator.py"),
-        "6": ("PASS", "13-dim vector verified at runtime incl. live frames (216 passed 2026-09-25)",
+        "6": ("PASS", "13-dim vector verified at runtime incl. live frames",
               "python -m pytest tests/test_pybullet_jev_live.py -q", "config/rl_state_config.json"),
     }
-    if sim["pybullet_importable"] and jev["available"]:
-        s7 = ("JEV DECISION VERIFIED", "live Jev decisions succeeding (choice+confidence)",
-              "python scripts/check_jev.py", "results/decisions/jev_requests.jsonl")
-        s8 = ("PYBULLET AUTONOMOUS ACTION EXECUTION VERIFIED", "Jev actions via safety move vehicle",
+    if sim["pybullet_importable"] and laya["available"]:
+        s7 = ("LAYA DECISION VERIFIED", "live local Laya typed decisions succeeding (choice+confidence)",
+              "python scripts/check_laya.py", "results/decisions/laya_requests.jsonl")
+        s8 = ("PYBULLET AUTONOMOUS ACTION EXECUTION VERIFIED", "Laya actions via safety move vehicle",
               "python scripts/run_pybullet_jev.py --steps 200", "results/pybullet/")
         s9 = ("PYBULLET CLOSED-LOOP SIMULATION VERIFIED", "full intelligent loop with scenario evidence",
               "python scripts/run_pybullet_jev.py --steps 200", "results/metrics/pybullet_jev_metrics.json")
     elif sim["pybullet_importable"]:
-        s7 = ("BLOCKED", "Jev credentials not configured (check_jev BLOCKED); no live decision yet",
-              "python scripts/check_jev.py", "src/decision/jev_client.py")
+        s7 = ("BLOCKED", "local Laya not READY (check_laya BLOCKED); no live decision yet",
+              "python scripts/check_laya.py", "src/decision/laya_client.py")
         s8 = ("PARTIAL", "directional mechanism VERIFIED live (forward moves vehicle; manual forward "
-              "via backend SAFE_TO_EXECUTE); Jev-generated autonomous motion pending key",
+              "via backend SAFE_TO_EXECUTE); Laya-generated autonomous motion pending server",
               "python -m pytest tests/test_pybullet_jev_live.py -q", "results/pybullet/")
-        s9 = ("PARTIAL", "degraded safe-stop loop VERIFIED (200 steps COMPLETED 2026-09-25: new LiDAR -> "
-              "new states -> Jev UNAVAILABLE -> fallback STOP -> safety -> executor); "
-              "intelligent loop pending Jev key",
+        s9 = ("PARTIAL", "degraded safe-stop loop VERIFIED (COMPLETED runs: new LiDAR -> "
+              "new states -> Laya UNAVAILABLE -> fallback STOP -> safety -> executor); "
+              "intelligent loop pending Laya server",
               "python scripts/run_pybullet_jev.py --steps 200", "results/metrics/pybullet_jev_metrics.json")
     else:
-        s7 = ("BLOCKED", "Jev UNAVAILABLE; DQN untrained baseline only",
-              "python scripts/check_jev.py", "src/decision/jev_client.py")
+        s7 = ("BLOCKED", "Laya server down; DQN untrained baseline only",
+              "python scripts/check_laya.py", "src/decision/laya_client.py")
         s8 = ("BLOCKED", "pybullet not importable; install into .venv-pb (Python 3.11)",
               "python scripts/check_pybullet.py", "src/simulation/pybullet_env.py")
         s9 = ("BLOCKED", "no simulator ticks recorded; offline replay evaluation only",
@@ -74,8 +74,10 @@ def probe() -> dict:
     return {"generated_utc": STAMP, "stages": stages,
             "physical_testing": "NOT EXECUTED",
             "pybullet_importable": sim["pybullet_importable"],
-            "jev_available": jev["available"],
-            "jev_reason": jev.get("reason", "")}
+            "decision_engine": "laya",
+            "laya_available": laya["available"],
+            "laya_reason": laya.get("reason", ""),
+            "laya_device": laya.get("device", "UNKNOWN")}
 
 
 def main() -> None:
