@@ -1,9 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AdaptiveMapView } from './components/AdaptiveMapView';
 import { AlertsPanel } from './components/AlertsPanel';
-import { BenchmarkPanel } from './components/BenchmarkPanel';
-import { DemoDataPanel } from './components/DemoDataPanel';
-import { ExplanationPanel } from './components/ExplanationPanel';
 import { Header } from './components/Header';
 import { ImportanceView } from './components/ImportanceView';
 import { Legend } from './components/Legend';
@@ -15,29 +12,20 @@ import { ResolutionDistancePanel } from './components/ResolutionDistancePanel';
 import { ResolutionView } from './components/ResolutionView';
 import { SettingsPanel } from './components/SettingsPanel';
 import { StatusPanel } from './components/StatusPanel';
-import { ModelPanel } from './components/ModelPanel';
-import { AccuracyPanel } from './components/AccuracyPanel';
 import { DecisionPanel } from './components/DecisionPanel';
-import { FlowPanel } from './components/FlowPanel';
+import { LayaDiagnosticsPanel } from './components/LayaDiagnosticsPanel';
 import { LiveControlPanel } from './components/LiveControlPanel';
-import { ResourcePanel } from './components/ResourcePanel';
-import { RLPanel } from './components/RLPanel';
-import { SimulationPanel } from './components/SimulationPanel';
-import { StreamPanel } from './components/StreamPanel';
-import { TracksPanel } from './components/TracksPanel';
-import { TransparencyPanel } from './components/TransparencyPanel';
+import { RecordedFramesPanel } from './components/RecordedFramesPanel';
 import { useBackendStatus } from './hooks/useBackendStatus';
 import { useFrames } from './hooks/useFrames';
 import { useReplay } from './hooks/useReplay';
 import './styles/app.css';
 
 const RAIL: { id: string; label: string }[] = [
-  { id: 'panel-live', label: 'Live View' },
-  { id: 'panel-map', label: 'Map' },
-  { id: 'panel-objects', label: 'Objects' },
-  { id: 'panel-alerts', label: 'Alerts' },
-  { id: 'panel-system', label: 'System' },
-  { id: 'panel-settings', label: 'Settings' },
+  { id: 'section-autonomy', label: 'Autonomy' },
+  { id: 'section-recorded', label: 'Recorded' },
+  { id: 'section-perception', label: 'Perception' },
+  { id: 'section-system', label: 'System' },
 ];
 
 /**
@@ -113,7 +101,20 @@ export default function App() {
           ))}
         </nav>
         <main className="grid ops-grid">
-          <div id="panel-live" className="ops-anchor" />
+          <h2 id="section-autonomy" className="section-title">1 · Autonomy — live PyBullet + Laya</h2>
+          <LiveControlPanel />
+          <DecisionPanel />
+          <LayaDiagnosticsPanel />
+          <h2 id="section-recorded" className="section-title">2 · Recorded runs & replay</h2>
+          <RecordedFramesPanel
+            onReplayFrame={(frameId) => {
+              const f = frames.frames.find((x) => x.frame_id === frameId) ?? null;
+              if (f) {
+                replay.selectFrame(f);
+                void replay.run(f);
+              }
+            }}
+          />
           <ReplayControls
             frames={frames.frames}
             framesLoading={frames.loading}
@@ -133,34 +134,20 @@ export default function App() {
             onSpeed={setSpeed}
             onSemanticMode={(m) => { replay.selectFrame(replay.currentFrame); replay.setSemanticMode(m); }}
           />
+          <h2 id="section-perception" className="section-title">3 · Perception — current frame pipeline</h2>
           <LidarView result={replay.currentResult} mode={encoding} onMode={setEncoding} title="1. Raw LiDAR Point Cloud" />
           <LidarView result={replay.currentResult} mode="semantic" onMode={() => undefined} title="2. Deep-Learning Semantic Perception (model / annotation channel)" hideModeSwitch />
           <ImportanceView result={replay.currentResult} />
-          <div id="panel-map" className="ops-anchor" />
           <AdaptiveMapView result={replay.currentResult} />
           <ResolutionView result={replay.currentResult} />
           <ObjectsTerrainPanel result={replay.currentResult} />
-          <MetricsPanel result={replay.currentResult} metrics={replay.currentMetrics} />
           <ResolutionDistancePanel result={replay.currentResult} />
-          <div id="panel-system" className="ops-anchor" />
-          <StatusPanel frame={replay.currentFrame} result={replay.currentResult} backend={backend.state} demo={backend.demo} />
+          <MetricsPanel result={replay.currentResult} metrics={replay.currentMetrics} />
           <AlertsPanel result={replay.currentResult} events={replay.events} />
-          <DemoDataPanel backend={backend.state} demo={backend.demo} config={backend.config} />
+          <h2 id="section-system" className="section-title">4 · System & settings</h2>
+          <StatusPanel frame={replay.currentFrame} result={replay.currentResult} backend={backend.state} demo={backend.demo} />
           <SettingsPanel speed={speed} onSpeed={setSpeed} maxCells={replay.maxCells} onMaxCells={replay.setMaxCells} />
           <Legend />
-          <BenchmarkPanel current={replay.currentResult} />
-          <ModelPanel />
-          <AccuracyPanel />
-          <ResourcePanel />
-          <FlowPanel />
-          <DecisionPanel />
-          <LiveControlPanel />
-          <RLPanel result={replay.currentResult} />
-          <SimulationPanel />
-          <TracksPanel />
-          <StreamPanel frames={frames.frames} />
-          <TransparencyPanel result={replay.currentResult} history={replay.history} />
-          <ExplanationPanel result={replay.currentResult} />
         </main>
       </div>
       <footer className="footer">
