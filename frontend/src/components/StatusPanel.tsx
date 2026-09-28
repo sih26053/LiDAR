@@ -32,7 +32,7 @@ export function StatusPanel({
       <dl className="meta">
         <div><dt>Frame ID</dt><dd className="mono">{frame ? shortId(frame.frame_id) : '—'}</dd></div>
         <div><dt>Scene ID</dt><dd>{frame?.scene_id ?? result?.scene_id ?? '—'}</dd></div>
-        <div><dt>Timestamp</dt><dd className="mono">{fmtTimestamp(frame?.timestamp ?? result?.timestamp)}</dd></div>
+        <div><dt>Timestamp</dt><dd className="mono">{fmtTimestamp(frame?.timestamp ?? result?.timestamp, frame?.origin)}</dd></div>
         <div><dt>Backend</dt><dd>{backend === 'connected' ? '● Connected' : backend === 'checking' ? '… Checking' : '● Unavailable'}</dd></div>
         <div><dt>Pipeline</dt><dd>{result?.status ?? '—'}</dd></div>
         <div><dt>Config</dt><dd>{demo?.configuration_loaded ? 'Loaded' : 'Unavailable'}</dd></div>

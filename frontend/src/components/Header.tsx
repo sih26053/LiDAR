@@ -21,10 +21,10 @@ export function Header({ backend, demo, frame, playing }: { backend: BackendStat
   return (
     <header className="header ops">
       <div className="brand">
-        <div className="brand-mark" aria-hidden="true">PP</div>
+        <div className="brand-mark" aria-hidden="true">P</div>
       <div>
-        <b>PARADOX PROTOCOL</b>
-        <span>Adaptive Variable-Resolution 2.5D LiDAR Mapping · SIH Demo Build</span>
+        <b>PRAGYA</b>
+        <span>Perception & Resolution-Adaptive Guidance for Intelligent Autonomous systems</span>
       </div>
     </div>
       <div className="ops-title">

@@ -90,7 +90,7 @@ export function ReplayControls(p: Props) {
       <dl className="meta">
         <div><dt>Frame ID</dt><dd>{p.current ? shortId(p.current.frame_id) : '—'}</dd></div>
         <div><dt>Scene ID</dt><dd>{p.current?.scene_id ?? '—'}</dd></div>
-        <div><dt>Timestamp</dt><dd className="mono">{fmtTimestamp(p.current?.timestamp)}</dd></div>
+        <div><dt>Timestamp</dt><dd className="mono">{fmtTimestamp(p.current?.timestamp, p.current?.origin)}</dd></div>
         <div><dt>Status</dt><dd><span className={`badge ${p.phase}`}>{PHASE_LABEL[p.phase]}</span></dd></div>
       </dl>
       {p.phase === 'loading' && <p className="state">Loading frame…</p>}

@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from '../api/client';
-import { jevStatusOf, useLiveSimulation } from '../hooks/useLiveSimulation';
+import { layaStatusOf, useLiveSimulation } from '../hooks/useLiveSimulation';
 import { AdaptiveMapView } from './AdaptiveMapView';
 import { ImportanceView } from './ImportanceView';
 import { ResolutionView } from './ResolutionView';
-import type { PipelineResult } from '../types/api';
+import type { LayaServerStatus, PipelineResult } from '../types/api';
 
 /**
- * Live PyBullet + Jev console (FINAL TASK).
- * Two explicitly separated modes: JEV AUTONOMOUS MODE vs MANUAL CONTROL
- * (manual actions are labelled MANUAL TEST and never presented as Jev
+ * Live PyBullet + Laya console.
+ * Two explicitly separated modes: LAYA AUTONOMOUS MODE vs MANUAL CONTROL
+ * (manual actions are labelled MANUAL TEST and never presented as Laya
  * decisions). Every value comes from the live backend snapshot
  * (GET /simulation/state or /ws/live); pre-start states render as
  * "—", never as fabricated numbers. The 2.5D map, importance and
@@ -20,7 +20,25 @@ export function LiveControlPanel() {
   const [live, setLive] = useState(false);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const [laya, setLaya] = useState<LayaServerStatus | null>(null);
+  const [checkpoint, setCheckpoint] = useState<Record<string, unknown> | null>(null);
   const { snapshot: s, connection } = useLiveSimulation(live);
+
+  useEffect(() => {
+    let on = true;
+    api.layaStatus()
+      .then((st) => { if (on) setLaya(st); })
+      .catch(() => undefined);
+    api.layaCheckpoint()
+      .then((cp) => { if (on) setCheckpoint(cp); })
+      .catch(() => undefined);
+    const t = setInterval(() => {
+      api.layaStatus()
+        .then((st) => { if (on) setLaya(st); })
+        .catch(() => undefined);
+    }, 5000);
+    return () => { on = false; clearInterval(t); };
+  }, []);
 
   const call = async (fn: () => Promise<unknown>, okMsg: string) => {
     setBusy(true);
@@ -53,18 +71,18 @@ export function LiveControlPanel() {
   };
 
   return (
-    <section className="panel wide" aria-label="Live PyBullet and Jev control">
-      <h2>Live Control — PyBullet + Jev 1.13</h2>
+    <section className="panel wide" aria-label="Live PyBullet and Laya control">
+      <h2>Live Control — PyBullet + Laya</h2>
       <div className="btn-row">
         <button
           className="primary"
-          onClick={() => void call(() => api.liveStart('autonomous').then(() => setLive(true)), 'JEV autonomous loop started.')}
+          onClick={() => void call(() => api.liveStart('autonomous').then(() => setLive(true)), 'Laya autonomous loop started.')}
           disabled={busy}
         >
-          Start Jev Autonomous
+          Start Laya Autonomous
         </button>
         <button
-          onClick={() => void call(() => api.liveStart('manual').then(() => setLive(true)), 'Manual mode started. Jev will NOT decide.')}
+          onClick={() => void call(() => api.liveStart('manual').then(() => setLive(true)), 'Manual mode started. Laya will NOT decide.')}
           disabled={busy}
         >
           Start Manual
@@ -82,26 +100,51 @@ export function LiveControlPanel() {
       </div>
       {notice && <p className="state">{notice}</p>}
 
-      <h3 className="sub">Jev — Decision Model Jev 1.13</h3>
+      <h3 className="sub">Laya — local decision engine</h3>
       <ul className="kv">
-        <li><span>Decision model</span><b>Jev 1.13 (typesafe/jev-1.13)</b></li>
-        <li><span>Status</span><b>{jevStatusOf(s)}</b></li>
+        <li><span>Decision engine</span><b>Laya (local{ s?.decision?.backend ? `, ${s.decision.backend}` : ''})</b></li>
+        <li><span>Model</span><b>{s?.decision?.model ?? laya?.model ?? '—'}</b></li>
+        <li><span>Endpoint</span><b className="mono">{s?.decision?.endpoint ?? '—'}</b></li>
+        <li><span>Inference device</span><b>{s?.decision?.device ?? laya?.device ?? '—'}</b></li>
+        <li><span>Server</span><b>{laya ? (laya.independent ? 'INDEPENDENT process' : laya.managed_process ? 'MANAGED child (dev)' : 'NOT RUNNING') : 'checking…'}</b></li>
+        <li><span>Laya status</span><b>{laya ? `${laya.state} (model ${laya.model})` : 'checking…'}</b></li>
+        <li><span>Server PID</span><b>{laya?.pid ?? '—'}</b></li>
+        <li><span>Uptime</span><b>{laya?.uptime_s != null ? `${Math.round(laya.uptime_s)} s (measured)` : '—'}</b></li>
+        <li><span>Restart count</span><b>{laya?.restart_count ?? '—'}</b></li>
+        <li><span>Checkpoint</span><b>{laya?.checkpoint ?? (checkpoint?.state as string) ?? '—'}</b></li>
+        <li><span>Revision</span><b className="mono">{s?.decision?.checkpoint_revision ?? (laya?.checkpoint_revision as string) ?? (checkpoint?.revision as string) ?? '—'}</b></li>
+        <li><span>Offline mode</span><b>{laya?.offline ?? (checkpoint?.offline_inference as string) ?? '—'}</b></li>
+        <li><span>Calibration</span><b>{laya?.calibration?.gate.state ?? 'NOT LOADED'}</b></li>
+        <li><span>Gate metric</span><b>{s?.decision?.gate_metric ?? laya?.calibration?.gate.metric ?? '—'}</b></li>
+        <li><span>Gate threshold</span><b>{s?.decision?.gate_threshold ?? laya?.calibration?.gate.threshold ?? '—'}</b></li>
+        <li><span>Status</span><b>{layaStatusOf(s)}</b></li>
         <li><span>Current action</span><b>{s?.execution?.proposed_action ?? s?.jev_action ?? '—'}</b></li>
         <li><span>Confidence</span><b>{s?.decision?.confidence != null ? num(s.decision.confidence) : s?.jev_confidence != null ? num(s.jev_confidence) : '—'}</b></li>
         <li><span>Probabilities</span><b className="mono">{probs}</b></li>
-        <li><span>Decision latency</span><b>{m?.jev_latency_ms != null ? `${num(m.jev_latency_ms, 2)} ms (measured)` : s?.jev_latency_ms != null ? `${num(s.jev_latency_ms, 2)} ms (measured)` : '—'}</b></li>
+        <li><span>Decision latency</span><b>{m?.laya_latency_ms != null ? `${num(m.laya_latency_ms, 2)} ms (measured)` : s?.jev_latency_ms != null ? `${num(s.jev_latency_ms, 2)} ms (measured)` : '—'}</b></li>
+      </ul>
+
+      <h3 className="sub">Decision chain — raw model vs constrained execution</h3>
+      <ul className="kv">
+        <li><span>Mode</span><b>{s?.decision?.mode ?? '—'}</b></li>
+        <li><span>Raw Laya action</span><b>{s?.decision?.raw_action ?? '— (constrained live path: no raw candidate)'}</b></li>
+        <li><span>Raw confidence</span><b>{s?.decision?.raw_confidence != null ? num(s.decision.raw_confidence) : '—'}</b></li>
+        <li><span>Answer confidence</span><b>{s?.decision?.answer_confidence != null ? num(s.decision.answer_confidence) : '—'}</b></li>
+        <li><span>Eligible actions</span><b>{s?.decision?.eligible_actions ? s.decision.eligible_actions.join(', ') : '—'}{s?.decision?.category ? ` (${s.decision.category})` : ''}</b></li>
+        <li><span>Constrained action</span><b>{s?.decision?.constrained_action ?? '—'}{s?.decision?.laya_skipped ? ' (deterministic, no inference)' : ''}</b></li>
+        <li><span>Execution source</span><b>{s?.source ?? '—'}</b></li>
       </ul>
 
       <h3 className="sub">Safety</h3>
       <ul className="kv">
         <li><span>Proposed action</span><b>{s?.execution?.proposed_action ?? '—'}</b></li>
         <li><span>Safety decision</span><b>{s?.safety?.status ?? s?.safety_status ?? '—'}</b></li>
-        <li><span>Override</span><b>{s?.safety ? (s.safety.override ? 'OVERRIDE' : 'ALLOWED') : '—'}</b></li>
+        <li><span>Safety override</span><b>{s?.safety ? (s.safety.override ? 'YES' : 'NO') : '—'}</b></li>
         <li><span>Override reason</span><b>{s?.safety?.reason ?? '—'}</b></li>
         <li><span>Executed action</span><b>{s?.execution?.executed_action ?? s?.executed_action ?? '—'}{s?.source ? ` (source=${s.source})` : ''}</b></li>
       </ul>
 
-      <h3 className="sub">Manual Control — MANUAL TEST (not Jev)</h3>
+      <h3 className="sub">Manual Control — MANUAL TEST (not Laya)</h3>
       <div className="btn-row">
         {(['forward', 'left', 'right', 'stop'] as const).map((a) => (
           <button key={a} onClick={() => void call(() => api.manualAction(a), `Manual ${a} sent (source=manual).`)} disabled={busy}>
@@ -137,7 +180,7 @@ export function LiveControlPanel() {
 
       <h3 className="sub">Metrics (measured; NOT AVAILABLE where unmeasured)</h3>
       <ul className="kv">
-        <li><span>Jev latency</span><b>{m?.jev_latency_ms != null ? `${num(m.jev_latency_ms, 2)} ms` : 'NOT AVAILABLE'}</b></li>
+        <li><span>Laya latency</span><b>{m?.laya_latency_ms != null ? `${num(m.laya_latency_ms, 2)} ms` : 'NOT AVAILABLE'}</b></li>
         <li><span>Perception latency</span><b>{m?.perception_latency_ms != null ? `${num(m.perception_latency_ms, 2)} ms` : 'NOT AVAILABLE'}</b></li>
         <li><span>Safety latency</span><b>{m?.safety_latency_ms != null ? `${num(m.safety_latency_ms, 3)} ms` : 'NOT AVAILABLE'}</b></li>
         <li><span>Action-exec latency</span><b>{m?.action_execution_latency_ms != null ? `${num(m.action_execution_latency_ms, 2)} ms` : 'NOT AVAILABLE'}</b></li>
@@ -145,7 +188,7 @@ export function LiveControlPanel() {
         <li><span>Vehicle speed</span><b>{m?.vehicle_speed_mps != null ? `${num(m.vehicle_speed_mps)} m/s` : 'NOT AVAILABLE'}</b></li>
         <li><span>Distance</span><b>{m?.distance_m != null ? `${num(m.distance_m, 2)} m` : 'NOT AVAILABLE'}</b></li>
         <li><span>Collisions</span><b>{m?.collisions_total ?? 'NOT AVAILABLE'}</b></li>
-        <li><span>Jev calls / success / failed</span><b>{m ? `${m.jev_calls} / ${m.jev_successful} / ${m.jev_failed}` : 'NOT AVAILABLE'}</b></li>
+        <li><span>Decision calls / success / failed</span><b>{m ? `${m.laya_calls} / ${m.laya_successful} / ${m.laya_failed}` : 'NOT AVAILABLE'}</b></li>
         <li><span>Directional / STOP</span><b>{m ? `${m.directional_actions} / ${m.stop_actions}` : 'NOT AVAILABLE'}</b></li>
         <li><span>Safety overrides / manual</span><b>{m ? `${m.safety_overrides} / ${m.manual_calls}` : 'NOT AVAILABLE'}</b></li>
       </ul>
@@ -160,7 +203,7 @@ export function LiveControlPanel() {
       ) : (
         <p className="state">No live frame yet — start the loop to stream the current PyBullet map. Never prerecorded.</p>
       )}
-      <p className="caption">Physical testing: NOT EXECUTED. Manual actions are human commands, never Jev decisions.</p>
+      <p className="caption">Physical testing: NOT EXECUTED. Manual actions are human commands, never Laya decisions.</p>
     </section>
   );
 }
