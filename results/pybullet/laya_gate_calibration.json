@@ -1,0 +1,120 @@
+{
+  "generated_utc": "2026-09-27T11:22:36Z",
+  "gate_threshold": 0.4,
+  "results": [
+    {
+      "scenario": "straight_road",
+      "fwd_clear_m": 9.37,
+      "laya_status": "OK",
+      "proposed_action": "forward",
+      "answer_confidence": 0.4375,
+      "raw_confidence": 0.0622,
+      "probabilities": {
+        "forward": 0.4375,
+        "left": 0.1932,
+        "right": 0.2083,
+        "stop": 0.161
+      },
+      "laya_latency_ms": 13652.27,
+      "gate": "passed",
+      "source": "laya",
+      "safety_status": "SAFE_TO_EXECUTE",
+      "executed_action": "forward"
+    },
+    {
+      "scenario": "obstacle_ahead",
+      "fwd_clear_m": 8.51,
+      "laya_status": "OK",
+      "proposed_action": "forward",
+      "answer_confidence": 0.4634,
+      "raw_confidence": 0.0779,
+      "probabilities": {
+        "forward": 0.4634,
+        "left": 0.1685,
+        "right": 0.1986,
+        "stop": 0.1695
+      },
+      "laya_latency_ms": 9095.85,
+      "gate": "passed",
+      "source": "laya",
+      "safety_status": "SAFE_TO_EXECUTE",
+      "executed_action": "forward"
+    },
+    {
+      "scenario": "left_blocked",
+      "fwd_clear_m": 5.7,
+      "laya_status": "OK",
+      "proposed_action": "forward",
+      "answer_confidence": 0.4425,
+      "raw_confidence": 0.0632,
+      "probabilities": {
+        "forward": 0.4425,
+        "left": 0.178,
+        "right": 0.1943,
+        "stop": 0.1852
+      },
+      "laya_latency_ms": 8939.06,
+      "gate": "passed",
+      "source": "laya",
+      "safety_status": "SAFE_TO_EXECUTE",
+      "executed_action": "forward"
+    },
+    {
+      "scenario": "right_blocked",
+      "fwd_clear_m": 4.57,
+      "laya_status": "OK",
+      "proposed_action": "forward",
+      "answer_confidence": 0.3991,
+      "raw_confidence": 0.04,
+      "probabilities": {
+        "forward": 0.3991,
+        "left": 0.2114,
+        "right": 0.2119,
+        "stop": 0.1776
+      },
+      "laya_latency_ms": 8608.89,
+      "gate": "laya answer_confidence 0.399 < 0.4; safe fallback applies",
+      "source": "fallback",
+      "safety_status": "SAFE_TO_EXECUTE",
+      "executed_action": "stop"
+    },
+    {
+      "scenario": "both_blocked",
+      "fwd_clear_m": 4.57,
+      "laya_status": "OK",
+      "proposed_action": "forward",
+      "answer_confidence": 0.4246,
+      "raw_confidence": 0.0536,
+      "probabilities": {
+        "forward": 0.4246,
+        "left": 0.1877,
+        "right": 0.1752,
+        "stop": 0.2125
+      },
+      "laya_latency_ms": 8539.09,
+      "gate": "passed",
+      "source": "laya",
+      "safety_status": "SAFE_TO_EXECUTE",
+      "executed_action": "forward"
+    },
+    {
+      "scenario": "emergency_close",
+      "fwd_clear_m": 2.54,
+      "laya_status": "OK",
+      "proposed_action": "forward",
+      "answer_confidence": 0.4492,
+      "raw_confidence": 0.0674,
+      "probabilities": {
+        "forward": 0.4492,
+        "left": 0.1785,
+        "right": 0.1908,
+        "stop": 0.1815
+      },
+      "laya_latency_ms": 8813.85,
+      "gate": "passed",
+      "source": "laya",
+      "safety_status": "OVERRIDE_TO_STOP",
+      "executed_action": "stop"
+    }
+  ]
+}

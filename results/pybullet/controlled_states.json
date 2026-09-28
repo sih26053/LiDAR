@@ -1,0 +1,506 @@
+{
+  "generated_utc": "2026-09-25T11:27:10Z",
+  "states": {
+    "straight_road": {
+      "lidar_points": 180,
+      "map_cells": 60,
+      "state_vector": [
+        0.3123,
+        0.2657,
+        0.2657,
+        0.3123,
+        0.3123,
+        0.2657,
+        0.2657,
+        0.3123,
+        1.0,
+        0.15,
+        0.1833,
+        0.4573,
+        0.1716
+      ],
+      "sector_ranges_m": [
+        9.37,
+        7.97,
+        7.97,
+        9.37,
+        9.37,
+        7.97,
+        7.97,
+        9.37
+      ],
+      "named_state": {
+        "sector_0_range": 0.3123,
+        "sector_1_range": 0.2657,
+        "sector_2_range": 0.2657,
+        "sector_3_range": 0.3123,
+        "sector_4_range": 0.3123,
+        "sector_5_range": 0.2657,
+        "sector_6_range": 0.2657,
+        "sector_7_range": 0.3123,
+        "obstacle_density": 1.0,
+        "moving_share": 0.15,
+        "static_share": 0.1833,
+        "mean_importance": 0.4573,
+        "mean_uncertainty": 0.1716,
+        "sector_ranges_m": [
+          9.37,
+          7.97,
+          7.97,
+          9.37,
+          9.37,
+          7.97,
+          7.97,
+          9.37
+        ],
+        "state_dim": 13
+      },
+      "criteria": {
+        "forward_clearance": 0.3123,
+        "left_clearance": 0.2657,
+        "right_clearance": 0.2657,
+        "rear_clearance": 0.3123,
+        "nearest_obstacle_norm": 0.2657,
+        "obstacle_density": 1.0,
+        "moving_share": 0.15,
+        "mean_importance": 0.4573,
+        "mean_uncertainty": 0.1716,
+        "vehicle_speed_ms": null,
+        "road_state": null,
+        "unavailable_note": "speed/road not in 13-D contract; Jev must decide without them"
+      },
+      "nearest_forward_obstacle_m": 12.53,
+      "emergency_stop": false
+    },
+    "obstacle_ahead": {
+      "lidar_points": 187,
+      "map_cells": 60,
+      "state_vector": [
+        0.2837,
+        0.2657,
+        0.2657,
+        0.3123,
+        0.3123,
+        0.2657,
+        0.2657,
+        0.284,
+        1.0,
+        0.15,
+        0.2167,
+        0.4479,
+        0.1706
+      ],
+      "sector_ranges_m": [
+        8.51,
+        7.97,
+        7.97,
+        9.37,
+        9.37,
+        7.97,
+        7.97,
+        8.52
+      ],
+      "named_state": {
+        "sector_0_range": 0.2837,
+        "sector_1_range": 0.2657,
+        "sector_2_range": 0.2657,
+        "sector_3_range": 0.3123,
+        "sector_4_range": 0.3123,
+        "sector_5_range": 0.2657,
+        "sector_6_range": 0.2657,
+        "sector_7_range": 0.284,
+        "obstacle_density": 1.0,
+        "moving_share": 0.15,
+        "static_share": 0.2167,
+        "mean_importance": 0.4479,
+        "mean_uncertainty": 0.1706,
+        "sector_ranges_m": [
+          8.51,
+          7.97,
+          7.97,
+          9.37,
+          9.37,
+          7.97,
+          7.97,
+          8.52
+        ],
+        "state_dim": 13
+      },
+      "criteria": {
+        "forward_clearance": 0.2837,
+        "left_clearance": 0.2657,
+        "right_clearance": 0.2657,
+        "rear_clearance": 0.3123,
+        "nearest_obstacle_norm": 0.2657,
+        "obstacle_density": 1.0,
+        "moving_share": 0.15,
+        "mean_importance": 0.4479,
+        "mean_uncertainty": 0.1706,
+        "vehicle_speed_ms": null,
+        "road_state": null,
+        "unavailable_note": "speed/road not in 13-D contract; Jev must decide without them"
+      },
+      "nearest_forward_obstacle_m": 8.51,
+      "emergency_stop": false
+    },
+    "left_blocked": {
+      "lidar_points": 196,
+      "map_cells": 59,
+      "state_vector": [
+        0.1899,
+        0.1523,
+        0.2657,
+        0.3123,
+        0.3123,
+        0.2657,
+        0.2657,
+        0.3123,
+        1.0,
+        0.1695,
+        0.1525,
+        0.4488,
+        0.1811
+      ],
+      "sector_ranges_m": [
+        5.7,
+        4.57,
+        7.97,
+        9.37,
+        9.37,
+        7.97,
+        7.97,
+        9.37
+      ],
+      "named_state": {
+        "sector_0_range": 0.1899,
+        "sector_1_range": 0.1523,
+        "sector_2_range": 0.2657,
+        "sector_3_range": 0.3123,
+        "sector_4_range": 0.3123,
+        "sector_5_range": 0.2657,
+        "sector_6_range": 0.2657,
+        "sector_7_range": 0.3123,
+        "obstacle_density": 1.0,
+        "moving_share": 0.1695,
+        "static_share": 0.1525,
+        "mean_importance": 0.4488,
+        "mean_uncertainty": 0.1811,
+        "sector_ranges_m": [
+          5.7,
+          4.57,
+          7.97,
+          9.37,
+          9.37,
+          7.97,
+          7.97,
+          9.37
+        ],
+        "state_dim": 13
+      },
+      "criteria": {
+        "forward_clearance": 0.1899,
+        "left_clearance": 0.1523,
+        "right_clearance": 0.2657,
+        "rear_clearance": 0.3123,
+        "nearest_obstacle_norm": 0.1523,
+        "obstacle_density": 1.0,
+        "moving_share": 0.1695,
+        "mean_importance": 0.4488,
+        "mean_uncertainty": 0.1811,
+        "vehicle_speed_ms": null,
+        "road_state": null,
+        "unavailable_note": "speed/road not in 13-D contract; Jev must decide without them"
+      },
+      "nearest_forward_obstacle_m": 12.53,
+      "emergency_stop": false
+    },
+    "right_blocked": {
+      "lidar_points": 196,
+      "map_cells": 59,
+      "state_vector": [
+        0.3123,
+        0.2657,
+        0.2657,
+        0.3123,
+        0.3123,
+        0.2657,
+        0.1791,
+        0.1523,
+        1.0,
+        0.1525,
+        0.1695,
+        0.4404,
+        0.1629
+      ],
+      "sector_ranges_m": [
+        9.37,
+        7.97,
+        7.97,
+        9.37,
+        9.37,
+        7.97,
+        5.37,
+        4.57
+      ],
+      "named_state": {
+        "sector_0_range": 0.3123,
+        "sector_1_range": 0.2657,
+        "sector_2_range": 0.2657,
+        "sector_3_range": 0.3123,
+        "sector_4_range": 0.3123,
+        "sector_5_range": 0.2657,
+        "sector_6_range": 0.1791,
+        "sector_7_range": 0.1523,
+        "obstacle_density": 1.0,
+        "moving_share": 0.1525,
+        "static_share": 0.1695,
+        "mean_importance": 0.4404,
+        "mean_uncertainty": 0.1629,
+        "sector_ranges_m": [
+          9.37,
+          7.97,
+          7.97,
+          9.37,
+          9.37,
+          7.97,
+          5.37,
+          4.57
+        ],
+        "state_dim": 13
+      },
+      "criteria": {
+        "forward_clearance": 0.1523,
+        "left_clearance": 0.2657,
+        "right_clearance": 0.1791,
+        "rear_clearance": 0.3123,
+        "nearest_obstacle_norm": 0.1523,
+        "obstacle_density": 1.0,
+        "moving_share": 0.1525,
+        "mean_importance": 0.4404,
+        "mean_uncertainty": 0.1629,
+        "vehicle_speed_ms": null,
+        "road_state": null,
+        "unavailable_note": "speed/road not in 13-D contract; Jev must decide without them"
+      },
+      "nearest_forward_obstacle_m": 12.53,
+      "emergency_stop": false
+    },
+    "both_blocked": {
+      "lidar_points": 212,
+      "map_cells": 58,
+      "state_vector": [
+        0.1899,
+        0.1523,
+        0.2657,
+        0.3123,
+        0.3123,
+        0.2657,
+        0.1791,
+        0.1523,
+        1.0,
+        0.1724,
+        0.1379,
+        0.4516,
+        0.1724
+      ],
+      "sector_ranges_m": [
+        5.7,
+        4.57,
+        7.97,
+        9.37,
+        9.37,
+        7.97,
+        5.37,
+        4.57
+      ],
+      "named_state": {
+        "sector_0_range": 0.1899,
+        "sector_1_range": 0.1523,
+        "sector_2_range": 0.2657,
+        "sector_3_range": 0.3123,
+        "sector_4_range": 0.3123,
+        "sector_5_range": 0.2657,
+        "sector_6_range": 0.1791,
+        "sector_7_range": 0.1523,
+        "obstacle_density": 1.0,
+        "moving_share": 0.1724,
+        "static_share": 0.1379,
+        "mean_importance": 0.4516,
+        "mean_uncertainty": 0.1724,
+        "sector_ranges_m": [
+          5.7,
+          4.57,
+          7.97,
+          9.37,
+          9.37,
+          7.97,
+          5.37,
+          4.57
+        ],
+        "state_dim": 13
+      },
+      "criteria": {
+        "forward_clearance": 0.1523,
+        "left_clearance": 0.1523,
+        "right_clearance": 0.1791,
+        "rear_clearance": 0.3123,
+        "nearest_obstacle_norm": 0.1523,
+        "obstacle_density": 1.0,
+        "moving_share": 0.1724,
+        "mean_importance": 0.4516,
+        "mean_uncertainty": 0.1724,
+        "vehicle_speed_ms": null,
+        "road_state": null,
+        "unavailable_note": "speed/road not in 13-D contract; Jev must decide without them"
+      },
+      "nearest_forward_obstacle_m": 14.26,
+      "emergency_stop": false
+    },
+    "emergency_close": {
+      "lidar_points": 201,
+      "map_cells": 56,
+      "state_vector": [
+        0.0847,
+        0.2657,
+        0.2657,
+        0.3123,
+        0.3123,
+        0.2657,
+        0.2657,
+        0.0849,
+        1.0,
+        0.1607,
+        0.1964,
+        0.4665,
+        0.1726
+      ],
+      "sector_ranges_m": [
+        2.54,
+        7.97,
+        7.97,
+        9.37,
+        9.37,
+        7.97,
+        7.97,
+        2.55
+      ],
+      "named_state": {
+        "sector_0_range": 0.0847,
+        "sector_1_range": 0.2657,
+        "sector_2_range": 0.2657,
+        "sector_3_range": 0.3123,
+        "sector_4_range": 0.3123,
+        "sector_5_range": 0.2657,
+        "sector_6_range": 0.2657,
+        "sector_7_range": 0.0849,
+        "obstacle_density": 1.0,
+        "moving_share": 0.1607,
+        "static_share": 0.1964,
+        "mean_importance": 0.4665,
+        "mean_uncertainty": 0.1726,
+        "sector_ranges_m": [
+          2.54,
+          7.97,
+          7.97,
+          9.37,
+          9.37,
+          7.97,
+          7.97,
+          2.55
+        ],
+        "state_dim": 13
+      },
+      "criteria": {
+        "forward_clearance": 0.0847,
+        "left_clearance": 0.2657,
+        "right_clearance": 0.2657,
+        "rear_clearance": 0.3123,
+        "nearest_obstacle_norm": 0.0847,
+        "obstacle_density": 1.0,
+        "moving_share": 0.1607,
+        "mean_importance": 0.4665,
+        "mean_uncertainty": 0.1726,
+        "vehicle_speed_ms": null,
+        "road_state": null,
+        "unavailable_note": "speed/road not in 13-D contract; Jev must decide without them"
+      },
+      "nearest_forward_obstacle_m": 2.54,
+      "emergency_stop": true
+    }
+  },
+  "checks": [
+    {
+      "scenario": "straight_road",
+      "check": "state_valid",
+      "passed": true,
+      "detail": "13-D in [0,1], cells=60"
+    },
+    {
+      "scenario": "straight_road",
+      "check": "forward_open",
+      "passed": true,
+      "detail": "nearest_fwd=12.53, fwd_clear=9.4m"
+    },
+    {
+      "scenario": "obstacle_ahead",
+      "check": "state_valid",
+      "passed": true,
+      "detail": "13-D in [0,1], cells=60"
+    },
+    {
+      "scenario": "obstacle_ahead",
+      "check": "forward_blocked",
+      "passed": true,
+      "detail": "nearest_fwd=8.51 (obstacle 10 m ahead)"
+    },
+    {
+      "scenario": "left_blocked",
+      "check": "state_valid",
+      "passed": true,
+      "detail": "13-D in [0,1], cells=59"
+    },
+    {
+      "scenario": "left_blocked",
+      "check": "left_tighter_than_right",
+      "passed": true,
+      "detail": "left=4.6m right=8.0m"
+    },
+    {
+      "scenario": "right_blocked",
+      "check": "state_valid",
+      "passed": true,
+      "detail": "13-D in [0,1], cells=59"
+    },
+    {
+      "scenario": "right_blocked",
+      "check": "right_tighter_than_left",
+      "passed": true,
+      "detail": "right=5.4m left=8.0m"
+    },
+    {
+      "scenario": "both_blocked",
+      "check": "state_valid",
+      "passed": true,
+      "detail": "13-D in [0,1], cells=58"
+    },
+    {
+      "scenario": "both_blocked",
+      "check": "both_sides_tight",
+      "passed": true,
+      "detail": "left=4.6m right=5.4m"
+    },
+    {
+      "scenario": "emergency_close",
+      "check": "state_valid",
+      "passed": true,
+      "detail": "13-D in [0,1], cells=56"
+    },
+    {
+      "scenario": "emergency_close",
+      "check": "emergency_flagged",
+      "passed": true,
+      "detail": "nearest_fwd=2.54 (obstacle ~3.5 m ahead)"
+    }
+  ],
+  "all_checks_passed": true
+}

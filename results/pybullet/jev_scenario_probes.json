@@ -1,0 +1,185 @@
+{
+  "generated_utc": "2026-09-25T11:28:55Z",
+  "results": [
+    {
+      "scenario": "straight_road",
+      "fwd_clear_m": 9.37,
+      "jev_status": "OK",
+      "proposed_action": "forward",
+      "confidence": 1.0,
+      "probabilities": {
+        "forward": 1.0,
+        "stop": 0.0,
+        "left": 0.0,
+        "right": 0.0
+      },
+      "jev_latency_ms": 1492.0,
+      "gate": "passed",
+      "source": "jev",
+      "safety_status": "SAFE_TO_EXECUTE",
+      "executed_action": "forward",
+      "pose_before": {
+        "x": -50.0,
+        "y": 0.0,
+        "yaw_deg": 0.0
+      },
+      "pose_after": {
+        "x": -49.9667,
+        "y": 0.0,
+        "yaw_deg": 0.0
+      },
+      "speed_after": 1.996,
+      "collision": false
+    },
+    {
+      "scenario": "obstacle_ahead",
+      "fwd_clear_m": 8.51,
+      "jev_status": "OK",
+      "proposed_action": "forward",
+      "confidence": 0.99,
+      "probabilities": {
+        "left": 0.0,
+        "stop": 0.0,
+        "forward": 1.0,
+        "right": 0.0
+      },
+      "jev_latency_ms": 1003.83,
+      "gate": "passed",
+      "source": "jev",
+      "safety_status": "SAFE_TO_EXECUTE",
+      "executed_action": "forward",
+      "pose_before": {
+        "x": -50.0,
+        "y": 0.0,
+        "yaw_deg": 0.0
+      },
+      "pose_after": {
+        "x": -49.9667,
+        "y": 0.0,
+        "yaw_deg": 0.0
+      },
+      "speed_after": 1.996,
+      "collision": false
+    },
+    {
+      "scenario": "left_blocked",
+      "fwd_clear_m": 5.7,
+      "jev_status": "OK",
+      "proposed_action": "turn_right",
+      "confidence": 0.66,
+      "probabilities": {
+        "stop": 0.01,
+        "right": 0.76,
+        "forward": 0.23,
+        "left": 0.0
+      },
+      "jev_latency_ms": 557.71,
+      "gate": "passed",
+      "source": "jev",
+      "safety_status": "SAFE_TO_EXECUTE",
+      "executed_action": "turn_right",
+      "pose_before": {
+        "x": -50.0,
+        "y": 0.0,
+        "yaw_deg": 0.0
+      },
+      "pose_after": {
+        "x": -49.9834,
+        "y": 0.0,
+        "yaw_deg": -0.4163
+      },
+      "speed_after": 0.9987,
+      "collision": false
+    },
+    {
+      "scenario": "right_blocked",
+      "fwd_clear_m": 4.57,
+      "jev_status": "OK",
+      "proposed_action": "turn_left",
+      "confidence": 0.92,
+      "probabilities": {
+        "right": 0.0,
+        "stop": 0.01,
+        "forward": 0.05,
+        "left": 0.94
+      },
+      "jev_latency_ms": 616.45,
+      "gate": "passed",
+      "source": "jev",
+      "safety_status": "SAFE_TO_EXECUTE",
+      "executed_action": "turn_left",
+      "pose_before": {
+        "x": -50.0,
+        "y": 0.0,
+        "yaw_deg": 0.0
+      },
+      "pose_after": {
+        "x": -49.9834,
+        "y": 0.0,
+        "yaw_deg": 0.4163
+      },
+      "speed_after": 0.9987,
+      "collision": false
+    },
+    {
+      "scenario": "both_blocked",
+      "fwd_clear_m": 4.57,
+      "jev_status": "OK",
+      "proposed_action": "turn_right",
+      "confidence": 0.8,
+      "probabilities": {
+        "forward": 0.12,
+        "stop": 0.03,
+        "left": 0.0,
+        "right": 0.85
+      },
+      "jev_latency_ms": 3062.92,
+      "gate": "passed",
+      "source": "jev",
+      "safety_status": "SAFE_TO_EXECUTE",
+      "executed_action": "turn_right",
+      "pose_before": {
+        "x": -50.0,
+        "y": 0.0,
+        "yaw_deg": 0.0
+      },
+      "pose_after": {
+        "x": -49.9834,
+        "y": 0.0,
+        "yaw_deg": -0.4163
+      },
+      "speed_after": 0.9987,
+      "collision": false
+    },
+    {
+      "scenario": "emergency_close",
+      "fwd_clear_m": 2.54,
+      "jev_status": "OK",
+      "proposed_action": "stop",
+      "confidence": 0.99,
+      "probabilities": {
+        "stop": 0.99,
+        "right": 0.0,
+        "left": 0.01,
+        "forward": 0.0
+      },
+      "jev_latency_ms": 610.33,
+      "gate": "passed",
+      "source": "jev",
+      "safety_status": "OVERRIDE_TO_STOP",
+      "executed_action": "stop",
+      "pose_before": {
+        "x": -50.0,
+        "y": 0.0,
+        "yaw_deg": 0.0
+      },
+      "pose_after": {
+        "x": -50.0,
+        "y": 0.0,
+        "yaw_deg": 0.0
+      },
+      "speed_after": 0.0,
+      "collision": false
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "generated_utc": "2026-09-27T12:33:13Z",
+  "steps_per_scenario": 20,
+  "interval_steps": 5,
+  "scenarios": {
+    "straight_road": {
+      "status": "COMPLETED",
+      "steps_recorded": 20,
+      "proposed": {
+        "forward": 20
+      },
+      "confidence": [
+        0.423,
+        0.4365,
+        0.4502,
+        0.4515
+      ],
+      "sources": {
+        "laya": 20
+      },
+      "safety": {
+        "SAFE_TO_EXECUTE": 20
+      },
+      "executed": {
+        "forward": 20
+      },
+      "collisions": 0,
+      "displacement_m": 0.6099,
+      "heading_change_deg": 0.0001,
+      "loop_latency_ms_mean": 2237.72
+    },
+    "obstacle_ahead": {
+      "status": "COMPLETED",
+      "steps_recorded": 20,
+      "proposed": {
+        "forward": 20
+      },
+      "confidence": [
+        0.4212,
+        0.4446,
+        0.4646,
+        0.4915
+      ],
+      "sources": {
+        "laya": 20
+      },
+      "safety": {
+        "SAFE_TO_EXECUTE": 20
+      },
+      "executed": {
+        "forward": 20
+      },
+      "collisions": 0,
+      "displacement_m": 0.6099,
+      "heading_change_deg": 0.0001,
+      "loop_latency_ms_mean": 1809.47
+    },
+    "left_blocked": {
+      "status": "COMPLETED",
+      "steps_recorded": 20,
+      "proposed": {
+        "forward": 20
+      },
+      "confidence": [
+        0.4399,
+        0.4472,
+        0.4479,
+        0.4556
+      ],
+      "sources": {
+        "laya": 20
+      },
+      "safety": {
+        "SAFE_TO_EXECUTE": 20
+      },
+      "executed": {
+        "forward": 20
+      },
+      "collisions": 0,
+      "displacement_m": 0.6099,
+      "heading_change_deg": 0.0001,
+      "loop_latency_ms_mean": 1910.13
+    },
+    "right_blocked": {
+      "status": "COMPLETED",
+      "steps_recorded": 20,
+      "proposed": {
+        "forward": 20
+      },
+      "confidence": [
+        0.3927,
+        0.3964,
+        0.4004,
+        0.4074
+      ],
+      "sources": {
+        "fallback": 10,
+        "laya": 10
+      },
+      "safety": {
+        "SAFE_TO_EXECUTE": 20
+      },
+      "executed": {
+        "stop": 10,
+        "forward": 10
+      },
+      "collisions": 0,
+      "displacement_m": 0.3189,
+      "heading_change_deg": 0.0001,
+      "loop_latency_ms_mean": 1894.55
+    },
+    "both_blocked": {
+      "status": "COMPLETED",
+      "steps_recorded": 20,
+      "proposed": {
+        "forward": 20
+      },
+      "confidence": [
+        0.4139,
+        0.4282,
+        0.4371,
+        0.4418
+      ],
+      "sources": {
+        "laya": 20
+      },
+      "safety": {
+        "SAFE_TO_EXECUTE": 20
+      },
+      "executed": {
+        "forward": 20
+      },
+      "collisions": 0,
+      "displacement_m": 0.6099,
+      "heading_change_deg": 0.0001,
+      "loop_latency_ms_mean": 1889.06
+    },
+    "emergency_close": {
+      "status": "COMPLETED",
+      "steps_recorded": 20,
+      "proposed": {
+        "forward": 20
+      },
+      "confidence": [
+        0.4501,
+        0.4542,
+        0.4548,
+        0.4635
+      ],
+      "sources": {
+        "laya": 20
+      },
+      "safety": {
+        "OVERRIDE_TO_STOP": 20
+      },
+      "executed": {
+        "stop": 20
+      },
+      "collisions": 0,
+      "displacement_m": 0.0,
+      "heading_change_deg": 0.0003,
+      "loop_latency_ms_mean": 1860.21
+    }
+  }
+}
