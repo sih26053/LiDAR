@@ -198,11 +198,11 @@ export const api = {
   decisionCurrent(): Promise<{ frame_id: string; decision_model: string; proposed_action: string | null; confidence: number | null; safety_status: string; executed_action: string; decision_latency_ms: number | null }> {
     return request('/decision/current');
   },
-  /** Live PyBullet/Jev backend state (measured, never assumed). */
+  /** Live PyBullet/Laya backend state (measured, never assumed). */
   pybulletStatus(): Promise<{ simulator: string; decision_backend: string }> {
     return request('/simulation/pybullet');
   },
-  /** Start the live PyBullet loop (autonomous = Jev, manual = human steps). */
+  /** Start the live PyBullet loop (autonomous = Laya, manual = human steps). */
   liveStart(mode: 'autonomous' | 'manual', decision_interval_steps = 5): Promise<LiveStatus> {
     return request('/simulation/live/start', {
       method: 'POST',
@@ -219,12 +219,64 @@ export const api = {
   liveState(): Promise<LiveSnapshot> {
     return request('/simulation/state');
   },
-  /** One safety-checked manual step (recorded source=manual, never Jev). */
+  /** One safety-checked manual step (recorded source=manual, never Laya). */
   manualAction(action: 'forward' | 'left' | 'right' | 'stop'): Promise<LiveSnapshot> {
     return request(`/simulation/action/${action}`, { method: 'POST' });
   },
-  /** Live system roll-up (simulator, Jev, live loop, physical=NOT EXECUTED). */
-  systemStatus(): Promise<{ backend: string; simulator: string; pybullet_importable: boolean; decision_model: string; jev_available: boolean; jev_reason: string | null; live: LiveStatus; physical_testing: string }> {
+  /** Local Laya server state (READY/DEGRADED/STARTING/ERROR/STOPPED + supervision). */
+  layaStatus(): Promise<import('../types/api').LayaServerStatus> {
+    return request('/laya/status');
+  },
+  /** Pinned checkpoint identity + provisioning state. */
+  layaCheckpoint(): Promise<Record<string, unknown>> {
+    return request('/laya/checkpoint');
+  },
+  /** Gate + temperature calibration artifacts + runtime load state. */
+  layaCalibration(): Promise<import('../types/api').LayaCalibration> {
+    return request('/laya/calibration');
+  },
+  /** Measured navigation diagnostics (eval + A/B summaries). */
+  layaDiagnostics(): Promise<import('../types/api').LayaDiagnostics> {
+    return request('/laya/diagnostics');
+  },
+  /** Restart the MANAGED Laya child (refuses for independent servers). */
+  layaRestart(): Promise<Record<string, unknown>> {
+    return request('/laya/restart', { method: 'POST' });
+  },
+  /** Evidence-gated validation status (VERIFIED only with artifacts). */
+  layaValidation(): Promise<Record<string, unknown>> {
+    return request('/laya/validation');
+  },
+  /** Live system roll-up (simulator, Laya, live loop, physical=NOT EXECUTED). */
+  systemStatus(): Promise<{ backend: string; simulator: string; pybullet_importable: boolean; decision_engine: string; decision_model: string; decision_backend: string; laya_available: boolean; laya_reason: string | null; live: LiveStatus; physical_testing: string }> {
     return request('/system/status');
+  },
+  /** Recorded live runs (SQLite; nuScenes replay unaffected). */
+  recordedRuns(): Promise<{ runs: { run_id: string; mode: string; scenario: string | null; status: string; started_at: string; frame_count: number }[] }> {
+    return request('/recordings/runs');
+  },
+  /** Recorder + DB health (writes, errors, path). */
+  recordingsStatus(): Promise<{ root: string; writable: boolean; recorded_runs: number; db: { path: string; ok: boolean; latest_run: string | null; error?: string } }> {
+    return request('/recordings/status');
+  },
+  recordedRunFrames(run_id: string): Promise<{ run_id: string; frames: { frame_id: string; sequence: number; timestamp: number | null; point_count: number }[] }> {
+    return request(`/recordings/runs/${encodeURIComponent(run_id)}/frames`);
+  },
+  recordedFrame(frame_id: string): Promise<{ frame: Record<string, unknown>; live_decision: Record<string, unknown> | null; safety: Record<string, unknown> | null; execution: Record<string, unknown> | null; map_cell_count: number; replay_history: Record<string, unknown>[] }> {
+    return request(`/recordings/frames/${encodeURIComponent(frame_id)}`);
+  },
+  /** Replay Jev on a recorded frame (LEGACY source=replay-jev; never drives the live vehicle). */
+  replayDecide(frame_id: string): Promise<{ frame_id: string; source: string; action: string | null; confidence: number | null; probabilities: Record<string, number> | null; latency_ms: number | null; safety: { status: string | null; override: boolean; reason: string | null }; stored: boolean; error?: string | null }> {
+    return request('/replay/jev-decide', {
+      method: 'POST',
+      body: JSON.stringify({ frame_id }),
+    });
+  },
+  /** Replay Laya on a recorded frame (source=replay-laya; never drives the live vehicle). */
+  replayLayaDecide(frame_id: string, mode: 'constrained' | 'unconstrained' = 'constrained'): Promise<{ frame_id: string; source: string; mode?: string | null; action: string | null; confidence: number | null; probabilities: Record<string, number> | null; latency_ms: number | null; eligible_actions?: string[] | null; raw_laya_action?: string | null; constrained_action?: string | null; safety: { status: string | null; override: boolean; reason: string | null }; stored: boolean; error?: string | null }> {
+    return request('/replay/laya-decide', {
+      method: 'POST',
+      body: JSON.stringify({ frame_id, mode }),
+    });
   },
 };
