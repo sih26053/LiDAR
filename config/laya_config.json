@@ -1,0 +1,82 @@
+{
+  "comment": "Local Laya decision engine (active backend). Loopback only; no cloud key. Gate threshold is a SELECTED value under a documented validation objective (models/laya/calibration/gate_selection.json), NOT a validated optimum.",
+  "decision_model": "laya",
+  "host": "127.0.0.1",
+  "port": 18001,
+  "endpoint": "http://127.0.0.1:18001/v1/systemone",
+  "health_endpoint": "http://127.0.0.1:18001/health",
+  "model": "typed-decisions",
+  "question": {
+    "instructions": "Which vehicle action should be selected based only on the supplied structured state? First determine whether every useful direction lacks safe clearance or an emergency flag is set. If so, stop. Otherwise select the direction with the largest safe clearance that is useful for travel, using forward_clearance_m, left_clearance_m and right_clearance_m. obstacle_density reports LiDAR-coverage evidence presence (1.0 is normal full-scan coverage), NOT a blockage fraction; judge blockage from the directional clearances and nearest_obstacle_m. Only the offered options are admissible: never propose an action that is not offered.",
+    "criteria": {
+      "forward": "The forward clearance is a safe clearance, is the largest useful clearance, and forward motion is useful.",
+      "left": "The left clearance is a safe clearance, is the largest useful clearance, and turning left is useful.",
+      "right": "The right clearance is a safe clearance, is the largest useful clearance, and turning right is useful.",
+      "stop": "No direction offers safe clearance for useful movement, or an emergency/stop condition is present (emergency_flag is true, or all clearances are below safe maneuvering needs)."
+    }
+  },
+  "actions": [
+    "forward",
+    "turn_left",
+    "turn_right",
+    "stop"
+  ],
+  "laya_policy": {
+    "min_confidence": 0.4,
+    "fallback_action": "stop",
+    "confidence_field": "answer_confidence",
+    "note": "LEGACY alias of confidence_gate (kept for backward compatibility). Source of truth is confidence_gate below."
+  },
+  "confidence_gate": {
+    "enabled": true,
+    "metric": "answer_confidence",
+    "threshold": 0.35,
+    "fallback_action": "stop",
+    "note": "Starting value from 6 recorded scenarios (probe_laya_scenarios, 2026-09-27): top-choice answer_confidence 0.399-0.463 for forward proposals, raw confidence 0.04-0.08 (high-entropy model). Recalibrated by scripts/calibrate_laya_gate.py on recorded-frame data; see models/laya/calibration/gate_selection.json. answer_confidence (selected-choice probability, Laya-native scale) is the gate metric because raw confidence sits near 0.04-0.08 for all proposals and carries no gating signal. NOT claimed optimal.",
+    "calibrated_from": "laya-nav-balanced-v1",
+    "calibrated_utc": "2026-09-27T14:00:51Z",
+    "artifact": "models/laya/calibration/gate_selection.json",
+    "status": "VALIDATED-CANDIDATE",
+    "validated_candidate_threshold": 0.35,
+    "legacy_starting_threshold": 0.35
+  },
+  "eligibility": {
+    "forward_min_m": null,
+    "side_min_m": 2.5,
+    "note": "forward_min_m null = mirror safety_config.json safety_radius_m at runtime (single source of truth). side_min_m is NEW and explicit (no prior lateral threshold existed); corridor walls read ~7.8 m lateral, side obstacles ~4.5 m ahead."
+  },
+  "checkpoint": {
+    "repository": "convaiinnovations/laya",
+    "subfolder": "typed-decisions",
+    "revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+    "local_dir": "models/laya/checkpoint",
+    "manifest": "models/laya/manifest.json",
+    "note": "Pinned revision = main at time of provisioning (2026-09-27). provisioned once by scripts/provision_laya.py; runtime loads from local path with no Hub re-download."
+  },
+  "calibration": {
+    "dir": "models/laya/calibration",
+    "gate_artifact": "models/laya/calibration/gate_selection.json",
+    "temperature_artifact": "models/laya/calibration/temperature.json",
+    "note": "Artifacts apply only when checkpoint_revision matches; otherwise runtime reports CALIBRATION: NOT LOADED and uses unscaled probabilities + configured gate."
+  },
+  "server": {
+    "standalone_entry": "scripts/run_laya_server.py",
+    "pid_file": "models/laya/laya_server.pid",
+    "log_file": "models/laya/laya_server.log",
+    "restart_backoff_s": [
+      1,
+      2,
+      4,
+      8,
+      30
+    ],
+    "max_restarts": 5,
+    "note": "Production: Laya runs as an independent process/service; backend connects, health-checks, and never owns its lifetime. Backend development convenience auto-start remains available."
+  },
+  "timeout_s": 30.0,
+  "max_retries": 1,
+  "startup_timeout_s": 600,
+  "preload_models": [
+    "typed-decisions"
+  ]
+}
