@@ -276,7 +276,7 @@ def test_closed_loop_single_step_chain():
     s = trace["steps"][0]
     assert s["points"] > 0 and s["map_cells"] > 0
     assert len(s["rl_state"]) == 13
-    assert s["decision"]["source"] in ("jev", "fallback")
+    assert s["decision"]["source"] in ("laya", "jev", "fallback")
     assert s["loop_latency_ms"] >= 0 and s["safety_latency_ms"] >= 0
 
 
