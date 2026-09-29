@@ -5,7 +5,7 @@ import type { LiveSnapshot } from '../types/api';
 export type LiveConnection = 'ws' | 'polling' | 'idle' | 'error';
 
 /**
- * Live PyBullet+Jev snapshot hook (GAP 8/9/10).
+ * Live PyBullet+Laya snapshot hook.
  * Prefers /ws/live; falls back to polling GET /simulation/state every 2 s.
  * Never fabricates values: snapshot is null until the backend produces one.
  */
@@ -72,13 +72,16 @@ export function useLiveSimulation(enabled: boolean) {
   return { snapshot, connection, error };
 }
 
-/** Derive the honest Jev status pill from a live snapshot. */
+/** Derive the honest engine status pill from a live snapshot. */
 export function jevStatusOf(s: LiveSnapshot | null): string {
   if (!s || !s.frame_id) return 'NO DATA';
-  if (s.source === 'manual') return 'MANUAL (not Jev)';
-  if (s.jev_status === 'OK' && s.source === 'jev') return 'LIVE';
+  if (s.source === 'manual') return 'MANUAL (not Laya)';
+  if (s.jev_status === 'OK' && (s.source === 'laya' || s.source === 'jev')) return 'LIVE';
   if (s.jev_status === 'OK') return 'FALLBACK (low confidence)';
   if (s.jev_status === 'UNAVAILABLE') return 'UNAVAILABLE (safe fallback)';
   if (s.jev_status === 'FAILED' || s.jev_status === 'INVALID') return 'ERROR (safe fallback)';
   return 'NO DATA';
 }
+
+/** Alias with the active-engine name (identical behavior). */
+export const layaStatusOf = jevStatusOf;
