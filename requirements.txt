@@ -12,3 +12,6 @@ uvicorn>=0.29
 pydantic>=2.0
 httpx>=0.27
 pytest>=8.0
+# Local decision engine (Phase LAYA): loopback HTTP server + typed decisions.
+# No cloud key required. Installed into .venv-pb (Python 3.11).
+laya[serve]
