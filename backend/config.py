@@ -124,15 +124,26 @@ def config_info() -> Dict[str, Any]:
     """Safe, non-sensitive metadata for GET /config."""
     cfg = load_final_config()
     levels = [(float(t), float(r)) for t, r in cfg["resolution_levels"]]
+    frozen_mode = str(cfg.get("semantic_source", "annotation+fallback"))
+    try:
+        from src.semantic_model import model_available
+
+        has_model = bool(model_available())
+    except Exception:
+        has_model = False
     return {
         "final_version": "prototype-final-v1",
         "selection": cfg.get("selection", ""),
+        "importance_weights": {k: float(v) for k, v in cfg["importance_weights"].items()},
+        "uncertainty_lambda": float(cfg["uncertainty_lambda"]),
         "resolution_levels": levels,
         "resolution_levels_m": cfg.get("resolution_levels_m", {}),
         "resolution_thresholds": cfg.get("resolution_thresholds", {}),
         "max_mapping_distance_m": float(cfg["max_distance_m"]),
         "integration_cell_size_m": float(cfg["integration_cell_size_m"]),
-        "semantic_source_mode": cfg.get("semantic_source", "annotation+fallback (no trained model)"),
+        "semantic_source_mode": (frozen_mode + "; trained point-classifier available "
+                                 "(semantic_mode='model')" if has_model else frozen_mode),
+        "trained_model_available": has_model,
         "random_seed": cfg.get("random_seed", 42),
         "config_path": "results/final/config/final_config.json",
     }

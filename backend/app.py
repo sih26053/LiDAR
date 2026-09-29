@@ -6,6 +6,7 @@ Run locally: ``uvicorn backend.app:app --host 127.0.0.1 --port 8000``
 from __future__ import annotations
 
 import logging
+import os
 
 from contextlib import asynccontextmanager
 
@@ -18,6 +19,7 @@ from backend.routes import frames as frames_routes
 from backend.routes import health as health_routes
 from backend.routes import flow as flow_routes
 from backend.routes import live as live_routes
+from backend.routes import recordings as recordings_routes
 from backend.routes import simulation as simulation_routes
 from backend.routes import metrics as metrics_routes
 from backend.routes import model as model_routes
@@ -47,6 +49,14 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+# CORS: loopback defaults for local dev; production adds the real Vercel
+# origin via CORS_ORIGINS (comma-separated) and/or FRONTEND_URL. Never "*".
+_cors_extra = [
+    o.strip().rstrip("/")
+    for o in (os.environ.get("CORS_ORIGINS", "") + ","
+              + os.environ.get("FRONTEND_URL", "")).split(",")
+    if o.strip()
+]
 # Local-only SIH prototype: restrict CORS to loopback frontends.
 app.add_middleware(
     CORSMiddleware,
@@ -57,6 +67,7 @@ app.add_middleware(
         "http://localhost:3000",
         "http://localhost:5173",
         "http://localhost:8000",
+        *_cors_extra,
     ],
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
@@ -65,6 +76,7 @@ app.add_middleware(
 app.include_router(health_routes.router, tags=["health"])
 app.include_router(flow_routes.router, tags=["flow"])
 app.include_router(live_routes.router, tags=["live"])
+app.include_router(recordings_routes.router, tags=["recordings"])
 app.include_router(simulation_routes.router, tags=["simulation"])
 app.include_router(config_routes.router, tags=["config"])
 app.include_router(model_routes.router, tags=["model"])
