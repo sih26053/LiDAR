@@ -79,24 +79,33 @@ def validate_perception_result(pr: PerceptionResult) -> bool:
     # semantic sources (lidarseg / annotation / fallback). Finite entries must
     # still lie within [0,1]; inf is always rejected. All previously valid
     # (all-finite [0,1]) arrays still pass unchanged.
-    for i, v in enumerate(np.asarray(pr.confidence, dtype=float)):
-        if np.isnan(v):
-            continue  # documented N/A for non-ML sources (never ML confidence)
-        if not np.isfinite(v) or not (0.0 <= v <= 1.0):
-            raise _fail(
-                f"confidence must be within [0,1] or NaN (not applicable for "
-                f"non-ML sources). Received: {v!r} at index {i}"
-            )
-    for i, v in enumerate(np.asarray(pr.roughness, dtype=float)):
-        if not np.isfinite(v) or not (0.0 <= v <= 1.0):
-            raise _fail(
-                f"roughness must be within [0,1]. Received: {v!r} at index {i}"
-            )
-    for i, v in enumerate(np.asarray(pr.distance, dtype=float)):
-        if not np.isfinite(v) or v < 0:
-            raise _fail(
-                f"distance must be finite and >= 0 (metres). Received: {v!r} at index {i}"
-            )
+    # Vectorized form of the old per-element loop: same first-offense index
+    # in the error message, same accepted/rejected sets.
+    conf = np.asarray(pr.confidence, dtype=float)
+    conf_bad = (
+        ~np.isnan(conf)
+        & (~np.isfinite(conf) | (conf < 0.0) | (conf > 1.0))
+    )
+    if np.any(conf_bad):
+        i = int(np.argmax(conf_bad))
+        raise _fail(
+            f"confidence must be within [0,1] or NaN (not applicable for "
+            f"non-ML sources). Received: {float(conf[i])!r} at index {i}"
+        )
+    rough = np.asarray(pr.roughness, dtype=float)
+    rough_bad = ~np.isfinite(rough) | (rough < 0.0) | (rough > 1.0)
+    if np.any(rough_bad):
+        i = int(np.argmax(rough_bad))
+        raise _fail(
+            f"roughness must be within [0,1]. Received: {float(rough[i])!r} at index {i}"
+        )
+    dist = np.asarray(pr.distance, dtype=float)
+    dist_bad = ~np.isfinite(dist) | (dist < 0.0)
+    if np.any(dist_bad):
+        i = int(np.argmax(dist_bad))
+        raise _fail(
+            f"distance must be finite and >= 0 (metres). Received: {float(dist[i])!r} at index {i}"
+        )
     for name in ("elevation", "point_density"):
         arr = np.asarray(getattr(pr, name), dtype=float)
         if not np.all(np.isfinite(arr)):

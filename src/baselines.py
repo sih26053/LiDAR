@@ -302,6 +302,50 @@ def _semantic_codes(
 
 
 # ---------------------------------------------------------------------------
+# Same-scope uniform baseline: one row per region at fixed resolution
+# ---------------------------------------------------------------------------
+
+def build_uniform_region_map(
+    region_features: Sequence[Any],
+    resolution_m: float = UNIFORM_RESOLUTION,
+) -> pd.DataFrame:
+    """Same-scope uniform map: one cell per region at fixed ``resolution_m``.
+
+    Unlike :func:`build_uniform_map` (analytic dense grid over the whole
+    evaluation area), this passes through the SAME per-region build path as
+    the proposed and distance-adaptive maps (same rows, same columns, same
+    code shape). Its mapping latency is therefore directly comparable to the
+    other two methods' mapping latencies. Resolution carries no information
+    (constant); it is the scope-matched cost reference.
+    """
+    regions = list(region_features)
+    if not regions:
+        raise ValueError("region_features must contain at least 1 region.")
+    r = float(resolution_m)
+    if not np.isfinite(r) or r <= 0:
+        raise ValueError(f"resolution_m must be finite and > 0. Got {r!r}")
+    rows: List[Dict[str, Any]] = []
+    for region in regions:
+        rows.append({
+            "x": float(region.x),
+            "y": float(region.y),
+            "elevation": float(region.elevation),
+            "occupancy": 1.0,
+            "semantic_class": str(region.semantic_label),
+            "confidence": float(region.confidence),
+            "resolution": r,
+            "resolution_m": r,
+            "distance": float(region.distance),
+            "point_count": int(region.point_count),
+            "region_id": int(region.region_id),
+            "semantic_source": str(
+                getattr(region, "semantic_source", "fallback") or "fallback"
+            ),
+        })
+    return pd.DataFrame(rows)
+
+
+# ---------------------------------------------------------------------------
 # Comparative metric: resolution-density proxy (NOT measured compute cost)
 # ---------------------------------------------------------------------------
 

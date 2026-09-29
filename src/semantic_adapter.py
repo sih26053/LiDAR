@@ -215,6 +215,42 @@ def annotations_to_sensor_frame(nusc, sample, sensor: str = "LIDAR_TOP") -> List
     return out
 
 
+def _parse_box_params(ann: Dict[str, Any]) -> Tuple[float, ...] | None:
+    """Parse one annotation into numeric box params, or None if unusable.
+
+    Returns (cx, cy, cz, w, l, h, cos_yaw, sin_yaw). Same arithmetic as
+    :func:`points_in_box` (box-local frame, nuScenes size convention).
+    """
+    try:
+        trans = ann["translation"]
+        size = ann["size"]
+    except KeyError:
+        return None
+    try:
+        cx, cy, cz = (float(v) for v in list(trans)[:3])
+        w, l, h = (float(v) for v in list(size)[:3])
+    except (TypeError, ValueError):
+        return None
+    rot = ann.get("rotation", None)
+    try:
+        yaw = _yaw_for_rotation(rot)
+    except (TypeError, ValueError):
+        yaw = 0.0  # same fallback as points_in_box (box still applies)
+    return (cx, cy, cz, w, l, h, float(np.cos(yaw)), float(np.sin(yaw)))
+
+
+def _yaw_for_rotation(rotation: Sequence[float] | float | None) -> float:
+    """Extract a yaw angle from the rotation formats `points_in_box` accepts."""
+    if isinstance(rotation, (int, float)):
+        return float(rotation)
+    if rotation is None:
+        return 0.0
+    seq = list(rotation)
+    if len(seq) == 1:
+        return float(seq[0])
+    return _yaw_from_quaternion(seq)
+
+
 def points_in_box(
     points_xyz: np.ndarray,
     translation: Sequence[float],
@@ -286,17 +322,38 @@ def assign_annotation_semantics(
             return float("inf")
 
     ordered = sorted(list(annotations or []), key=_box_volume, reverse=True)
+    # Precompute numeric box params ONCE (yaw/quaternion parsing and cos/sin
+    # dominate the old cost). Masks stay per-box: small (N,) temporaries rest
+    # in cache, which measures faster than one N x B broadcast pass for the
+    # box counts seen here. Arithmetic is identical to points_in_box, and
+    # large-first overwrite order (with later-input-wins ties) is unchanged.
+    xyz = pts[:, :3]
+    X = xyz[:, 0]
+    Y = xyz[:, 1]
+    Z = xyz[:, 2]
+    parsed: List[Tuple[Tuple[float, ...], str]] = []
     for ann in ordered:
         try:
             cat = str(ann.get("category_name", ""))
-            trans = ann["translation"]
-            size = ann["size"]
-        except KeyError:
+        except (AttributeError, TypeError, ValueError):
             continue
-        rot = ann.get("rotation", None)
-        try:
-            mask = points_in_box(pts[:, :3], trans, size, rot)
-        except (TypeError, ValueError):
+        params = _parse_box_params(ann)
+        if params is None:
+            continue
+        parsed.append((params, cat))
+    for params, cat in parsed:
+        cx, cy, cz, w, l, h, c, s = params
+        dx = X - cx
+        dy = Y - cy
+        lx = c * dx + s * dy
+        ly = -s * dx + c * dy
+        dz = Z - cz
+        mask = (
+            (np.abs(lx) <= l / 2.0)
+            & (np.abs(ly) <= w / 2.0)
+            & (np.abs(dz) <= h / 2.0)
+        )
+        if not np.any(mask):
             continue
         project_label = map_nuscenes_label_to_project(cat)
         labels[mask] = project_label
@@ -442,41 +499,108 @@ def aggregate_to_regions(
 
     grid_x = np.floor(pts[:, 0] / cell).astype(np.int64)
     grid_y = np.floor(pts[:, 1] / cell).astype(np.int64)
-    unique_regions = np.unique(np.column_stack([grid_x, grid_y]), axis=0)
+    pairs = np.column_stack([grid_x, grid_y])
+    unique_regions, inv = np.unique(pairs, axis=0, return_inverse=True)
+    n_regions = int(unique_regions.shape[0])
+
+    # Vectorized per-region geometry via bincount (same population
+    # statistics as the old per-region loop, without an O(N) mask scan
+    # per region). Member index lists come from one stable argsort, so any
+    # fallback path still sees points in original frame order.
+    counts = np.bincount(inv, minlength=n_regions).astype(np.int64)
+    if np.any(counts == 0):
+        raise ValueError("No spatial regions generated from the input points.")
+    sum_x = np.bincount(inv, weights=pts[:, 0], minlength=n_regions)
+    sum_y = np.bincount(inv, weights=pts[:, 1], minlength=n_regions)
+    sum_z = np.bincount(inv, weights=pts[:, 2], minlength=n_regions)
+    sum_z2 = np.bincount(inv, weights=pts[:, 2] ** 2, minlength=n_regions)
+    n_f = counts.astype(np.float64)
+    mean_x = sum_x / n_f
+    mean_y = sum_y / n_f
+    mean_z = sum_z / n_f
+    var_z = np.maximum(sum_z2 / n_f - mean_z ** 2, 0.0)
+    std_z = np.sqrt(var_z)
+
+    order = np.argsort(inv, kind="stable")
+    sorted_inv = inv[order]
+    bounds = np.searchsorted(sorted_inv, np.arange(n_regions + 1))
+    members = [order[bounds[r]:bounds[r + 1]] for r in range(n_regions)]
+
+    labels_all = np.asarray([str(s) for s in list(pr.semantic_labels)], dtype=object)
+
+    # Vectorized majority vote over RAW label strings (factorized in global
+    # first-occurrence order). Unique argmax == old Counter result exactly
+    # (same winner, ratio, and voter set); exact ties fall back to the
+    # Counter path, which reproduces within-region first-occurrence wins.
+    raw_names: List[str] = []
+    raw_index: Dict[str, int] = {}
+    for s in labels_all.tolist():
+        if s not in raw_index:
+            raw_index[s] = len(raw_names)
+            raw_names.append(s)
+    n_cls = len(raw_names)
+    label_codes = np.array([raw_index[s] for s in labels_all.tolist()], dtype=np.int64)
+    src_names = sorted({str(s) for s in sources.tolist()})
+    src_to_code = {name: i for i, name in enumerate(src_names)}
+    n_src = len(src_names)
+    src_codes = np.array(
+        [src_to_code[str(s)] for s in sources.tolist()], dtype=np.int64
+    )
+    vote_counts = np.bincount(
+        inv * n_cls + label_codes, minlength=n_regions * n_cls
+    ).reshape(n_regions, n_cls)
+    dom_code = np.argmax(vote_counts, axis=1)
+    dom_count = vote_counts[np.arange(n_regions), dom_code]
+    tie_mask = (vote_counts == dom_count[:, None]).sum(axis=1) > 1
+
+    # Dominant source among dominant-class voters, vectorized over the
+    # voter subset. Source ties also take the Counter fallback.
+    dom_per_point = dom_code[inv]
+    voter_mask = label_codes == dom_per_point
+    v_inv = inv[voter_mask]
+    v_src = src_codes[voter_mask]
+    src_votes = np.bincount(
+        v_inv * n_src + v_src, minlength=n_regions * n_src
+    ).reshape(n_regions, n_src)
+    dom_src_code = np.argmax(src_votes, axis=1)
+    src_tie = (src_votes == src_votes[np.arange(n_regions), dom_src_code][:, None]).sum(axis=1) > 1
 
     records: List[Dict[str, Any]] = []
-    for region_id, (gx, gy) in enumerate(unique_regions):
-        mask = (grid_x == int(gx)) & (grid_y == int(gy))
-        idx = np.where(mask)[0]
+    for region_id in range(n_regions):
+        gx, gy = (int(unique_regions[region_id, 0]), int(unique_regions[region_id, 1]))
+        idx = members[region_id]
         if len(idx) == 0:
             continue
-        region_points = pts[idx]
-        xyz = region_points[:, :3]
-        x_mean = float(xyz[:, 0].mean())
-        y_mean = float(xyz[:, 1].mean())
-        z_vals = xyz[:, 2]
-        elevation = float(z_vals.mean())
-        height_std = float(z_vals.std())
+        if tie_mask[region_id] or src_tie[region_id]:
+            # Exact-tie fallback: identical to the old Counter logic.
+            region_labels = [str(s) for s in labels_all[idx].tolist()]
+            region_sources = sources[idx].tolist()
+            label_counts = Counter(region_labels)
+            dominant_label, dominant_count = label_counts.most_common(1)[0]
+            dominant_ratio = float(dominant_count / len(idx))
+            dom_sources = [
+                s for lab, s in zip(region_labels, region_sources) if lab == dominant_label
+            ]
+            dominant_source = Counter(dom_sources).most_common(1)[0][0]
+        else:
+            dominant_label = raw_names[int(dom_code[region_id])]
+            dominant_count = int(dom_count[region_id])
+            dominant_ratio = float(dominant_count / len(idx))
+            dominant_source = src_names[int(dom_src_code[region_id])]
+        x_mean = float(mean_x[region_id])
+        y_mean = float(mean_y[region_id])
+        elevation = float(mean_z[region_id])
+        height_std = float(std_z[region_id])
         region_distance = float(np.sqrt(x_mean ** 2 + y_mean ** 2))
-        point_count = int(len(idx))
+        point_count = int(counts[region_id])
         point_density = float(point_count / (cell ** 2))
-
-        region_labels = [str(s) for s in pr.semantic_labels[idx].tolist()]
-        region_sources = sources[idx].tolist()
-        counts = Counter(region_labels)
-        dominant_label, dominant_count = counts.most_common(1)[0]
-        dominant_ratio = float(dominant_count / len(idx))
-        # Majority source among points voting for the dominant class.
-        dom_sources = [
-            s for lab, s in zip(region_labels, region_sources) if lab == dominant_label
-        ]
-        dominant_source = Counter(dom_sources).most_common(1)[0][0]
 
         if dominant_label not in sem_map:
             dominant_label = "unknown"
         sem_imp = float(sem_map.get(dominant_label, 0.5))
 
         if dominant_source == "model":
+            region_labels = [str(s) for s in labels_all[idx].tolist()]
             dom_conf = np.asarray(pr.confidence[idx], dtype=np.float64)
             voter_conf = np.array(
                 [c for lab, c in zip(region_labels, dom_conf.tolist())

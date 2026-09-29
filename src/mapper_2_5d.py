@@ -59,6 +59,41 @@ class AdaptiveMapCell:
     semantic_source: str
 
 
+def _supports_batch_importance(engine: Any) -> bool:
+    """True when the engine exposes the v1 numeric config for batch math."""
+    try:
+        return (
+            isinstance(getattr(engine, "weights", None), dict)
+            and isinstance(getattr(engine, "max_distance", None), (int, float))
+            and isinstance(getattr(engine, "lambda_uncertainty", None), (int, float))
+            and callable(getattr(engine, "calculate", None))
+        )
+    except (TypeError, ValueError):
+        return False
+
+
+def _batch_resolutions(engine: Any, importances: List[float]) -> List[float]:
+    """Vectorized resolution assignment with per-call fallback."""
+    try:
+        levels = [(float(t), float(r)) for t, r in list(engine.levels)]
+    except (AttributeError, TypeError, ValueError):
+        return [float(engine.assign_resolution(float(v))) for v in importances]
+    if not levels:
+        return [float(engine.assign_resolution(float(v))) for v in importances]
+    thresholds = np.array([t for t, _ in levels], dtype=np.float64)
+    res_vals = np.array([r for _, r in levels], dtype=np.float64)
+    # levels are descending; first threshold <= v wins (boundary inclusive).
+    vals = np.asarray(importances, dtype=np.float64)
+    idx = np.sum(vals[:, None] < thresholds[None, :], axis=1)
+    idx = np.minimum(idx, len(levels) - 1)
+    out = [float(res_vals[int(i)]) for i in idx]
+    # Parity guard: NaN/out-of-range inputs must behave like assign_resolution.
+    for v in vals.tolist():
+        if not np.isfinite(v) or not (0.0 <= v <= 1.0):
+            return [float(engine.assign_resolution(float(x))) for x in importances]
+    return out
+
+
 def _final_importance(result: Any) -> float:
     """Extract final importance from ImportanceResult object or dict."""
     if isinstance(result, dict):
@@ -105,15 +140,43 @@ def build_adaptive_map(
             continue
 
     cells: List[AdaptiveMapCell] = []
-    for region in regions:
-        validate_region_features(region)
-        importance = float(_final_importance(importance_engine.calculate(region)))
-        if not np.isfinite(importance) or not (0.0 <= importance <= 1.0):
-            raise ValueError(
-                f"Importance Engine returned out-of-range value {importance!r} "
-                f"(region_id={getattr(region, 'region_id', '?')})."
-            )
-        resolution = float(resolution_engine.assign_resolution(importance))
+    importances: List[float] = []
+    if _supports_batch_importance(importance_engine):
+        # Fast path: identical element-wise arithmetic over arrays
+        # (see importance_engine.batch_final_importance). Inputs go through
+        # extract_features, so distance/terrain field fallbacks and input
+        # validation match ImportanceEngine.calculate exactly. Falls back to
+        # the per-region loop for foreign engine implementations.
+        from .importance_engine import batch_final_importance, extract_features
+
+        feats = [extract_features(r) for r in regions]
+        for region in regions:
+            validate_region_features(region)
+        importances = [float(v) for v in batch_final_importance(
+            [f["distance"] for f in feats],
+            [f["semantic_importance"] for f in feats],
+            [f["terrain_complexity"] for f in feats],
+            [f["dynamic_relevance"] for f in feats],
+            [f["uncertainty"] for f in feats],
+            weights=dict(importance_engine.weights),
+            max_distance=float(importance_engine.max_distance),
+            lambda_uncertainty=float(importance_engine.lambda_uncertainty),
+        )]
+        for value in importances:
+            if not np.isfinite(value) or not (0.0 <= value <= 1.0):
+                raise ValueError(f"Importance Engine returned out-of-range value {value!r}.")
+    else:
+        for region in regions:
+            validate_region_features(region)
+            importance = float(_final_importance(importance_engine.calculate(region)))
+            if not np.isfinite(importance) or not (0.0 <= importance <= 1.0):
+                raise ValueError(
+                    f"Importance Engine returned out-of-range value {importance!r} "
+                    f"(region_id={getattr(region, 'region_id', '?')})."
+                )
+            importances.append(importance)
+    resolutions = _batch_resolutions(resolution_engine, importances)
+    for region, importance, resolution in zip(regions, importances, resolutions):
         cells.append(
             AdaptiveMapCell(
                 x=float(region.x),

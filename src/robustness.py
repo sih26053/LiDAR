@@ -271,6 +271,8 @@ def run_pipeline_condition(
     condition: Dict[str, Any],
     cell_size: float = 2.0,
     failsafe_config: Dict[str, Any] | None = None,
+    semantic_override: Dict[str, Any] | None = None,
+    live_input: bool = False,
 ) -> Dict[str, Any]:
     """Run the full existing pipeline for one frame x condition.
 
@@ -286,6 +288,14 @@ def run_pipeline_condition(
     ``build_adaptive_map``. Never raises: failures are captured into the
     returned record (``success=False`` + ``failure_reason``/``exception_type``
     /``stage_of_failure``).
+
+    ``semantic_override`` (optional): ``{"mode": "model", ...}`` selects the
+    trained point classifier for the perception stage instead of annotation
+    boxes. ``None`` (default) preserves the annotation+fallback path exactly.
+
+    ``live_input``: True when points come from a live/external stream with no
+    dataset sample attached. Annotation lookup is then skipped (empty box
+    list -> all-fallback in annotation mode); model mode is unaffected.
     """
     # Late imports keep this module importable without the full stack.
     from .preprocessing import preprocess_points
@@ -331,23 +341,42 @@ def run_pipeline_condition(
         preprocessing_ms = (time.perf_counter() - t0) * 1000.0
 
         # --- perception (annotation semantics + PerceptionResult) -----------
+        # ... or trained-model inference when semantic_override requests it.
         t0 = time.perf_counter()
-        sensor_anns = annotations_to_sensor_frame(nusc, sample)
-        sem_labels, sem_source_arr, _ = assign_annotation_semantics(
-            clean_points, sensor_anns)
-        semantic_labels: List[str] = [
-            str(label) for label in np.asarray(sem_labels).reshape(-1).tolist()
-        ]
-        semantic_source: List[str] = [
-            str(source)
-            for source in np.asarray(sem_source_arr).reshape(-1).tolist()
-        ]
-        # NOTE: semantic labels are NOT altered by coordinate noise; the
-        # boxes stay in the sensor frame of the same sample.
-        perception_result, source_array, _ = build_perception_from_semantics(
-            str(frame_metadata["frame_id"]), clean_points,
-            semantic_labels, semantic_source)
-        perception_ms = (time.perf_counter() - t0) * 1000.0
+        override_mode = (semantic_override or {}).get("mode")
+        if override_mode == "model":
+            from .semantic_model import predict_points
+
+            model_labels, model_sources, model_conf, model_ms = predict_points(clean_points)
+            semantic_labels = [str(label) for label in np.asarray(model_labels).reshape(-1).tolist()]
+            semantic_source = [str(source) for source in np.asarray(model_sources).reshape(-1).tolist()]
+            perception_result, source_array, _ = build_perception_from_semantics(
+                str(frame_metadata["frame_id"]), clean_points,
+                semantic_labels, semantic_source,
+                confidence=np.asarray(model_conf, dtype=np.float64))
+            perception_ms = float(model_ms)
+            rec["semantic_mode"] = "model_prediction (trained MLP point classifier)"
+        else:
+            if live_input or nusc is None or sample is None:
+                sensor_anns = []  # live stream: no dataset boxes; all-fallback
+            else:
+                sensor_anns = annotations_to_sensor_frame(nusc, sample)
+            sem_labels, sem_source_arr, _ = assign_annotation_semantics(
+                clean_points, sensor_anns)
+            semantic_labels = [
+                str(label) for label in np.asarray(sem_labels).reshape(-1).tolist()
+            ]
+            semantic_source = [
+                str(source)
+                for source in np.asarray(sem_source_arr).reshape(-1).tolist()
+            ]
+            # NOTE: semantic labels are NOT altered by coordinate noise; the
+            # boxes stay in the sensor frame of the same sample.
+            perception_result, source_array, _ = build_perception_from_semantics(
+                str(frame_metadata["frame_id"]), clean_points,
+                semantic_labels, semantic_source)
+            perception_ms = (time.perf_counter() - t0) * 1000.0
+            rec["semantic_mode"] = "annotation+fallback"
 
         # --- feature extraction (regions) ----------------------------------
         t0 = time.perf_counter()
@@ -357,10 +386,25 @@ def run_pipeline_condition(
 
         # --- diagnostic importance / resolution sub-timings ----------------
         t0 = time.perf_counter()
-        importances: List[float] = []
-        for region in region_features:
-            importances.append(
-                float(importance_engine.calculate(region).final_importance))
+        try:
+            from src.importance_engine import batch_final_importance, extract_features
+
+            _feats = [extract_features(r) for r in region_features]
+            importances = [float(v) for v in batch_final_importance(
+                [f["distance"] for f in _feats],
+                [f["semantic_importance"] for f in _feats],
+                [f["terrain_complexity"] for f in _feats],
+                [f["dynamic_relevance"] for f in _feats],
+                [f["uncertainty"] for f in _feats],
+                weights=dict(importance_engine.weights),
+                max_distance=float(importance_engine.max_distance),
+                lambda_uncertainty=float(importance_engine.lambda_uncertainty),
+            )]
+        except (AttributeError, TypeError, ValueError):
+            importances = []
+            for region in region_features:
+                importances.append(
+                    float(importance_engine.calculate(region).final_importance))
         importance_ms = (time.perf_counter() - t0) * 1000.0
 
         t0 = time.perf_counter()

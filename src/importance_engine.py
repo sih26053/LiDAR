@@ -282,6 +282,72 @@ class ImportanceResult:
         }
 
 
+def batch_final_importance(
+    distances: Any,
+    semantic_importance: Any,
+    terrain_complexity: Any,
+    dynamic_relevance: Any,
+    uncertainty: Any,
+    weights: Mapping[str, float] | None = None,
+    max_distance: float = MAX_DISTANCE,
+    lambda_uncertainty: float = UNCERTAINTY_LAMBDA,
+) -> np.ndarray:
+    """Vectorized equivalent of ``ImportanceEngine.calculate`` over arrays.
+
+    Applies the identical element-wise arithmetic (``D = clip01(1 - d/max)``,
+    weighted sum, ``min(1, base + lam*U)``) to whole arrays, with the same
+    input validation performed once up front instead of per region. Used by
+    the mapper and pipeline hot paths; the single-region ``calculate`` API
+    is unchanged and remains authoritative for unit tests.
+    """
+    import numpy as np
+
+    w = dict(weights if weights is not None else WEIGHTS)
+    required = ("distance", "semantic", "terrain", "dynamic", "uncertainty")
+    missing = [k for k in required if k not in w]
+    if missing:
+        raise ValueError(f"weights missing keys: {missing}")
+    for key in required:
+        v = w[key]
+        if not isinstance(v, (int, float)) or not math.isfinite(float(v)) or float(v) < 0:
+            raise ValueError(f"weights[{key!r}] must be finite and >= 0. Received: {v!r}")
+    if abs(sum(float(w[k]) for k in required) - 1.0) > 1e-6:
+        raise ValueError(f"weights must sum to ~1.0. Received sum={sum(float(w[k]) for k in required)!r}")
+    m = float(max_distance)
+    if not math.isfinite(m) or m <= 0:
+        raise ValueError(f"max_distance must be finite and > 0. Received: {max_distance!r}")
+    lam = float(lambda_uncertainty)
+    if not math.isfinite(lam) or lam < 0:
+        raise ValueError(f"lambda_uncertainty must be finite and >= 0. Received: {lambda_uncertainty!r}")
+
+    d = np.asarray(distances, dtype=np.float64)
+    s = np.asarray(semantic_importance, dtype=np.float64)
+    t = np.asarray(terrain_complexity, dtype=np.float64)
+    m_ = np.asarray(dynamic_relevance, dtype=np.float64)
+    u = np.asarray(uncertainty, dtype=np.float64)
+    for name, arr in (("distance", d), ("semantic_importance", s),
+                      ("terrain_complexity", t), ("dynamic_relevance", m_),
+                      ("uncertainty", u)):
+        if not np.all(np.isfinite(arr)):
+            raise ValueError(f"{name} must be all finite.")
+    if np.any(d < 0):
+        raise ValueError("distance must be >= 0 (metres).")
+    for name, arr in (("semantic_importance", s), ("terrain_complexity", t),
+                      ("dynamic_relevance", m_), ("uncertainty", u)):
+        if np.any((arr < 0.0) | (arr > 1.0)):
+            raise ValueError(f"{name} must be within [0,1].")
+    d_score = np.minimum(np.maximum(1.0 - d / m, 0.0), 1.0)
+    base = (
+        float(w["distance"]) * d_score
+        + float(w["semantic"]) * s
+        + float(w["terrain"]) * t
+        + float(w["dynamic"]) * m_
+        + float(w["uncertainty"]) * u
+    )
+    base = np.minimum(np.maximum(base, 0.0), 1.0)
+    return np.minimum(np.maximum(base + lam * u, 0.0), 1.0)
+
+
 class ImportanceEngine:
     """Importance Engine v1. ``engine.calculate(region_features)`` -> result."""
 

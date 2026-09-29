@@ -91,11 +91,16 @@ class LiDARFrame:
 
     x/y/z in metres. intensity is the sensor intensity value (no unit
     assumption, no fifth field).
+
+    ``scene_id``/``source`` are optional provenance (both adapters fill
+    them; downstream code never branches on them).
     """
 
     frame_id: str
     timestamp: float
     points: np.ndarray
+    scene_id: str = ""
+    source: str = "nuscenes_replay"
 
 
 @dataclass
