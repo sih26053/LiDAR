@@ -1,0 +1,13 @@
+{
+  "comment": "Model class -> project semantic class -> mandatory output category. Identity mapping is deliberate: the classifier is trained directly on project-taxonomy weak labels. vegetation has zero box support in nuScenes Mini and is NEVER predicted by the model (documented limitation, not a silent mapping).",
+  "mapping": [
+    {"model_class": "vehicle", "project_class": "vehicle", "mandatory_category": "moving_object", "label_source": "annotation boxes (weak label)"},
+    {"model_class": "pedestrian_vru", "project_class": "pedestrian_vru", "mandatory_category": "moving_object", "label_source": "annotation boxes (weak label)"},
+    {"model_class": "static_manmade", "project_class": "static_manmade", "mandatory_category": "static_obstacle", "label_source": "annotation boxes (weak label)"},
+    {"model_class": "road_driveable", "project_class": "road_driveable", "mandatory_category": "terrain", "label_source": "ground-plane heuristic pseudo-label (documented, NOT human annotation)"},
+    {"model_class": "unknown", "project_class": "unknown", "mandatory_category": "unknown", "label_source": "sampled non-ground points outside all boxes"}
+  ],
+  "unavailable": [
+    {"project_class": "vegetation", "mandatory_category": "static_obstacle", "reason": "No vegetation boxes in nuScenes Mini replay frames; model output layer excludes it. Reported as insufficient data wherever per-class metrics are shown."}
+  ]
+}

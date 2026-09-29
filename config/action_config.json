@@ -1,0 +1,12 @@
+{
+  "comment": "Stage 8 action-to-control mapping (Steps 14-15). Values are conservative starting points for a CARLA Tesla Model 3-class vehicle, NOT tuned optima. Applied only against a live simulator; hardware remains disabled.",
+  "controls": {
+    "forward": {"throttle": 0.4, "steer": 0.0, "brake": 0.0, "reverse": false},
+    "turn_left": {"throttle": 0.3, "steer": -0.4, "brake": 0.0, "reverse": false},
+    "turn_right": {"throttle": 0.3, "steer": 0.4, "brake": 0.0, "reverse": false},
+    "stop": {"throttle": 0.0, "steer": 0.0, "brake": 1.0, "reverse": false}
+  },
+  "limits": {"max_throttle": 0.6, "max_steer": 0.5, "note": "hard caps; executor clamps above-limit values and logs the clamp"},
+  "synchronous_mode": true,
+  "fixed_delta_seconds": 0.05
+}

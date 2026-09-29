@@ -1,0 +1,23 @@
+{
+  "comment": "Stage 2 perception configuration. PointNet++/sparse-CNN class GPU models are NOT deployable here (CPU-only host, no torch runtime); the deployed model is a point-wise shared MLP. This file describes what actually runs.",
+  "model_name": "mlp-point-segmenter-v1",
+  "architecture": "point-wise shared MLP (sklearn MLPClassifier, backprop-trained)",
+  "features": ["x", "y", "z", "intensity", "range", "z_rel"],
+  "classes": ["vehicle", "pedestrian_vru", "static_manmade", "road_driveable", "unknown"],
+  "high_level_mapping": {
+    "terrain": ["road_driveable"],
+    "static_obstacle": ["static_manmade"],
+    "moving_object": ["vehicle", "pedestrian_vru"],
+    "unknown": ["unknown"]
+  },
+  "display_taxonomy": {
+    "road_driveable": "Road",
+    "vehicle": "Vehicle",
+    "pedestrian_vru": "Pedestrian",
+    "static_manmade": "Static Obstacle",
+    "vegetation": "Static Obstacle",
+    "unknown": "Others"
+  },
+  "weights": "models/segmentation/weights/mlp_model.pkl",
+  "unavailable_classes": ["vegetation (zero box support in nuScenes Mini; never predicted)"]
+}

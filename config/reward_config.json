@@ -1,0 +1,12 @@
+{
+  "comment": "Canonical reward specification (reference: Reward System box). SPECIFIED, NEVER EXECUTED: no CARLA/simulator exists here, so no episode ran and no reward was optimized. Weights are configurable starting values, not tuned optima.",
+  "rewards": {
+    "progress_towards_goal": {"value": 1.0, "unit": "per step with reduced goal distance", "status": "specified, unexecuted"},
+    "safe_clearance": {"value": 0.5, "unit": "per step with nearest obstacle beyond safety radius", "status": "specified, unexecuted"},
+    "smooth_movement": {"value": 0.2, "unit": "per step without action switching", "status": "specified, unexecuted"},
+    "collision": {"value": -10.0, "unit": "per contact event", "status": "specified, unexecuted"},
+    "unnecessary_stop": {"value": -1.0, "unit": "per stop with clear path", "status": "specified, unexecuted"}
+  },
+  "action_space": ["forward", "turn_left", "turn_right", "stop"],
+  "training_environment": "CARLA (NOT INSTALLED -- training blocked; see docs/carla_setup.md)"
+}

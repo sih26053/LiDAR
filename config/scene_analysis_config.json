@@ -1,0 +1,9 @@
+{
+  "comment": "Stage 3 scene-analysis configuration (src/scene_analysis.py).",
+  "max_distance_m": 100.0,
+  "density_normalization": "divide by frame max point_density (min-max to [0,1])",
+  "moving_object_classes": ["vehicle", "pedestrian_vru"],
+  "object_density_method": "dominant-vote share when dominant label is moving-object, else 0.0 (documented proxy; member point labels are not retained by aggregation)",
+  "uncertainty_fallback": 0.5,
+  "factors": ["distance_from_lidar", "point_density", "object_density", "object_importance", "elevation_variation", "prediction_uncertainty"]
+}

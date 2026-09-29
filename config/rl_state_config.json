@@ -1,0 +1,12 @@
+{
+  "comment": "Stage 6 RL state specification (src/rl_state.py). The frontend MUST NOT modify this definition.",
+  "state_dim": 13,
+  "feature_order": ["sector_0_range", "sector_1_range", "sector_2_range", "sector_3_range", "sector_4_range", "sector_5_range", "sector_6_range", "sector_7_range", "obstacle_density", "moving_share", "static_share", "mean_importance", "mean_uncertainty"],
+  "normalization": "sector ranges divided by radius_m; shares and densities already in [0,1]; importance/uncertainty in [0,1]",
+  "value_ranges": {"sector_range": "[0,1]", "shares": "[0,1]", "importance": "[0,1]", "uncertainty": "[0,1]"},
+  "n_sectors": 8,
+  "radius_m": 30.0,
+  "occupied_threshold": 0.5,
+  "heading_convention": "ego heading assumed +X (no heading signal in replay frames)",
+  "missing_value_policy": "empty sector range = radius_m (normalized 1.0); no cells in radius = shares 0.0, mean importance 0.0, mean uncertainty 0.5; empty cell list raises ValueError"
+}

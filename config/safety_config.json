@@ -1,0 +1,10 @@
+{
+  "comment": "Stage 8 safety configuration (src/safety_controller.py). Rule-based, independent of the DQN. Hardware execution is disabled by default.",
+  "safety_radius_m": 5.0,
+  "safety_half_angle_deg": 30.0,
+  "occupied_threshold": 0.5,
+  "heading_convention": "ego heading assumed +X (no heading signal in replay frames)",
+  "default_executor": "simulation",
+  "hardware_execution_enabled": false,
+  "override_rule": "DQN action FORWARD with an occupied cell inside the safety sector becomes STOP; STOP is never overridden"
+}

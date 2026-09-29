@@ -1,0 +1,17 @@
+{
+  "comment": "Stage 7 DQN configuration (src/rl_agent.py). Network is RANDOMLY INITIALIZED; no training has executed (no simulator).",
+  "state_dim": 13,
+  "hidden_dim": 64,
+  "n_actions": 4,
+  "actions": ["forward", "turn_left", "turn_right", "stop"],
+  "activation": "relu",
+  "gamma": 0.99,
+  "learning_rate": 0.001,
+  "epsilon_inference": 0.0,
+  "replay_capacity": 10000,
+  "minibatch": 32,
+  "seed": 42,
+  "trained": false,
+  "episodes_run": 0,
+  "weights_dir": "models/rl (absent -- nothing trained)"
+}

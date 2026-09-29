@@ -1,0 +1,13 @@
+{
+  "comment": "Step 22 evaluation scenarios. Map/town names are real CARLA maps; pedestrian counts describe what the scenario REQUIRES at execution (no pedestrian run is claimed until walkers are actually spawned and logged). All scenarios: NOT EXECUTED (no simulator).",
+  "synchronous": {"synchronous_mode": true, "fixed_delta_seconds": 0.05},
+  "scenarios": [
+    {"id": "open_road", "town": "Town01", "weather": "ClearNoon", "traffic": 0, "pedestrians": 0, "goal": "drive 200 m straight", "status": "not executed"},
+    {"id": "straight_dense", "town": "Town02", "weather": "ClearNoon", "traffic": 20, "pedestrians": 0, "goal": "drive 200 m with traffic", "status": "not executed"},
+    {"id": "turn", "town": "Town03", "weather": "WetNoon", "traffic": 10, "pedestrians": 0, "goal": "right turn at junction", "status": "not executed"},
+    {"id": "static_obstacle", "town": "Town04", "weather": "ClearSunset", "traffic": 0, "pedestrians": 0, "goal": "stop before barrier", "props": ["static.prop.streetbarrier"], "status": "not executed"},
+    {"id": "dynamic_obstacle", "town": "Town05", "weather": "CloudyNoon", "traffic": 15, "pedestrians": 0, "goal": "yield to crossing vehicle", "status": "not executed"},
+    {"id": "dense_urban", "town": "Town10HD", "weather": "HardRainNoon", "traffic": 40, "pedestrians": 0, "goal": "500 m urban route", "status": "not executed"}
+  ],
+  "metrics_per_episode": ["episode_duration_s", "distance_travelled_m", "goal_completion", "collision_count", "safe_stop_count", "action_counts", "mean_decision_latency_ms"]
+}
