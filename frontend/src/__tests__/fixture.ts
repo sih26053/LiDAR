@@ -33,7 +33,7 @@ export const sampleResult: PipelineResult = {
     average_resolution: 0.104, distribution: { '0.05': 52, '0.1': 429, '0.2': 52, '0.5': 0 },
   },
   semantic: {
-    mode: 'annotation+fallback (no trained model)',
+    mode: 'annotation+fallback',
     source_counts: { fallback: 474, annotation: 59 },
     note: 'Annotation-derived labels are evaluation references, never model predictions.',
   },

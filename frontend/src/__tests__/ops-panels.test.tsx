@@ -11,7 +11,7 @@ const R = sampleResult as unknown as PipelineResult;
 describe('ops-console panels (backend values only)', () => {
   it('ObjectsTerrainPanel lists annotation objects with distance, never confidence', () => {
     const { container } = render(<ObjectsTerrainPanel result={R} />);
-    expect(screen.getByText('5. Detected Objects & Terrain')).toBeTruthy();
+    expect(screen.getByText('5. Objects & Terrain (model / annotation channel)')).toBeTruthy();
     expect(container.textContent).toMatch(/Distance/);
     expect(container.textContent).not.toMatch(/0\.93|confidence.*%/i);
   });

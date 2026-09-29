@@ -45,9 +45,10 @@ describe('ReplayControls states', () => {
   const base = {
     frames: [{ frame_id: 'a', scene_id: 's', timestamp: 1, source: 'x', point_count: 10 }],
     framesLoading: false, framesError: null, current: null, phase: 'idle' as const,
-    actionError: null, playing: false, speed: 1,
+    actionError: null, playing: false, speed: 1, semanticMode: 'annotation' as const,
     onSelect: () => {}, onRun: () => {}, onReset: () => {},
     onPrev: () => {}, onNext: () => {}, onPlayPause: () => {}, onSpeed: () => {},
+    onSemanticMode: () => {},
   };
   it('shows empty state with no frame selected', () => {
     render(<ReplayControls {...base} />);
