@@ -25,8 +25,10 @@ export function fmtMeters(v: number | null | undefined): string {
   return `${v.toFixed(2)} m`;
 }
 
-export function fmtTimestamp(ts: number | null | undefined): string {
+export function fmtTimestamp(ts: number | null | undefined, origin?: string | null): string {
   if (ts === null || ts === undefined || !Number.isFinite(ts)) return 'Unavailable';
+  // Live-recorded frames carry simulation seconds, not epoch time.
+  if (origin === 'live-recorded') return `t=${ts.toFixed(2)} s (sim time)`;
   // nuScenes timestamps are microseconds since epoch.
   const ms = ts > 1e12 ? ts / 1000 : ts;
   const d = new Date(ms);
