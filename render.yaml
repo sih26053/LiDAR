@@ -1,0 +1,25 @@
+# Pragya backend on Render (Python 3.11 — pybullet has no 3.14 wheel).
+# Dashboard deploys separately on Vercel; this file is backend-only.
+services:
+  - type: web
+    name: pragya-backend
+    runtime: python
+    plan: free
+    # NOTE: the 803 MB Laya checkpoint + torch CPU need ~2 GB+ RAM.
+    # On the free plan Laya will report ERROR/STOPPED and autonomy runs on the
+    # deterministic safe fallback. For live Laya inference upgrade this service
+    # to a plan with >= 2 GB RAM and >= 3 GB disk.
+    buildCommand: "pip install --upgrade pip && pip install -r requirements.txt"
+    startCommand: "uvicorn backend.app:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: LAYA_ALLOW_SPAWN
+        value: "0"
+      - key: HF_HUB_OFFLINE
+        value: "1"
+      - key: CORS_ORIGINS
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
