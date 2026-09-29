@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import type { JSX } from 'react';
 import { api } from '../api/client';
 import type { LayaCalibration, LayaDiagnostics, LayaServerStatus } from '../types/api';
 
