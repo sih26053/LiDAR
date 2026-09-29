@@ -48,6 +48,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe
 .rail a { color: var(--muted); text-decoration: none; font-size: 12px; padding: 8px 4px; text-align: center; border-radius: 6px; }
 .rail a:hover { color: var(--accent); background: var(--panel2); }
 .ops-anchor { height: 0; }
+.section-title { grid-column: 1 / -1; margin: 14px 0 0; font-size: 15px; letter-spacing: 0.5px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
 
 /* Grid + panels */
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
@@ -153,3 +154,10 @@ table.objs td:first-child { font-weight: 600; }
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .header { flex-direction: column; }
 }
+
+.flow-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 8px 0; }
+.flow-box { border: 1px solid #2b3a4a; border-radius: 8px; padding: 10px 12px; background: #101820; }
+.flow-box b { display: block; margin-bottom: 6px; }
+.flow-box p { margin: 6px 0; font-size: 0.85rem; }
+.flow-box .mono { font-size: 0.75rem; opacity: 0.8; }
+@media (max-width: 900px) { .flow-grid { grid-template-columns: 1fr; } }
